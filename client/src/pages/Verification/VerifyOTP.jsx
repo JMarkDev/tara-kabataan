@@ -14,6 +14,9 @@ function VerifyOTP() {
   const location = useLocation();
   const { state } = location;
   const navigate = useNavigate();
+  const userId = Cookies.get('userId')
+  const role = Cookies.get('role')
+
   // Access the data
   const email = state ? state.email : '';
 
@@ -127,6 +130,14 @@ function VerifyOTP() {
   })
 
   const submitDisabled = otpDigits.includes('') || otpDigits.length < 4;
+
+  useEffect(() => {
+
+    if(userId) {
+      const userRole = role === 'user' ? '/home' : '/dashboard'
+      navigate(userRole)
+    }
+  })
 
   return (
     <>

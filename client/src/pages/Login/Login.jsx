@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../../api/api';
 import Cookies from 'js-cookie';
@@ -14,6 +14,8 @@ const Login = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate(); 
+  const userId = Cookies.get('userId')
+  const role = Cookies.get('role')
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -28,7 +30,6 @@ const Login = () => {
         headers: { 'Content-Type': 'application/json' },
         // withCredentials: true,
       });
-      console.log(response.data)
 
       Cookies.set('token', response.data.token, { expires: 1 });
       Cookies.set('role', response.data.role, { expires: 1 });
@@ -58,6 +59,14 @@ const Login = () => {
       setErrorMessage(err.response.data.message);
     }
   };
+
+  useEffect(() => {
+
+    if(userId) {
+      const userRole = role === 'user' ? '/home' : '/dashboard'
+      navigate(userRole)
+    }
+  })
   
   
   return (
@@ -71,8 +80,7 @@ const Login = () => {
         backgroundPosition: 'center',
       }}
     > 
-
-        <div className="w-[350px] sm:mx-auto sm:w-full sm:max-w-md px-4 py-10 mt-6 overflow-hidden bg-[#ffffff] p-4 rounded-lg shadow-md">
+        <div className="w-[350px] sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 mt-6 overflow-hidden bg-white p-4 rounded-lg shadow-md">
             <h2 className="text-center mb-5 text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in your account
             </h2>
@@ -129,7 +137,10 @@ const Login = () => {
             <div>
             <button
             type="submit"
-            className="flex w-full justify-center rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58] px-3 py-2 text-md font-semibold leading-6 text-white shadow-sm transition-all duration-300 ease-in-out hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58] hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="flex w-full justify-center rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58]
+             px-3 py-2 text-md font-semibold leading-6 text-white shadow-sm transition-all duration-300 ease-in-out 
+             hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58] hover:bg-indigo-500 focus-visible:outline 
+             focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Log in
           </button>

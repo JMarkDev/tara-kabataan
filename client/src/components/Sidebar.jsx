@@ -15,9 +15,9 @@ const Sidebar = ({ open }) => {
 
   const Menus = [
     { title: 'Dashboard', path: '/dashboard', src: <RiDashboardLine  /> },
-    { title: 'Events', path: '/dashboard-events', src: <BsFillJournalBookmarkFill/> },
+    { title: 'Events', path: '/admin-events', src: <BsFillJournalBookmarkFill/> },
     // { title: 'Courses', path: '/courses', src: <SiFuturelearn />},
-    { title: 'Users', path: '/users', src: <CgProfile /> },
+    { title: 'Users', path: '/admin-users', src: <CgProfile /> },
     { title: 'Admin', path: '/admin', src: <FaUserShield /> },
   ];
 
@@ -30,7 +30,6 @@ const Sidebar = ({ open }) => {
     open: PropTypes.bool.isRequired,
     setOpen: PropTypes.func.isRequired,
   };
-
 
   return (
     <>

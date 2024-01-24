@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import Loading from "../../components/loading/otpLoader/otpLoader";
+import Cookies from "js-cookie";
 
 export default function Register() {
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
+  const role = Cookies.get('role')
+  const userId = Cookies.get('userId')
 
   const [values, setValues] = useState({
     firstname: "",
@@ -88,6 +91,14 @@ export default function Register() {
       }
     }
   };
+
+  useEffect(() => {
+
+    if(userId) {
+      const userRole = role === 'user' ? '/home' : '/dashboard'
+      navigate(userRole)
+    }
+  })
   
 
   return (
@@ -110,7 +121,7 @@ export default function Register() {
       </div>
     }
           
-            <div className="w-[350px] sm:mx-auto sm:w-full sm:max-w-md px-4 py-2 mt-[120px] overflow-hidden bg-[#ffffff] shadow-md sm:rounded-lg">
+          <div className="w-[350px] sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 mt-[120px] overflow-hidden bg-white p-4 rounded-lg shadow-md">
             <div className="p-5 m-auto flex justify-center items-center">
             <h1 className='text-center mb-5 text-2xl font-bold leading-9 tracking-tight text-gray-900'>
             Sign up your account

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import PropTypes  from 'prop-types';
 import { RxHamburgerMenu } from 'react-icons/rx'
 import api from '../api/api';
@@ -7,12 +7,23 @@ import Cookies from 'js-cookie';
 import userIcon from '../assets/images/user.png';
 import UserProfile from './UserProfile';
 
+const pageTitles = {
+  '/dashboard': 'Dashboard',
+  '/admin-events': 'Event List',
+  '/admin-users': 'User List',
+  '/admin': 'Admin List',
+  '/admin-profile': 'Admin Profile',
+}
+
 function NavbarDashboard({ setOpen }) {
   const [name, setName] = useState('');
   const [open, setOpenProfile] = useState(false); 
   const navigate = useNavigate();
   const userId = Cookies.get('userId');
 
+  const location = useLocation();
+  const title = pageTitles[location.pathname];
+  
   const handleBurgerClick = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -59,7 +70,7 @@ function NavbarDashboard({ setOpen }) {
       <div className="flex justify-between p-4">
         <div className="flex items-center text-center">
           <RxHamburgerMenu onClick={handleBurgerClick} className="text-3xl mr-5" />
-          <h1 className="text-2xl font-bold">Dashboard</h1>
+          <h1 className="text-2xl font-bold">{title}</h1>
         </div>
         <div className='relative'>
           <div className="flex gap-10">

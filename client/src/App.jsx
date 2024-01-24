@@ -21,7 +21,11 @@ import Admin from './pages/Admin/Admin/Admin'
 import AdminProfile from './pages/Admin/Admin/AdminProfile'
 
 import ProtectedRoute from './route/ProtectedRoute'
-import VerifyOTP from './components/VeriryOTP/VerifyOTP'
+import VerifyOTP from './pages/Verification/VerifyOTP'
+import ChangePassword from './pages/Verification/ChangePassword'
+import ChangePasswordOTP from './pages/Verification/ChangePasswordOTP'
+import ConfirmPassword from './pages/Verification/ConfirmPassword'
+
 import Profile from './pages/User/Profile'
 
 function App() {
@@ -37,7 +41,7 @@ function App() {
       try {
         if (userId) {
           const response = await api.get(`/user/id/${userId}`);
-            if(response.data.role === role) {
+            if(response.data.role === role && token) {
               setIsLoggedIn(true)
               setUserRole(response.data.role)
             } else {
@@ -62,6 +66,25 @@ function App() {
           <Home />
         </LayoutUser>
       } />
+
+      <Route path='/change-password' element={
+        <LayoutUser>
+          <ChangePassword />
+        </LayoutUser>
+      }/>
+
+      <Route path='/change-password-otp' element={
+        <LayoutUser>
+          <ChangePasswordOTP />
+        </LayoutUser> 
+      } />
+
+      <Route path='/confirm-password' element={
+        <LayoutUser>
+          <ConfirmPassword />
+        </LayoutUser>
+      } />
+
       <Route path='/register' element={
         <LayoutUser>
           <Register />
@@ -82,14 +105,14 @@ function App() {
 
 
       <Route path='/home' element={
-        <ProtectedRoute element={
+        // <ProtectedRoute element={
           <LayoutUser>
             <Home />
           </LayoutUser>
-        } 
-        allowedRoles={['user']}
-        isLoggedIn={isLoggedIn}
-        userRole={userRole}/>
+        // } 
+        // allowedRoles={['user']}
+        // isLoggedIn={isLoggedIn}
+        // userRole={userRole}/>
       }/>
       <Route path='/events' element={
         <LayoutUser>
@@ -124,7 +147,7 @@ function App() {
           userRole={userRole}/>
       }/>
 
-      <Route path='/dashboard-events' 
+      <Route path='/admin-events' 
         element={
           <ProtectedRoute element={
           <LayoutAdmin>
@@ -148,7 +171,7 @@ function App() {
           userRole={userRole}/>
       } />
 
-      <Route path='/users' element={
+      <Route path='/admin-users' element={
         <ProtectedRoute element={
           <LayoutAdmin>
             <DashboardUser />
@@ -159,7 +182,7 @@ function App() {
           userRole={userRole}/>
       } />
 
-      <Route path='/admin/profile' element={
+      <Route path='/admin-profile' element={
         <ProtectedRoute element={
           <LayoutAdmin>
             <AdminProfile />

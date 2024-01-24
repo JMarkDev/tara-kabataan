@@ -20,7 +20,7 @@ const UserProfile = ({ handleDropdownClick, hideProfile, handleLogout}) => {
     <ul className="w-full">
       <li>
         <Link
-        to={`${role === 'user' ? '/profile' : '/admin/profile'}`}
+        to={`${role === 'user' ? '/profile' : '/admin-profile'}`}
         className="block dark:text-white dark:hover:text-[#075985] p-2  font-semibold cursor-pointer hover-bg-sky-100 dark:hover-bg-gray-200
         hover:bg-[#aed3ec] border-b-2 border-transparent dark:hover:bg-gray-20 "
       >
