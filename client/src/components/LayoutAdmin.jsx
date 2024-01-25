@@ -24,11 +24,11 @@ const LayoutAdmin = ({ children }) => {
       <div className='flex flex-auto h-full w-auto'>
         <div className=''>
         {isSmallScreen ? null : <Sidebar open={open} setOpen={setOpen} className='w-[250px]'/>}
-        {isSmallScreen && open && <Sidebar open={open} setOpen={setOpen} />}
+        {isSmallScreen && open && <Sidebar open={open} setOpen={setOpen}/>}
         
         </div>
-        <div className='grow bg-[#f2f2f2]'>
-          <NavbarDashboard setOpen={setOpen} />
+        <div className='bg-[#f2f2f2] w-full'>
+          <NavbarDashboard setOpen={setOpen} open={open} />
           <div className='m-4 mt-5'>{children}</div>
         </div>
       </div>

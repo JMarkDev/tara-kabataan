@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import logo from '../assets/images/logo.jpg';
 import { Link, useLocation } from 'react-router-dom';
 import HamburgerButton from './HamburgerMenuButton/HamburgerButton';
@@ -14,7 +13,6 @@ const NavbarUser = () => {
   const [userData, setUserData] = useState(false);
   const [name, setName] = useState('');
   const [open, setOpen] = useState(false); 
-  const navigate = useNavigate();
 
   const userId = Cookies.get('userId'); 
 
@@ -46,14 +44,6 @@ const NavbarUser = () => {
   const handleMobileLinkClick = () => {
     closeMobileMenu(); // Close the mobile menu when a link is clicked
   };
-
-  const handleLogout = () => {
-    Cookies.remove('token');
-    Cookies.remove('role');
-    Cookies.remove('userId');
-    setUserData(false)
-    navigate('/login');
-  } 
 
   const showProfile = () => {
     setOpen(!open);
@@ -140,7 +130,7 @@ const NavbarUser = () => {
                   handleDropdownClick={handleDropdownClick}
                   hideProfile={hideProfile}
                   userId={userId}
-                  handleLogout={handleLogout}
+                  // handleLogout={useLogout}
                   />
                 </>    
               )}
@@ -188,7 +178,6 @@ const NavbarUser = () => {
               handleDropdownClick={handleDropdownClick}
               hideProfile={hideProfile}
               userId={userId}
-              handleLogout={handleLogout}
               />
             </>    
           )}

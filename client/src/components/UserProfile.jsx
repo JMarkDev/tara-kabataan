@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom'
 import Proptypes from 'prop-types'
 import Cookies from 'js-cookie';
+import { useLogout } from '../hooks/useLogout';
 
-const UserProfile = ({ handleDropdownClick, hideProfile, handleLogout}) => {
-    const role = Cookies.get('role');  
-
+const UserProfile = ({ handleDropdownClick, hideProfile }) => {
+    const role = Cookies.get('role'); 
+    const handleLogout = useLogout(); 
+ 
     UserProfile.propTypes = {
         handleDropdownClick: Proptypes.func.isRequired,
         hideProfile: Proptypes.func.isRequired,
         userId: Proptypes.string.isRequired,
-        handleLogout: Proptypes.func.isRequired,
     }
     
   return (

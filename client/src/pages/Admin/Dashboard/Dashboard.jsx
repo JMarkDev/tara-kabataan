@@ -1,5 +1,6 @@
-import { FaUser } from 'react-icons/fa'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
+import PieChartComponent from '../../../components/PieChart';
+import Cards from '../../../components/Cards';
 
 const Dashboard = () => {
 
@@ -26,7 +27,6 @@ const Dashboard = () => {
     return color;
   };
 
-  // Sample static data for the line chart
   const data = [
     { month: 'Jan', event1: 30, event2: 45, event3: 50 },
     { month: 'Feb', event1: 40, event2: 55, event3: 40 },
@@ -39,7 +39,6 @@ const Dashboard = () => {
     { month: 'Mar', event1: 25, event2: 30, event3: 50 },
     { month: 'Jan', event1: 30, event2: 45, event3: 50 },
     { month: 'Feb', event1: 40, event2: 55, event3: 40 },
-    // Add more data for other months
   ];
 
   const getGraphColor = () => getNextColor();
@@ -47,29 +46,8 @@ const Dashboard = () => {
   return (
     <div>
       <div>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 '>
-                {
-                    cards.map((name, index) => (
-                        <div key={index} className='dark:bg-[#9333ea] border-2 h-[150px] rounded-[20px] bg-[#e6e6fa] border-l-[6px] flex items-center cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out '  
-                        style={{ borderColor: getNextColor() }}
-                        > 
-                            <div className='flex'>
-                                <div className='ml-5 flex'>
-                                <div className='rounded-full h-10 w-10 flex items-center justify-center bg-emerald-200'>
-                                    <FaUser fontSize={22} color="" />
-                                </div>
-                                <div>
-                                    <h2 className='text-[#1f2633fd] text-xl leading-[22px] px-[10px] font-bold'>{name.name}</h2>
-                                    <h1 className='text-[30px] leading-[24px] font-bold  px-[10px] mt-[5px]'>{name.count}</h1>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
-
-            <div className='flex flex-col md:flex-row md:gap-6 mt-[16px] w-full'>
+        <Cards cards={cards} getNextColor={getNextColor} />
+            <div className=' flex lg:flex-row flex-col md:flex-col md:gap-6 mt-[16px] w-full'>
             <div className='basis-[60%] rounded dark:border-white bg-white shadow-md cursor-pointer  mb-4 md:mb-0 lg:mb-0 lg:mr-4'>
                     <div className='bg-gray-500 flex items-center justify-between py-[15px] px-[20px] border-b-4 mb-[20px]'>
                         <h2 className='text-[#020617]  dark:text-white text-[16px] leading-[19px] font-bold '>Events Chart</h2>
@@ -112,9 +90,11 @@ const Dashboard = () => {
                                   />
                                 ))}
                         </LineChart>
-                        </ResponsiveContainer>
+                        </ResponsiveContainer >
                     </div>
-
+                </div>
+                <div> 
+                  <PieChartComponent />
                 </div>
                 </div>
         </div>

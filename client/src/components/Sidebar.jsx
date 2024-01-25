@@ -5,13 +5,15 @@ import { RiDashboardLine  } from 'react-icons/ri';
 // import { SiFuturelearn } from 'react-icons/si';
 import { CgProfile } from 'react-icons/cg';
 import { FaUserShield } from 'react-icons/fa'; 
-// import { ThemeContext } from "./ThemeContext";
+import { MdLogout } from "react-icons/md";
 import logo from "../assets/images/logo.jpg";
 import { BsFillJournalBookmarkFill } from 'react-icons/bs';
+import { useLogout } from '../hooks/useLogout';
 
 const Sidebar = ({ open }) => {
   const [showCoursesDropdown, setShowCoursesDropdown] = useState(false);
   const location = useLocation();
+  const handleLogout = useLogout();
 
   const Menus = [
     { title: 'Dashboard', path: '/dashboard', src: <RiDashboardLine  /> },
@@ -25,7 +27,6 @@ const Sidebar = ({ open }) => {
     setShowCoursesDropdown(!showCoursesDropdown);
   };
   
-
   Sidebar.propTypes = {
     open: PropTypes.bool.isRequired,
     setOpen: PropTypes.func.isRequired,
@@ -33,11 +34,10 @@ const Sidebar = ({ open }) => {
 
   return (
     <>
-     <div className={`w-[${open ? '80px' : '250px'}] h-[100vh] bg-[#40189d] p-2 text-[#f2f2f2] transition-all ease-in-out duration-300`}>
-         <div className=" lg:flex justify-center items-center gap-3">
-          <img src={logo} alt="logo" className={`hidden sm:block md:block lg:block w-[50px]`} />
-        
-      </div>
+     <div className={`w-[${open ? '80px' : '250px'}] z-20 h-[100vh] bg-[#40189d] p-2 text-[#f2f2f2] transition-all ease-in-out duration-300`}>
+        <div className="flex justify-center items-center gap-3">
+            <img src={logo} alt="logo" className={`w-[70px] my-2`} />
+        </div>
         <ul className={`pt-6 ${open ? 'items-center flex flex-col': ''}`}>
           {Menus.map((menu, index) => (
             <li
@@ -57,7 +57,7 @@ const Sidebar = ({ open }) => {
                       'bg-[orange-400] '
                     }`}
                   >
-                    <span className="text-2xl">{menu.src}</span>
+                    <span className={`${!open && 'hidden'} text-2xl`}>{menu.src}</span>
                     <span className={`${!open && 'hidden'} origin-left duration-300 hover:block`}>
                       {menu.title}
                     </span>
@@ -84,6 +84,21 @@ const Sidebar = ({ open }) => {
               )}
             </li>
           ))}
+
+            <Link to={'/login'} onClick={handleLogout}>
+                  <div
+                    className='w-full mt-[250px] flex items-center gap-x-6 p-3 text-base font-normal rounded-lg cursor-pointer  hover:bg-[#607D8B]'
+                  >
+                    <span className={`${!open && 'block'} text-2xl`}><MdLogout /></span>
+                    {
+                      !open && (
+                        <span className="origin-left duration-300 hover:block">
+                          Logout
+                        </span>
+                      )
+                    }
+                  </div>
+            </Link>
         </ul>
       </div>
     </>

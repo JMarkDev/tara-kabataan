@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import PropTypes  from 'prop-types';
 import { RxHamburgerMenu } from 'react-icons/rx'
 import api from '../api/api';
@@ -15,10 +15,9 @@ const pageTitles = {
   '/admin-profile': 'Admin Profile',
 }
 
-function NavbarDashboard({ setOpen }) {
+function NavbarDashboard({ setOpen}) {
   const [name, setName] = useState('');
-  const [open, setOpenProfile] = useState(false); 
-  const navigate = useNavigate();
+  const [openProfile, setOpenProfile] = useState(false); 
   const userId = Cookies.get('userId');
 
   const location = useLocation();
@@ -43,15 +42,8 @@ function NavbarDashboard({ setOpen }) {
     getUserData();
   }, [userId]);
 
-  const handleLogout = () => {
-    Cookies.remove('token');
-    Cookies.remove('role');
-    Cookies.remove('userId');
-    navigate('/login');
-  } 
-
   const showProfile = () => {
-    setOpenProfile(!open);
+    setOpenProfile(!openProfile);
   };
 
   const hideProfile = () => {
@@ -64,9 +56,8 @@ function NavbarDashboard({ setOpen }) {
     setOpenProfile(false)
   };
 
-
   return (
-    <div className="h-[70px] shadow-md">
+    <div className={`h-[70px] shadow-md`}>
       <div className="flex justify-between p-4">
         <div className="flex items-center text-center">
           <RxHamburgerMenu onClick={handleBurgerClick} className="text-3xl mr-5" />
@@ -78,16 +69,15 @@ function NavbarDashboard({ setOpen }) {
             <img onClick={showProfile}
                 onMouseEnter={showProfile}
                 className="w-8 h-8 rounded-full object-cover cursor-pointer"
-                src={userIcon}
+                src={userIcon} 
                 alt=""
               />
-            {open && (
+            {openProfile && (
               <div className="absolute top-[60px] right-0 mr-[-10px]">
                 <UserProfile
                   handleDropdownClick={handleDropdownClick}
                   hideProfile={hideProfile}
                   userId={userId}
-                  handleLogout={handleLogout}
                 />
               </div>
             )}
