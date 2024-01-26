@@ -12,7 +12,7 @@ const Cards = ({cards, getNextColor}) => {
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 '>
     {
         cards.map((name, index) => (
-            <div key={index} className='dark:bg-[#9333ea] border-2 h-[150px] rounded-[20px] bg-[#e6e6fa] border-l-[6px] flex items-center cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out '  
+            <div key={index} className='border-2 h-[150px] rounded-[20px] bg-[#e6e6fa] border-l-[6px] flex items-center cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out '  
             style={{ borderColor: getNextColor() }}
             > 
                 <div className='flex'>

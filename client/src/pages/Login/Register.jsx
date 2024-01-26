@@ -104,7 +104,7 @@ export default function Register() {
   return (
     <>
     {/* <NavbarUser /> */}
-    <div className="relative bg-[#efeff5] mt-[-100px]">
+    <div className="relative bg-[#efeff5] ">
       <div
         className="flex flex-col items-center sm:justify-center sm:pt-0"/>
         <div
@@ -121,7 +121,7 @@ export default function Register() {
       </div>
     }
           
-          <div className="w-[350px] sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 mt-[120px] overflow-hidden bg-white p-4 rounded-lg shadow-md">
+          <div className="w-[350px] sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 m-5 overflow-hidden bg-white p-4 rounded-lg shadow-md">
             <div className="p-5 m-auto flex justify-center items-center">
             <h1 className='text-center mb-5 text-2xl font-bold leading-9 tracking-tight text-gray-900'>
             Sign up your account

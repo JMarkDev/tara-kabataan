@@ -6,6 +6,7 @@ import api from '../api/api';
 import Cookies from 'js-cookie';
 import userIcon from '../assets/images/user.png';
 import UserProfile from './UserProfile';
+import { useResizeLayout } from '../hooks/resizeLayout';
 
 const pageTitles = {
   '/dashboard': 'Dashboard',
@@ -19,12 +20,16 @@ function NavbarDashboard({ setOpen}) {
   const [name, setName] = useState('');
   const [openProfile, setOpenProfile] = useState(false); 
   const userId = Cookies.get('userId');
+  const [resize, setResize] = useState(false);
+  const { isSmallScreen } = useResizeLayout();
+
 
   const location = useLocation();
   const title = pageTitles[location.pathname];
   
   const handleBurgerClick = () => {
     setOpen((prevOpen) => !prevOpen);
+    setResize(!resize);
   };
 
   useEffect(() => {
@@ -57,8 +62,8 @@ function NavbarDashboard({ setOpen}) {
   };
 
   return (
-    <div className={`h-[70px] shadow-md`}>
-      <div className="flex justify-between p-4">
+    <div className={`h-[70px] bg-[#f2f2f2] z-10 fixed w-full shadow-md`}>
+    <div className=" flex justify-between p-4" style={isSmallScreen ? {width: 'full'} : { marginLeft: !resize ? '250px' : '80px' }}>
         <div className="flex items-center text-center">
           <RxHamburgerMenu onClick={handleBurgerClick} className="text-3xl mr-5" />
           <h1 className="text-2xl font-bold">{title}</h1>

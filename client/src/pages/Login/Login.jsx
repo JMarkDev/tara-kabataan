@@ -73,7 +73,7 @@ const Login = () => {
     <> 
     {/* <NavbarUser /> */}
     <div
-      className="flex bg-[#efeff5] flex-col items-center sm:justify-center sm:pt-0 h-[100vh]"
+      className="flex bg-[#efeff5] flex-col items-center sm:justify-center sm:pt-0"
       style={{
         backgroundImage: `url('https://unsplash.com/photos/selective-focus-photography-of-people-sitting-on-chairs-while-writing-on-notebooks-Hb6uWq0i4MI')`,
         backgroundSize: 'cover',
