@@ -16,7 +16,7 @@ const Sidebar = ({ open, setOpen }) => {
 
   const Menus = [
     { title: 'Dashboard', path: '/dashboard', src: <RiDashboardLine /> },
-    { title: 'Events', path: '/admin-events', src: <BsFillJournalBookmarkFill /> },
+    { title: 'Event List', path: '/admin-events', src: <BsFillJournalBookmarkFill /> },
     { title: 'Users', path: '/admin-users', src: <CgProfile /> },
     { title: 'Admin', path: '/admin', src: <FaUserShield /> },
   ];
