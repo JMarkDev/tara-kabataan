@@ -32,7 +32,7 @@ const LayoutAdmin = ({ children }) => {
             className="transition-all ease-in-out duration-300 flex justify-between p-4"
             style={isSmallScreen ? { width: 'full' } : { marginLeft: open ? '50px' : '250px' }}
           >
-            <div className={`w-full m-4 mt-[90px] ${open && !isSmallScreen && 'px-10'}`}>{children}</div>
+            <div className={`w-full p-4 pt-[90px] ${open && !isSmallScreen && 'px-10'}`}>{children}</div>
           </div>
         </div>
       </div>

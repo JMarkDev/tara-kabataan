@@ -4,6 +4,7 @@ import { RiDashboardLine } from 'react-icons/ri';
 import { CgProfile } from 'react-icons/cg';
 import { FaUserShield } from 'react-icons/fa';
 import { MdLogout } from 'react-icons/md';
+import { FaUsersLine } from "react-icons/fa6";
 import logo from '../assets/images/logo.jpg';
 import { BsFillJournalBookmarkFill } from 'react-icons/bs';
 import { useLogout } from '../hooks/useLogout';
@@ -17,6 +18,7 @@ const Sidebar = ({ open, setOpen }) => {
   const Menus = [
     { title: 'Dashboard', path: '/dashboard', src: <RiDashboardLine /> },
     { title: 'Event List', path: '/admin-events', src: <BsFillJournalBookmarkFill /> },
+    { title: 'Attendees', path: '/admin-attendees', src: <FaUsersLine />},
     { title: 'Users', path: '/admin-users', src: <CgProfile /> },
     { title: 'Admin', path: '/admin', src: <FaUserShield /> },
   ];

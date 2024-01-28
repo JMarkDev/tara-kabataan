@@ -27,6 +27,7 @@ import ChangePasswordOTP from './pages/Verification/ChangePasswordOTP'
 import ConfirmPassword from './pages/Verification/ConfirmPassword'
 
 import Profile from './pages/User/Profile'
+import Attendees from './pages/Admin/Attendees/Attendees'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -158,6 +159,19 @@ function App() {
           isLoggedIn={isLoggedIn}
           userRole={userRole}/>
       }/>
+      
+      <Route path='/admin-attendees' 
+        element={
+          <ProtectedRoute element={
+          <LayoutAdmin>
+            <Attendees />
+          </LayoutAdmin>
+          }  
+          allowedRoles={['admin']}
+          isLoggedIn={isLoggedIn}
+          userRole={userRole}/>
+      }
+      />
 
       <Route path='/admin' 
         element={

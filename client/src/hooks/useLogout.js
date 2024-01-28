@@ -9,7 +9,6 @@ export const useLogout = () => {
         Cookies.remove('role');
         Cookies.remove('userId');
         navigate('/login')
-        console.log('logout')
     }
 
     return handleLogout;
