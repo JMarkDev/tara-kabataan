@@ -165,7 +165,7 @@ function VerifyOTP() {
 }
 
 
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center">
       {loader && 
       <div className="absolute flex items-center justify-center h-screen">
         <Loading />

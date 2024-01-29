@@ -213,8 +213,8 @@ export default function Register() {
                       <input
                         type="radio"
                         name="gender"
-                        value="male"
-                        checked={values.gender === "male"}
+                        value="Male"
+                        checked={values.gender === "Male"}
                         onChange={(e) =>
                           setValues({ ...values, gender: e.target.value })
                         }
@@ -226,8 +226,8 @@ export default function Register() {
                       <input
                         type="radio"
                         name="gender"
-                        value="female"
-                        checked={values.gender === "female"}
+                        value="Female"
+                        checked={values.gender === "Female"}
                         onChange={(e) =>
                           setValues({ ...values, gender: e.target.value })
                         }
@@ -239,8 +239,8 @@ export default function Register() {
                       <input
                         type="radio"
                         name="gender"
-                        value="non-binary"
-                        checked={values.gender === "non-binary"}
+                        value="Non-Binary"
+                        checked={values.gender === "Non-Binary"}
                         onChange={(e) =>
                           setValues({ ...values, gender: e.target.value })
                         }

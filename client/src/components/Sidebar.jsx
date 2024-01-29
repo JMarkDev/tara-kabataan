@@ -23,15 +23,9 @@ const Sidebar = ({ open, setOpen }) => {
     { title: 'Admin', path: '/admin', src: <FaUserShield /> },
   ];
 
-  Sidebar.propTypes = {
-    open: PropTypes.bool.isRequired,
-    setOpen: PropTypes.func.isRequired
-  };
-
   return (
     <>
     <div 
-    // className='w-[250px] fixed z-20 h-[100vh] bg-[#40189d] p-2 text-[#f2f2f2] transition-all ease-in-out duration-300'
       className={` w-[${isSmallScreen ? '80px' : open ? '80px' : '250px'}] fixed ${isSmallScreen  && 'hidden'} z-20 h-[100vh] bg-[#40189d] p-2 text-[#f2f2f2] transition-all ease-in-out duration-300`}
     >
       <div className="flex justify-center items-center gap-3">
@@ -55,7 +49,7 @@ const Sidebar = ({ open, setOpen }) => {
           </li>
         ))}
         <Link to="/login" onClick={handleLogout}>
-          <div className="w-full mt-[250px] flex items-center gap-x-6 p-3 text-base font-normal rounded-lg cursor-pointer hover:bg-[#607D8B]">
+          <div className="w-full mt-[220px] flex items-center gap-x-6 p-3 text-base font-normal rounded-lg cursor-pointer hover:bg-[#607D8B]">
             <span className={`${!open && 'block'} text-2xl`}><MdLogout /></span>
             {!open && !isSmallScreen && (
               <span className="origin-left duration-300 hover:block">Logout</span>
@@ -88,7 +82,7 @@ const Sidebar = ({ open, setOpen }) => {
           </li>
         ))}
         <Link to="/login" onClick={handleLogout}>
-          <div className="w-full mt-[250px] flex items-center gap-x-6 p-3 text-base font-normal rounded-lg cursor-pointer hover:bg-[#607D8B]">
+          <div className="w-full mt-[220px] flex items-center gap-x-6 p-3 text-base font-normal rounded-lg cursor-pointer hover:bg-[#607D8B]">
             <span className='text-2xl'><MdLogout /></span>
               <span className="origin-left duration-300 hover:block">Logout</span>
           </div>
@@ -100,6 +94,11 @@ const Sidebar = ({ open, setOpen }) => {
     }
     </>
   );
+};
+
+Sidebar.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired
 };
 
 export default Sidebar;

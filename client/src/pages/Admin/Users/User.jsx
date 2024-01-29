@@ -11,16 +11,36 @@ const User = () => {
   useEffect(() => {
     const getUsers = async () => {
         try {
-          const response = await api.get('/user/role/user')
-          console.log(response.data)
-          setData(response.data)
+          let response;
+          if(search) {
+            response = await api.get(`/user/search/${search}/user`);
+            setData(response.data)
+          } else {
+            response = await api.get('/user/role/user')
+            setData(response.data)
+          }
         } catch (error) {
           console.log(error)
         }
     }
 
     getUsers()
-  }, [])
+  }, [search])
+
+  const handleFilter = async (value) => {
+    try {
+      let response;
+      if(value === 'Default') {
+          response = await api.get('/user/role/user')
+          setData(response.data)
+      } else {
+          response = await api.get(`/user/filter/${value}/user`)
+          setData(response.data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div>
@@ -35,7 +55,7 @@ const User = () => {
           </button>
         </div>
           <div className="flex justify-center items-center">
-            <Dropdown />
+            <Dropdown handleFilter={handleFilter}/>
           </div>
       </div>
 

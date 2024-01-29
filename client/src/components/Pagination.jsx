@@ -20,7 +20,7 @@ const Pagination = ({ currentPage, onPageChange, totalPages}) => {
         <li key={i}>
         <a
           href="#"
-          className={`flex items-center justify-center px-3 h-10 leading-tight ${
+          className={`flex items-center justify-center px-3 h-10 rounded-lg leading-tight ${
             i === currentPage ? 'text-white bg-gradient-to-r from-[#f87a58] to-[#f7426f] hover:from-[#f7426f] hover:to-[#f87a58]' : 'hover:text-white hover:bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58]  border border-gray-300'
           }`}
           onClick={() => handlePageClick(i)}
@@ -36,7 +36,7 @@ const Pagination = ({ currentPage, onPageChange, totalPages}) => {
   return (
     <div>
 <nav aria-label="Page navigation example">
-  <ul className="inline-flex -space-x-px text-md">
+  <ul className="text-md flex space-x-2">
     <li>
       <a href="#" className={`flex items-center justify-center px-3 h-10 ms-0 leading-tight text-white bg-gradient-to-r from-[#f87a58] to-[#f7426f]  hover:from-[#f7426f] hover:to-[#f87a58] border border-e-0 border-gray-300 rounded-s-lg
           ${currentPage === 1 ? 'pointer-events-none' : ''}

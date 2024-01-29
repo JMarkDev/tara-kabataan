@@ -1,14 +1,30 @@
-import  { useState } from "react";
+import  { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import PropTypes from "prop-types";
+import api from '../api/api'
 
 const EventsTable = ({ data }) => {
     const [openAction, setOpenAction] = useState(false);
+    const [eventData, setEventData] = useState([]);
 
-    EventsTable.propTypes = {
-        data: PropTypes.array.isRequired
+    useEffect(() => {
+        setEventData(data)
+    }, [data])
+
+    const handleDelete = async (id) => {
+        try {
+            const response = await api.delete(`/event/delete/${id}`)
+            if(response.data.status === 'success') {
+                alert(response.data.message)
+            
+                const newEventData = eventData.filter((event) => event.id !== id)
+                setEventData(newEventData)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
-    
+     
   return (
 <div className="relative overflow-x-auto rounded-md">
     <table className="w-full text-md text-left rtl:text-right text-gray-500">
@@ -25,6 +41,9 @@ const EventsTable = ({ data }) => {
         </th>
         <th scope="col" className="px-6 py-3">
             Event Time
+        </th>
+        <th scope="col" className="px-6 py-3">
+            Event Category
         </th>
         <th scope="col" className="px-6 py-3">
             Event Type
@@ -44,49 +63,54 @@ const EventsTable = ({ data }) => {
     </tr>
         </thead>
         <tbody>
-            { data.map((event) => {
+            { eventData.map(({ id, event_title, event_category, start_date, end_date, start_time, end_time, event_type, location, max_attendees, status }) => {
                 return (
-                <tr key={event.id} className="bg-white hover:bg-gray-100 border-b ">
+                <tr key={id} className="bg-white hover:bg-gray-100 border-b ">
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                            {event.id}
+                            {id}
                         </th>
                         <td className="px-6 py-4 whitespace-nowrap ">
-                            {event.event_title}
+                            {event_title}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                            {event.start_date} - {event.end_date}
+                            {start_date} - {end_date}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                            {event.start_time} - {event.end_time}
+                            {start_time} - {end_time}
                         </td>
                         <td className="px-6 py-4">
-                            {event.event_type}
+                            {event_category}
+                        </td>
+                        <td className="px-6 py-4">
+                            {event_type}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                            {event.location}
+                            {location}
                         </td>
                         <td className="px-6 py-4">
-                            {event.max_attendees}
+                            {max_attendees}
                         </td>
                         <td className="px-6 py-4">
-                            <span className={`px-2 py-1 font-normal leading-tight ${event.status === 'Completed' ? 'text-green-700  green-blue-700 bg-green-100 rounded-full green:bg-blue-700 ' : ' text-blue-700 bg-blue-100 rounded-full  dark:text-blue-100'}rounded-full`}>
-                                {event.status}
+                            <span className={`px-2 py-1 font-normal leading-tight ${status === 'Completed' ? 'text-green-700  green-blue-700 bg-green-100 rounded-full green:bg-blue-700 ' : ' text-blue-700 bg-blue-100 rounded-full  dark:text-blue-100'}rounded-full`}>
+                                {status}
                             </span>
                         </td>
                         <td className="px-6 py-4 flex justify-center text-md gap-5 relative">
                             <div className="relative">
                                 <button onClick={() => {
-                                    setOpenAction(event.id === openAction ? null : event.id)
+                                    setOpenAction(id === openAction ? null : id)
                                     }}
                                     className="text-xl text-gray-800 font-semibold"
                                 >
                                 <BsThreeDots />
                                 </button>
-                                {openAction === event.id && (
-                                <div className="z-20 absolute flex flex-col right-0 bottom-0 w-48 py-2 mt-2 bg-white rounded-md shadow-2xl transform translate-y-full">
+                                {openAction === id && (
+                                <div className="z-20 absolute flex flex-col right-[-25px] bottom-2 w-48 py-2 mt-2 bg-white rounded-md shadow-2xl transform translate-y-full">
                                     <a href="#" className="px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">View</a>
                                     <a href="#" className="px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Edit</a>
-                                    <a href="#" className="px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Delete</a>
+                                    <a href="#" className="px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
+                                        onClick={() => handleDelete(id)}
+                                    >Delete</a>
                                 </div>
                                 )}
                             </div>
@@ -100,6 +124,10 @@ const EventsTable = ({ data }) => {
 </div>
 
   )
+}
+
+EventsTable.propTypes = {
+    data: PropTypes.array.isRequired
 }
 
 export default EventsTable

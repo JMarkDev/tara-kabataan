@@ -14,6 +14,7 @@ const pageTitles = {
   '/admin-users': 'User List',
   '/admin': 'Admin List',
   '/admin-profile': 'Admin Profile',
+  '/add-event': 'Add Event',
 }
 
 function NavbarDashboard({ setOpen}) {

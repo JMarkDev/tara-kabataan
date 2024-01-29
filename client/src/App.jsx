@@ -19,6 +19,7 @@ import DashboardEvents from './pages/Admin/Events/Events'
 import DashboardUser from './pages/Admin/Users/User'
 import Admin from './pages/Admin/Admin/Admin'
 import AdminProfile from './pages/Admin/Admin/AdminProfile'
+import AddEvent from './pages/Admin/Events/AddEvent'
 
 import ProtectedRoute from './route/ProtectedRoute'
 import VerifyOTP from './pages/Verification/VerifyOTP'
@@ -58,6 +59,16 @@ function App() {
     }
     fetchData()
   }, [userId, token, role, navigate])
+
+  const adminLinks = [
+    { title: 'Dashboard', path: '/dashboard', component: <Dashboard />},
+    { title: 'Events', path: '/admin-events', component: <DashboardEvents />},
+    { title: 'Add Event', path: '/add-event', component: <AddEvent />},
+    { title: 'Attendees', path: '/admin-attendees', component: <Attendees />},
+    { title: 'Users', path: '/admin-users', component: <DashboardUser />},
+    { title: 'Admin', path: '/admin', component: <Admin />},
+    { title: 'Profile', path: '/admin-profile', component: <AdminProfile />},
+  ];
 
   return (
     <>
@@ -136,76 +147,18 @@ function App() {
         </LayoutUser>
       }/>
 
-      <Route path='/dashboard' 
-        element={
+      { adminLinks.map((link, index) => (
+        <Route key={index} path={link.path} element={
           <ProtectedRoute element={
-          <LayoutAdmin>
-            <Dashboard />
-          </LayoutAdmin>
-          }  
+            <LayoutAdmin>
+              {link.component}
+            </LayoutAdmin>
+          } 
           allowedRoles={['admin']}
           isLoggedIn={isLoggedIn}
           userRole={userRole}/>
-      }/>
-
-      <Route path='/admin-events' 
-        element={
-          <ProtectedRoute element={
-          <LayoutAdmin>
-            <DashboardEvents />
-          </LayoutAdmin>
-          }  
-          allowedRoles={['admin']}
-          isLoggedIn={isLoggedIn}
-          userRole={userRole}/>
-      }/>
-      
-      <Route path='/admin-attendees' 
-        element={
-          <ProtectedRoute element={
-          <LayoutAdmin>
-            <Attendees />
-          </LayoutAdmin>
-          }  
-          allowedRoles={['admin']}
-          isLoggedIn={isLoggedIn}
-          userRole={userRole}/>
-      }
-      />
-
-      <Route path='/admin' 
-        element={
-          <ProtectedRoute element={
-          <LayoutAdmin>
-            <Admin />
-          </LayoutAdmin>
-          }  
-          allowedRoles={['admin']}
-          isLoggedIn={isLoggedIn}
-          userRole={userRole}/>
-      } />
-
-      <Route path='/admin-users' element={
-        <ProtectedRoute element={
-          <LayoutAdmin>
-            <DashboardUser />
-          </LayoutAdmin>
-          }  
-          allowedRoles={['admin']}
-          isLoggedIn={isLoggedIn}
-          userRole={userRole}/>
-      } />
-
-      <Route path='/admin-profile' element={
-        <ProtectedRoute element={
-          <LayoutAdmin>
-            <AdminProfile />
-          </LayoutAdmin>
-          }  
-          allowedRoles={['admin']}
-          isLoggedIn={isLoggedIn}
-          userRole={userRole}/>
-      } />
+        }/>
+      ))}
 
       <Route path='/*' element={<PageNotFound />}/>
      </Routes>
