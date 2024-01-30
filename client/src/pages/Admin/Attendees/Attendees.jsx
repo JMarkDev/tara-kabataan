@@ -1,7 +1,10 @@
+import LocationInput from "../../../components/LocationInput"
 
 const Attendees = () => {
   return (
-    <div>Attendees</div>
+    <div>
+      <LocationInput />
+    </div>
   )
 }
 
