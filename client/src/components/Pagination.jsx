@@ -14,8 +14,9 @@ const Pagination = ({ currentPage, onPageChange, totalPages}) => {
   }
 
   const renderPageNumbers = () => {
+    const totalPage = Math.ceil(totalPages / 10);
     const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
+    for (let i = 1; i <= totalPage; i++) {
       pageNumbers.push(
         <li key={i}>
         <a

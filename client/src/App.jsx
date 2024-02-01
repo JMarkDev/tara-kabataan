@@ -20,6 +20,7 @@ import DashboardUser from './pages/Admin/Users/User'
 import Admin from './pages/Admin/Admin/Admin'
 import AdminProfile from './pages/Admin/Admin/AdminProfile'
 import AddEvent from './pages/Admin/Events/AddEvent'
+import EditEvent from './pages/Admin/Events/EditEvent'
 
 import ProtectedRoute from './route/ProtectedRoute'
 import VerifyOTP from './pages/Verification/VerifyOTP'
@@ -68,6 +69,7 @@ function App() {
     { title: 'Users', path: '/admin-users', component: <DashboardUser />},
     { title: 'Admin', path: '/admin', component: <Admin />},
     { title: 'Profile', path: '/admin-profile', component: <AdminProfile />},
+    { title: 'Edit Event', path: '/edit-event/:id', component: <EditEvent />},
   ];
 
   return (

@@ -1,4 +1,5 @@
 import  { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { BsThreeDots } from "react-icons/bs";
 import PropTypes from "prop-types";
 import api from '../api/api'
@@ -106,13 +107,21 @@ const EventsTable = ({ data }) => {
                                 </button>
                                 {openAction === id && (
                                 <div className="z-20 absolute flex flex-col right-[-25px] bottom-2 w-48 py-2 mt-2 bg-white rounded-md shadow-2xl transform translate-y-full">
-                                    <a href="#" className="px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">View</a>
-                                    <a href="#" className="px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Edit</a>
-                                    <a href="#" className="px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
-                                        onClick={() => handleDelete(id)}
-                                    >Delete</a>
+                                    <button className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
+                                    Complete
+                                    </button>
+                                    <Link to='/view-event' className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
+                                    View
+                                    </Link>
+                                    <Link to={`/edit-event/${id}`} className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white" >
+                                    Edit
+                                    </Link>
+                                    <button className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white" onClick={() => handleDelete(id)}>
+                                    Delete
+                                    </button>
                                 </div>
                                 )}
+
                             </div>
                         </td>
                     </tr>

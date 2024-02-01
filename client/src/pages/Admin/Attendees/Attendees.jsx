@@ -1,9 +1,9 @@
-import LocationInput from "../../../components/LocationInput"
+// import LocationComponent from '../../../components/LocationComponent'
 
 const Attendees = () => {
   return (
     <div>
-      <LocationInput />
+      {/* <LocationComponent /> */}
     </div>
   )
 }

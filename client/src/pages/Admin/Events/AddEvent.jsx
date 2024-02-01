@@ -1,6 +1,7 @@
 import api from '../../../api/api'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+// import LocationComponent from '../../../components/LocationComponent'
 
 const AddEvent = () => {
     const navigate = useNavigate()
@@ -182,7 +183,7 @@ const AddEvent = () => {
                 name="price"
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                 required
-                values={formData.price}
+                value={formData.price}
                 onChange={handleInputChange}
               />
             </div>
@@ -196,7 +197,7 @@ const AddEvent = () => {
                 name="discount"
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                 required
-                values={formData.discount}
+                value={formData.discount}
                 onChange={handleInputChange}
               />
             </div>
@@ -237,7 +238,7 @@ const AddEvent = () => {
                 name="start_date"
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                 required
-                values={formData.start_date}
+                value={formData.start_date}
                 onChange={handleInputChange}
               />
             </div>
@@ -251,7 +252,7 @@ const AddEvent = () => {
                 name="end_date"
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                 required
-                values={formData.end_date}
+                value={formData.end_date}
                 onChange={handleInputChange}
               />
           </div>
@@ -267,7 +268,7 @@ const AddEvent = () => {
             name="start_time"
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
             required
-            values={formData.start_time}
+            value={formData.start_time}
             onChange={handleInputChange}
           />
         </div>
@@ -281,7 +282,7 @@ const AddEvent = () => {
             name="end_time"
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
             required
-            values={formData.end_time}
+            value={formData.end_time}
             onChange={handleInputChange}
           />
         </div>
@@ -296,10 +297,16 @@ const AddEvent = () => {
             name="location"
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
             required
-            values={formData.location}
+            value={formData.location}
             onChange={(e) => setFormData({...formData, location: e.target.value})}
           />
         </div>
+        {/* <div className='mb-4'>
+          <label htmlFor="title" className="block text-gray-700 font-bold dark:text-white">
+            Location
+          </label>
+          <LocationComponent />
+        </div> */}
         <div className='flex justify-end'>
         <Link to="/admin-events" className="w-[150px] text-center mr-2 py-2 bg-gray-500 text-white px-4 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-red-200">   
           Cancel

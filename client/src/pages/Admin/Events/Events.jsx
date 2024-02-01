@@ -22,7 +22,7 @@ const Events = () => {
           } else {
             response = await api.get(`/event/pagination?page=${currentPage}&size=10`)
             setData(response.data.events)
-            setTotalPages(response.data.totalPages)
+            setTotalPages(response.data.totalItems)
           }
       } catch (error) {
         console.log(error)
