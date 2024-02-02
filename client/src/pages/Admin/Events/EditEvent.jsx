@@ -1,9 +1,10 @@
 import  { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import api from '../../../api/api'
 
 const EditEvent = () => {
     const { id } = useParams()
+    const navigate = useNavigate()
     const [eventType, setEventType] = useState(false)
     const [formData, setFormData] = useState({
       title: '',
@@ -24,12 +25,30 @@ const EditEvent = () => {
     })
 
     const handleInputChange = (e) => {
-        const { name, value, files } = e.target;
-        setFormData(prevData => ({
-            ...prevData,
-            [name]: name === 'image' ? files : value
-        }))
-    }
+      const { name, value, files } = e.target;
+  
+      if (name === 'image') {
+          // Log information from the first File in the FileList (assuming only one file can be selected)
+          const firstFile = files[0];
+          console.log('File Information:', {
+              name: firstFile.name,
+              size: firstFile.size,
+              type: firstFile.type,
+              lastModified: firstFile.lastModified,
+          });
+  
+          setFormData(prevData => ({
+              ...prevData,
+              [name]: files,
+          }));
+      } else {
+          setFormData(prevData => ({
+              ...prevData,
+              [name]: value,
+          }));
+      }
+  }
+  
 
     const handleCategory = (e) => {
         const selectedCategory = e.target.value;
@@ -76,17 +95,40 @@ const EditEvent = () => {
 
       const handleUpdateEvent = async (e) => {
         e.preventDefault()
-        const { title, description, image, organizer_name, event_type, event_category, start_date, end_date, start_time, end_time, location, max_attendees, price, discount, status } = formData
         
+        // const { image } = new FormData()
+
+        // for(let i = 0; i < image.length; i++) {
+        //   data.append('image', image[i]);
+        // } 
+
+        const data = {
+          title: formData.title,
+          description: formData.description,
+          image: formData.image,
+          organizer_name: formData.organizer_name,
+          event_type: formData.event_type,
+          event_category: formData.event_category,
+          start_date: formData.start_date,
+          end_date: formData.end_date,
+          start_time: formData.start_time,
+          end_time: formData.end_time,
+          location: formData.location,
+          max_attendees: formData.max_attendees,
+          price: formData.price,
+          discount: formData.discount,
+          status: formData.status
+        }
         try {
-          const response = await api.put(`/event/update/${id}`, formData)
-          console.log(response)
+          const response = await api.put(`/event/update/${id}`, data)
+          if(response.data.status === 'success') {
+            alert('Event updated successfully')
+            navigate('/admin-events')
+          }
         } catch (error) {
           console.log(error)
         }
       }
-
-      
 
   return (
     <div className="max-w-xl mx-auto p-4 border rounded-lg shadow-lg bg-white">
@@ -129,7 +171,8 @@ const EditEvent = () => {
               id="image"
               name="image"
               className="w-full px-3 py-2 border rounded-lg focus:outline-none text-center"
-              required
+              // required
+              // value={formData.image}
               onChange={handleInputChange}              
             />
           </div>
@@ -160,6 +203,8 @@ const EditEvent = () => {
                   setEventType(true)
                 } else {
                   setEventType(false)
+                  formData.price = '00'
+                  formData.discount = '00'
                 }
               }}
               value={formData.event_type}
@@ -180,7 +225,7 @@ const EditEvent = () => {
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
               required
               value={formData.max_attendees}
-              onChange={handleInputChange}
+              onChange={(e) => setFormData({...formData, max_attendees: e.target.value})}
             />
           </div>  
           </div>
@@ -197,8 +242,8 @@ const EditEvent = () => {
                 name="price"
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                 required
-                value={formData.price}
-                onChange={handleInputChange}
+                value={eventType ? formData.price : '00'}
+                onChange={(e) => setFormData({...formData, price: e.target.value})}
               />
             </div>
               <div className="mb-4 w-full lg:w-[50%]">
@@ -211,8 +256,8 @@ const EditEvent = () => {
                 name="discount"
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                 required
-                value={formData.discount}
-                onChange={handleInputChange}
+                value={eventType ? formData.discount : '00'}
+                onChange={(e) => setFormData({...formData, discount: e.target.value})}
               />
             </div>
             </div>
@@ -253,7 +298,7 @@ const EditEvent = () => {
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                 required
                 value={formData.start_date}
-                onChange={handleInputChange}
+                onChange={(e) => setFormData({...formData, start_date: e.target.value})}
               />
             </div>
             <div className="mb-4 w-full lg:w-[50%]">
@@ -267,7 +312,7 @@ const EditEvent = () => {
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                 required
                 value={formData.end_date}
-                onChange={handleInputChange}
+                onChange={(e) => setFormData({...formData, end_date: e.target.value})}
               />
           </div>
         </div>
@@ -283,7 +328,7 @@ const EditEvent = () => {
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
             required
             value={formData.start_time}
-            onChange={handleInputChange}
+            onChange={(e) => setFormData({...formData, start_time: e.target.value})}
           />
         </div>
         <div className="mb-4 w-full lg:w-[50%]">
@@ -297,7 +342,7 @@ const EditEvent = () => {
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
             required
             value={formData.end_time}
-            onChange={handleInputChange}
+            onChange={(e) => setFormData({...formData, end_time: e.target.value})}
           />
         </div>
         </div>

@@ -25,6 +25,26 @@ const EventsTable = ({ data }) => {
             console.log(error)
         }
     }
+
+    const dateFormat = (date) => {
+        const monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        const month = parseInt(date.substring(5, 7), 10) - 1;
+        const day = date.substring(8, 10);
+        const year = date.substring(0, 4);
+
+        return `${day} ${monthName[month]} ${year}`
+    }
+
+    const formatTime = (time) => {
+        const hour = time.substring(0, 2);
+        const period = hour >= 12 ? 'PM' : 'AM';
+        const minutes = time.substring(3, 5);
+
+        // convert to 12 hour format
+        const formatedHour = hour % 12 === 0 ? 12 : hour % 12;
+
+        return `${formatedHour}:${minutes} ${period}`
+    }
      
   return (
 <div className="relative overflow-x-auto rounded-md">
@@ -74,10 +94,10 @@ const EventsTable = ({ data }) => {
                             {event_title}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                            {start_date} - {end_date}
+                            {dateFormat(start_date)} - {dateFormat(end_date)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                            {start_time} - {end_time}
+                            {formatTime(start_time)} - {formatTime(end_time)}
                         </td>
                         <td className="px-6 py-4">
                             {event_category}
@@ -110,7 +130,7 @@ const EventsTable = ({ data }) => {
                                     <button className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
                                     Complete
                                     </button>
-                                    <Link to='/view-event' className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
+                                    <Link to={`/view-event/${id}`} className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
                                     View
                                     </Link>
                                     <Link to={`/edit-event/${id}`} className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white" >

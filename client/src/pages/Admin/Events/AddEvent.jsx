@@ -64,6 +64,8 @@ const AddEvent = () => {
 
       try {
         const response = await api.post('/event/add', data)
+        console.log(response.data)
+        console.log(response)
         
         if(response.data.status === 'success') {
           alert(response.data.message)
@@ -146,6 +148,8 @@ const AddEvent = () => {
                   setEventType(true)
                 } else {
                   setEventType(false)
+                  formData.price = '00'
+                  formData.discount = '00'
                 }
               }}
               value={formData.event_type}

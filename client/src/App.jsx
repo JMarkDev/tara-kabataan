@@ -21,6 +21,7 @@ import Admin from './pages/Admin/Admin/Admin'
 import AdminProfile from './pages/Admin/Admin/AdminProfile'
 import AddEvent from './pages/Admin/Events/AddEvent'
 import EditEvent from './pages/Admin/Events/EditEvent'
+import ViewEvent from './pages/Admin/Events/ViewEvent'
 
 import ProtectedRoute from './route/ProtectedRoute'
 import VerifyOTP from './pages/Verification/VerifyOTP'
@@ -70,16 +71,43 @@ function App() {
     { title: 'Admin', path: '/admin', component: <Admin />},
     { title: 'Profile', path: '/admin-profile', component: <AdminProfile />},
     { title: 'Edit Event', path: '/edit-event/:id', component: <EditEvent />},
+    { title: 'View Event', path: '/view-event/:id', component: <ViewEvent />}
   ];
 
   return (
     <>
+
+
+
      <Routes>
-      <Route path="/" element={
+      {/* <Route path="/" element={
         <LayoutUser>
           <Home />
         </LayoutUser>
       } />
+
+      <Route path='/' element={
+        <LayoutAdmin>
+          <Dashboard />
+        </LayoutAdmin>
+      } /> */}
+
+      {userRole === 'admin' ? (
+        <Route path='/' element={
+          <LayoutAdmin>
+            <Dashboard />
+          </LayoutAdmin>
+        } />
+      ) : (
+        // <Routes>
+          <Route path="/" element={
+            <LayoutUser>
+              <Home />
+            </LayoutUser>
+          } />
+        // </Routes>
+      )}
+
 
       <Route path='/change-password' element={
         <LayoutUser>
