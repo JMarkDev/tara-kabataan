@@ -1,7 +1,16 @@
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function PageNotFound() {
+  const navigate = useNavigate();
   const goBack = () => {
-    window.history.back();
+    const userId = Cookies.get('userId');
+    if(!userId) {
+     navigate('/login');
+     
+    } else {
+      window.history.back();
+    }
   };
 
   return (

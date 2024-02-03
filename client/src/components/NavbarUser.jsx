@@ -28,6 +28,8 @@ const NavbarUser = () => {
         if (userId) {
           const response = await api.get(`/user/id/${userId}`);
           setName(response.data.firstname)
+        } else {
+          setUserData(false)
         }
       } catch (error) {
         console.log(error)
