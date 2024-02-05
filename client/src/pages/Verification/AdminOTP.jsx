@@ -1,24 +1,15 @@
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import sendEmail from '../../assets/images/send-email.jpg'
 import api from '../../api/api';
 import Loading from "../../components/loading/otpLoader/otpLoader";
-import Cookies from 'js-cookie';
-
-function VerifyOTP() {
+function AdminOTP({ email }) {
   const [countDown, setCountDown] = useState(0);
   const [successMessage, setSuccessMessage] = useState('');
   const [otpError, setOtpError] = useState('');
   const [loader, setLoader] = useState(false);
-  const location = useLocation();
-  const { state } = location;
   const navigate = useNavigate();
-  const userId = Cookies.get('userId')
-  const role = Cookies.get('role')
-
-  // Access the data
-  const email = state ? state.email : '';
 
   const [otpDigits, setOtpDigits] = useState(['', '', '', '']); // Initialize state for OTP digits
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
@@ -63,26 +54,18 @@ function VerifyOTP() {
     try{
       const values = {
         email: email,
+        role: 'admin',
         otp: otpDigits.join(''), // Join the OTP digits into a single string
       }; 
       
       const response = await api.post('/auth/verify-otp', values);
+      console.log(response.data)
       if(response.data.status === 'success'){
         setLoader(false);
         setSuccessMessage(response.data.message)
 
-        // setSuccessMessage(response.data.message)
-  
-        Cookies.set('token', response.data.token, { expires: 1 });
-        Cookies.set('role', response.data.role, { expires: 1 });
-        Cookies.set('userId', response.data.userId, { expires: 1 });
-
-        // const userRole = localStorage.getItem('role');
-        const userRole = response.data.role;
-        const dashboardURL = userRole === 'admin' ? '/dashboard' : '/Home';
-
         setTimeout(() => {
-          navigate(dashboardURL);
+          navigate('/admin');
         }, 2000)
       } else {
         setLoader(false)
@@ -131,20 +114,12 @@ function VerifyOTP() {
 
   const submitDisabled = otpDigits.includes('') || otpDigits.length < 4;
 
-  useEffect(() => {
-
-    if(userId) {
-      const userRole = role === 'user' ? '/home' : '/dashboard'
-      navigate(userRole)
-    }
-  })
-
   return (
     <>
    {
   successMessage &&
   <div
-    className="absolute flex w-full mx-auto rounded-lg bg-green-100 px-6 py-5 text-base text-green-500 justify-center items-center"
+    className="absolute right-0 flex w-[70%] mx-auto rounded-lg bg-green-100 px-6 py-5 text-base text-green-500 justify-center items-center"
     role="alert"
   >
     <span className="flex-1 mr-3">{successMessage}</span>
@@ -167,13 +142,13 @@ function VerifyOTP() {
 
     <div className="flex flex-col items-center justify-center">
       {loader && 
-      <div className="absolute flex items-center justify-center h-screen">
+      <div className="absolute flex items-center justify-center">
         <Loading />
       </div>
       }
-      <div className="w-[350px] sm:mx-auto sm:w-full sm:max-w-md px-4 py-4 mt-6 overflow-hidden bg-white p-4 rounded-lg shadow-md">
+      <div className="w-[350px] sm:mx-auto sm:w-full sm:max-w-md px-4 py-4 mt-6 overflow-hidden bg-gray-200 p-4 rounded-lg shadow-lg">
         <div className='flex'>
-        <Link to="/register" className="flex items-center gap-2 mb-4">
+        <Link to="/admin" className="flex items-center gap-2 mb-4">
           <MdOutlineKeyboardBackspace className='text-2xl'/>
         </Link>
         <h1 className="ml-5 text-2xl font-semibold mb-4">Account Verification</h1>
@@ -212,7 +187,7 @@ function VerifyOTP() {
             }
           {/* </div> */}
           <button  
-            className={`bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58] hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58]  text-white px-4 py-2 mt-2 rounded-md focus:outline-none focus:bg-indigo-600
+            className={`bg-indigo-500 text-white px-4 py-2 mt-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600
             ${submitDisabled ? 'opacity-50 cursor-not-allowed' : ''}
           `}
             type='submit'
@@ -222,20 +197,20 @@ function VerifyOTP() {
           </button>
         </form>
         <p className="text-center text-gray-500 text-sm mt-4">
-                <span>Didn&apos;t receive the OTP?</span>
-                <button
-                    className={`text-indigo-500 focus:outline-none ${countDown > 0 ? 'opacity-50 cursor-not-allowed ml-2' : 'hover:text-indigo-600 ml-2'}`}
-                    disabled={countDown > 0}
-                    onClick={handleResend}
-                >
-                {countDown > 0 ? `Resend OTP in ${countDown}s` : 'Resend OTP'}
-            </button>
+            <span>Didn't receive the OTP?</span>
+            <button
+              className={`text-indigo-500 focus:outline-none ${countDown > 0 ? 'opacity-50 cursor-not-allowed ml-2' : 'hover:text-indigo-600 ml-2'}`}
+              disabled={countDown > 0}
+              onClick={handleResend}
+            >
+            {countDown > 0 ? `Resend OTP in ${countDown}s` : 'Resend OTP'}
+          </button>
 
-            </p>
+          </p>
       </div>
     </div>
     </>
   );
 }
 
-export default VerifyOTP;
+export default AdminOTP;

@@ -72,9 +72,9 @@ const EventsTable = ({ data }) => {
         <th scope="col" className="px-6 py-3">
             Location
         </th>
-        <th scope="col" className="px-6 py-3">
+        {/* <th scope="col" className="px-6 py-3">
             No. Attendees
-        </th>
+        </th> */}
         <th scope="col" className="px-6 py-3">
             Status
         </th>
@@ -108,9 +108,9 @@ const EventsTable = ({ data }) => {
                         <td className="px-6 py-4 whitespace-nowrap">
                             {location}
                         </td>
-                        <td className="px-6 py-4">
+                        {/* <td className="px-6 py-4">
                             {max_attendees}
-                        </td>
+                        </td> */}
                         <td className="px-6 py-4">
                             <span className={`px-2 py-1 font-normal leading-tight ${status === 'Completed' ? 'text-green-700  green-blue-700 bg-green-100 rounded-full green:bg-blue-700 ' : ' text-blue-700 bg-blue-100 rounded-full  dark:text-blue-100'}rounded-full`}>
                                 {status}

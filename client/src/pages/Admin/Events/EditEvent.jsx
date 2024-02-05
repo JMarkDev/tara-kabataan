@@ -18,37 +18,18 @@ const EditEvent = () => {
       start_time: '',
       end_time: '',
       location: '',
-      max_attendees: '',
+      attendance_count: '',
       price: '00',
       discount: '00',
-      status: 'Upcoming'
     })
 
     const handleInputChange = (e) => {
       const { name, value, files } = e.target;
-  
-      if (name === 'image') {
-          // Log information from the first File in the FileList (assuming only one file can be selected)
-          const firstFile = files[0];
-          console.log('File Information:', {
-              name: firstFile.name,
-              size: firstFile.size,
-              type: firstFile.type,
-              lastModified: firstFile.lastModified,
-          });
-  
-          setFormData(prevData => ({
-              ...prevData,
-              [name]: files,
-          }));
-      } else {
-          setFormData(prevData => ({
-              ...prevData,
-              [name]: value,
-          }));
-      }
-  }
-  
+      setFormData(prevData => ({
+          ...prevData,
+          [name]: name === 'image' ? files : value
+      }))
+    }
 
     const handleCategory = (e) => {
         const selectedCategory = e.target.value;
@@ -72,7 +53,7 @@ const EditEvent = () => {
               start_time: response.data.start_time,
               end_time: response.data.end_time,
               location: response.data.location,
-              max_attendees: response.data.max_attendees,
+              attendance_count: response.data.attendance_count,
               price: response.data.price,
               discount: response.data.discount,
               status: response.data.status
@@ -94,41 +75,49 @@ const EditEvent = () => {
       }, [id])
 
       const handleUpdateEvent = async (e) => {
-        e.preventDefault()
-        
-        // const { image } = new FormData()
+        e.preventDefault();
 
-        // for(let i = 0; i < image.length; i++) {
-        //   data.append('image', image[i]);
-        // } 
+        const { image, title, description, organizer_name, event_type, event_category, start_date, end_date, start_time, end_time, location, attendance_count, price, discount } = formData;
+        const data = new FormData();
 
-        const data = {
-          title: formData.title,
-          description: formData.description,
-          image: formData.image,
-          organizer_name: formData.organizer_name,
-          event_type: formData.event_type,
-          event_category: formData.event_category,
-          start_date: formData.start_date,
-          end_date: formData.end_date,
-          start_time: formData.start_time,
-          end_time: formData.end_time,
-          location: formData.location,
-          max_attendees: formData.max_attendees,
-          price: formData.price,
-          discount: formData.discount,
-          status: formData.status
-        }
+        for(let i = 0; i < image.length; i++) {
+          data.append('image', image[i]);
+        } 
+    
+        data.append('title', title);
+        data.append('description', description);
+        data.append('organizer_name', organizer_name);
+        data.append('event_type', event_type);
+        data.append('event_category', event_category);
+        data.append('start_date', start_date);
+        data.append('end_date', end_date);
+        data.append('start_time', start_time);
+        data.append('end_time', end_time);
+        data.append('location', location);
+        data.append('attendance_count', attendance_count);
+        data.append('price', price);
+        data.append('discount', discount);
+        console.log(title)
+    
         try {
-          const response = await api.put(`/event/update/${id}`, data)
-          if(response.data.status === 'success') {
-            alert('Event updated successfully')
-            navigate('/admin-events')
-          }
+            const response = await api.put(`/event/update/${id}`, data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            console.log(data)
+    
+            console.log(response.data);
+    
+            if (response.data.status === 'success') {
+                alert('Event updated successfully');
+                navigate('/admin-events');
+            }
         } catch (error) {
-          console.log(error)
+            console.log(error);
         }
-      }
+    };
+    
 
   return (
     <div className="max-w-xl mx-auto p-4 border rounded-lg shadow-lg bg-white">
@@ -191,7 +180,7 @@ const EditEvent = () => {
             />
           </div>
           <div className="lg:flex justify-between gap-3">
-          <div className="mb-4 w-full lg:w-[50%]">
+          <div className={`mb-4 w-full ${eventType && 'lg:w-[50%]'}`}>
             <label htmlFor="title" className="block text-gray-700 font-bold dark:text-white">
               Type
             </label>
@@ -203,6 +192,7 @@ const EditEvent = () => {
                   setEventType(true)
                 } else {
                   setEventType(false)
+                  formData.attendance_count = '0'
                   formData.price = '00'
                   formData.discount = '00'
                 }
@@ -214,20 +204,22 @@ const EditEvent = () => {
               <option value="Paid">Paid</option>
             </select>
           </div>
-          <div className='mb-4 w-full lg:w-[50%]'>
+          { eventType && (
+            <div className='mb-4 w-full lg:w-[50%]'>
             <label htmlFor="description" className="block text-gray-700 dark:text-white font-bold ">
-              Total Attendees 
+              Attendance Count
             </label>
             <input
               type="number"
-              id="max_attendees"
-              name="max_attendees"
+              id="attendance_count"
+              name="attendance_count"
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
               required
-              value={formData.max_attendees}
-              onChange={(e) => setFormData({...formData, max_attendees: e.target.value})}
+              value={formData.attendance_count}
+              onChange={(e) => setFormData({...formData, attendance_count: e.target.value})}
             />
-          </div>  
+          </div> 
+          )}
           </div>
 
           { eventType && (
@@ -283,6 +275,7 @@ const EditEvent = () => {
               <option value="Symposium">Symposium</option>
               <option value="Networking-event">Networking Event</option>
               <option value="Summit">Summit</option>
+              <option value="Online-event">Online Event</option>
             </select>
           </div>
 

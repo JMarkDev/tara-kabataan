@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import UserTable from "../../../components/UserTable"
 import api from '../../../api/api'
 import { MdSearch } from 'react-icons/md'
+import { Link } from "react-router-dom"
 // import Dropdown from "../../../components/Dropdown"
 
 const Admin = () => {
@@ -27,6 +28,21 @@ const Admin = () => {
     getUsers()
   }, [search])
 
+  const handleDelete = async (id) => {
+    console.log('click')
+    try {
+      const response = await api.delete(`/user/delete/${id}`)
+      if(response.data.status === 'success') {
+        alert(response.data.message)
+        const updatedData = data.filter((user) => user.id !== id)
+        setData(updatedData)
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   // const handleFilter = async (value) => {
   //   try {
   //     let response;
@@ -45,12 +61,12 @@ const Admin = () => {
     <div>
         <div className="flex justify-between items-center pb-5">
           <div className="flex justify-center items-center">
-            <button className=" w-[150px] rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58] px-5 py-2 text-md font-normal text-white hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58] ">
+            <Link to='/add-admin' className=" w-[150px] text-center rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58] px-5 py-2 text-md font-normal text-white hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58] ">
               Add Admin
-            </button>
+            </Link>
           </div>
         <div className="flex justify-center items-center relative"> 
-          <input type="text" placeholder="search events" 
+          <input type="text" placeholder="search admin..." 
             className="lg:w-[350px] p-2 px-5 outline-none focus:border-indigo-600 border shadow-lg rounded-full"
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -60,7 +76,7 @@ const Admin = () => {
         </div>
       </div>
 
-      <UserTable data={data}/>
+      <UserTable data={data} handleDelete={handleDelete}/>
     </div>
   )
 }

@@ -18,7 +18,7 @@ const AddEvent = () => {
       start_time: '',
       end_time: '',
       location: '',
-      max_attendees: '',
+      attendance_count: '',
       price: '00',
       discount: '00',
       status: 'Upcoming'
@@ -40,7 +40,7 @@ const AddEvent = () => {
     const handleSubmit = async (e) => {
       e.preventDefault()
 
-      const { image, title, description, organizer_name, event_type, event_category, start_date, end_date, start_time, end_time, location, max_attendees, price, discount, status } = formData;
+      const { image, title, description, organizer_name, event_type, event_category, start_date, end_date, start_time, end_time, location, attendance_count, price, discount, status } = formData;
       const data = new FormData();
 
       for(let i = 0; i < image.length; i++) {
@@ -57,16 +57,13 @@ const AddEvent = () => {
       data.append('start_time', start_time);
       data.append('end_time', end_time);
       data.append('location', location);
-      data.append('max_attendees', max_attendees);
+      data.append('attendance_count', attendance_count);
       data.append('price', price);
       data.append('discount', discount);
       data.append('status', status);
 
       try {
         const response = await api.post('/event/add', data)
-        console.log(response.data)
-        console.log(response)
-        
         if(response.data.status === 'success') {
           alert(response.data.message)
           navigate('/admin-events')
@@ -96,7 +93,7 @@ const AddEvent = () => {
           </div>
           <div className="mb-4">
             <label htmlFor="title" className="block text-gray-700 font-bold dark:text-white">
-              Organizer
+              Organizer Name
             </label>
             <input
               type="text"
@@ -136,7 +133,7 @@ const AddEvent = () => {
             />
           </div>
           <div className="lg:flex justify-between gap-3">
-          <div className="mb-4 w-full lg:w-[50%]">
+          <div className={`mb-4 w-full ${eventType && 'lg:w-[50%]'}`}>
             <label htmlFor="title" className="block text-gray-700 font-bold dark:text-white">
               Type
             </label>
@@ -148,6 +145,7 @@ const AddEvent = () => {
                   setEventType(true)
                 } else {
                   setEventType(false)
+                  formData.attendance_count = '0'
                   formData.price = '00'
                   formData.discount = '00'
                 }
@@ -159,20 +157,22 @@ const AddEvent = () => {
               <option value="Paid">Paid</option>
             </select>
           </div>
-          <div className='mb-4 w-full lg:w-[50%]'>
+          { eventType && (
+            <div className='mb-4 w-full lg:w-[50%]'>
             <label htmlFor="description" className="block text-gray-700 dark:text-white font-bold ">
-              Total Attendees 
+              Attendance Count
             </label>
             <input
               type="number"
-              id="max_attendees"
-              name="max_attendees"
+              id="attendance_count"
+              name="attendance_count"
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
               required
-              value={formData.max_attendees}
+              value={formData.attendance_count}
               onChange={handleInputChange}
             />
           </div>  
+          )}
           </div>
 
           { eventType && (
@@ -228,6 +228,7 @@ const AddEvent = () => {
               <option value="Symposium">Symposium</option>
               <option value="Networking-event">Networking Event</option>
               <option value="Summit">Summit</option>
+              <option value="Online-event">Online Event</option>
             </select>
           </div>
 

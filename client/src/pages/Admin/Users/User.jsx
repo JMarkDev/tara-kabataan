@@ -42,11 +42,26 @@ const User = () => {
     }
   }
 
+  const handleDelete = async (id) => {
+    console.log('click')
+    try {
+      const response = await api.delete(`/user/delete/${id}`)
+      if(response.data.status === 'success') {
+        alert(response.data.message)
+        const updatedData = data.filter((user) => user.id !== id)
+        setData(updatedData)
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div>
       <div className="flex justify-between items-center pb-5">
         <div className="flex justify-center items-center relative"> 
-          <input type="text" placeholder="search events" 
+          <input type="text" placeholder="search user..." 
             className="lg:w-[350px] p-2 px-5 outline-none focus:border-indigo-600 border shadow-lg rounded-full"
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -59,7 +74,7 @@ const User = () => {
           </div>
       </div>
 
-      <UserTable data={data}/>
+      <UserTable data={data} handleDelete={handleDelete}/>
     </div>
   )
 }

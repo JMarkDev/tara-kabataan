@@ -1,9 +1,13 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { BsThreeDots } from "react-icons/bs";
+import { FaRegEdit } from "react-icons/fa";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
-const UserTable = ({ data }) => {
+const UserTable = ({ data, handleDelete }) => {
     const [openAction, setOpenAction] = useState(false);
+
+    
     
   return (
 <div className="relative overflow-x-auto rounded-md">
@@ -49,9 +53,14 @@ const UserTable = ({ data }) => {
                         <td className="px-6 py-4">
                             {gender}
                         </td>
-                        <td className="px-6 py-4 flex justify-center text-md gap-5 relative">
-                            <div className="relative">
-                                <button onClick={() => {
+                        <td className=" flex justify-center items-center align-middle m-auto text-md gap-5 relative">
+                            {/* <div > */}
+                                <button className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-blue-600 text-center flex items-center"
+                                ><FaRegEdit /></button>
+                                <button className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-red-500"><RiDeleteBin6Line 
+                                 onClick={() => handleDelete(id)}
+                                /></button>
+                                {/* <button onClick={() => {
                                     setOpenAction(id === openAction ? null : id)
                                     }}
                                     className="text-xl text-gray-800 font-semibold"
@@ -64,8 +73,8 @@ const UserTable = ({ data }) => {
                                     <a href="#" className="px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Edit</a>
                                     <a href="#" className="px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Delete</a>
                                 </div>
-                                )}
-                            </div>
+                                )} */}
+                            {/* </div> */}
                         </td>
                     </tr>
                 )

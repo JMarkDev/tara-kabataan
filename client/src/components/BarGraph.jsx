@@ -1,9 +1,9 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
-import PieChartComponent from '../../../components/PieChart';
-import Cards from '../../../components/Cards';
-import useColorGenerator from '../../../hooks/useColorGenerator';
+// import PieChartComponent from '../../../components/PieChart';
+// import Cards from '../../../components/Cards';
+import useColorGenerator from '../hooks/useColorGenerator';
 
-const Dashboard = () => {
+const BarGraph = () => {
   const { getNextColors, usedColors } = useColorGenerator();
 
   const COLORS = [
@@ -16,12 +16,6 @@ const Dashboard = () => {
     // '#ffcc29', 
     '#00a8cc'];
 
-  const cards = [
-    { name: 'Total Events', count: 100 },
-    { name: 'Total Revenue', count: '₱ 100'},
-    { name: 'Total Attendees', count: 100 },
-    { name: 'Upcoming Events', count: 100 },
-  ]
 
   const getNextColor = () => {
     const color = COLORS.shift();
@@ -49,9 +43,8 @@ const Dashboard = () => {
   return (
     <div className='w-full'>
       <div>
-        <Cards cards={cards} getNextColor={getNextColor} />
             <div className=' flex lg:flex-row flex-col md:flex-col md:gap-6 mt-[16px] w-full'>
-            <div className=' basis-[60%] rounded dark:border-white bg-white shadow-md cursor-pointer  mb-4 md:mb-0 lg:mb-0 lg:mr-4'>
+            <div className=' basis-[100%] rounded dark:border-white bg-white shadow-md cursor-pointer  mb-4 md:mb-0 lg:mb-0 lg:mr-4'>
                     <div className='bg-gray-500 flex items-center justify-between py-[15px] px-[20px] border-b-4 mb-[20px]'>
                         <h2 className='text-[#020617]  dark:text-white text-[16px] leading-[19px] font-bold '>Events Chart</h2>
                         {/* <YearDropdown 
@@ -96,13 +89,10 @@ const Dashboard = () => {
                         </ResponsiveContainer >
                     </div>
                 </div>
-                <div> 
-                  <PieChartComponent />
-                </div>
                 </div>
         </div>
     </div>
   )
 }
 
-export default Dashboard
+export default BarGraph

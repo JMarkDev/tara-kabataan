@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import PropTypes  from 'prop-types';
 import { RxHamburgerMenu } from 'react-icons/rx'
 import api from '../api/api';
@@ -8,21 +8,24 @@ import userIcon from '../assets/images/user.png';
 import UserProfile from './UserProfile';
 import { useResizeLayout } from '../hooks/resizeLayout';
 
-const pageTitles = {
-  '/dashboard': 'Dashboard',
-  '/admin-events': 'Event List',
-  '/admin-users': 'User List',
-  '/admin': 'Admin List',
-  '/admin-profile': 'Admin Profile',
-  '/add-event': 'Add Event',
-}
-
 function NavbarDashboard({ setOpen}) {
   const [name, setName] = useState('');
   const [openProfile, setOpenProfile] = useState(false); 
   const userId = Cookies.get('userId');
   const [resize, setResize] = useState(false);
   const { isSmallScreen } = useResizeLayout();
+  const { id } = useParams()
+
+  const pageTitles = {
+    '/dashboard': 'Dashboard',
+    '/admin-events': 'Event List',
+    '/admin-users': 'User List',
+    '/admin': 'Admin List',
+    '/admin-profile': 'Admin Profile',
+    '/add-event': 'Add Event',
+    [`/edit-event/${id}`]: 'Edit Event',
+    [`/view-event/${id}`] : 'View Event'
+  }
 
 
   const location = useLocation();
