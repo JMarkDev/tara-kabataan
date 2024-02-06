@@ -48,7 +48,7 @@ const Pagination = ({ currentPage, onPageChange, totalPages}) => {
       {renderPageNumbers()}
     <li>
       <a href="#" className={`flex items-center justify-center px-3 h-10 leading-tight text-white bg-gradient-to-r from-[#f87a58] to-[#f7426f]  hover:from-[#f7426f] hover:to-[#f87a58]  border border-gray-300 rounded-e-lg
-        ${currentPage === totalPages ? 'pointer-events-none': ''}
+        ${currentPage === Math.ceil(totalPages / 10) ? 'pointer-events-none': ''}
       `}
         onClick={() => handlePageClick(currentPage + 1)}
       >Next</a>

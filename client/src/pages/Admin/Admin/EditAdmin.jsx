@@ -1,17 +1,10 @@
-import React, { useState } from "react";
-import Cookies from "js-cookie";
-import { Link, useNavigate} from "react-router-dom";
-import { TbArrowBackUp } from "react-icons/tb";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams} from "react-router-dom";
 import api from "../../../api/api";
-import AdminOTP from "../../Verification/AdminOTP";
-import Loading from "../../../components/loading/otpLoader/otpLoader";
 
-const AddAdmin = () => {
-    const [displayOTP, setDisplayOTP] = useState(false)
-    const [loader, setLoader] = useState(false);
+const EditAdmin = () => {
+    const { id } = useParams()
     const navigate = useNavigate();
-    const role = Cookies.get('role')
-    const userId = Cookies.get('userId')
   
     const [values, setValues] = useState({
       firstname: "",
@@ -20,50 +13,55 @@ const AddAdmin = () => {
       password: "",
       confirmPassword: "",
       gender: "", 
-      role: "admin", // Set a default role
     });
   
     const [firstnameError, setfirstnameError] = useState("");
     const [LastnameError, setLastnameError] = useState("");
     const [genderError, setGenderError] = useState("");
-    const [emailError, setemailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
   
-    const handleRegister = async (e) => {
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await api.get(`/user/id/${id}`)
+                console.log(response.data)
+                setValues((prevData) => ({
+                    ...prevData,
+                    firstname: response.data.firstname,
+                    lastname: response.data.lastname,
+                    email: response.data.email,
+                    gender: response.data.gender
+                }))
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData()
+    }, [id])
+
+    const handleUpdate = async (e) => {
       e.preventDefault();
-      setLoader(true)
-    
-      setLoader(true);
     
       // Clear error messages when the user submits the form
       setfirstnameError("");
       setLastnameError("");
       setGenderError("");
-      setemailError("");
       setPasswordError("");
       setConfirmPasswordError("");
     
       try {
-        const response = await api.post("/auth/register", values, {
-          headers: { "Content-Type": "application/json" },
-          // withCredentials: true,
-        });
-  
+        const response = await api.put(`/user/update/${id}`, values)
+
         if (response.data.status === "success") {
-        //   navigate("/verify-otp", { state: { email: values.email } });
-          setDisplayOTP(true)
-          setLoader(false)
+            alert('Updated Successfully')
+            navigate('/admin')
         } else {
           alert(response.data.message);
         }
         
       } catch (error) {
-        setLoader(false);
-  
-        if (error.response && error.response.data.status === 'error') {
-          setemailError(error.response.data.message);
-        }
     
         if (error.response && error.response.data.errors) {
           error.response.data.errors.forEach((error) => {
@@ -76,9 +74,6 @@ const AddAdmin = () => {
                 break;
               case 'gender':
                 setGenderError(error.msg);
-                break;
-              case 'email':
-                setemailError(error.msg);
                 break;
               case 'password':
                 setPasswordError(error.msg);
@@ -98,27 +93,15 @@ const AddAdmin = () => {
       }
     };
 
+
+
   return (
     <div>
-    {/* <Link to={'/admin'} className="py-2 rounded-lg bg-gray-700 text-white hover:bg-orange-500 flex items-center justify-center w-20 text-center"><TbArrowBackUp />Back</Link> */}
-        {
-          loader && 
-          <div className="absolute top-[50%] lg:right-[40%] right-[50%]">
-            <Loading/>
-          </div>
-        }
-        
-        {
-          displayOTP ? 
-          <div className="mt-[-50px]">
-              <AdminOTP email={values.email} password={values.password}/> 
-          </div>
-          : 
        
         <div className="w-full m-auto px-6 py-4 overflow-hidden shadow-md sm:max-w-lg sm:rounded-lg  bg-white">
-        <h2 className="text-2xl font-semibold text-center mt-4 ">Add Admin</h2>
+        <h2 className="text-2xl font-semibold text-center mt-4 ">Edit Admin</h2>
 
-        <form onSubmit={handleRegister}>
+        <form onSubmit={handleUpdate} method="PUT">
                 <div>
                   <label
                     htmlFor="name"
@@ -170,27 +153,27 @@ const AddAdmin = () => {
                   {/* </div> */}
                 </div>
                 <div className="mt-2">
-                  <label
+                    <div className="flex">
+                    <label
                     htmlFor="email"
                     className="block text-sm font-medium text-gray-700 undefined"
                   >
                     Email
                   </label>
-                  <div className="flex flex-col items-start">
-                    <input
-                      type="text"
-                      name="email"
-                      placeholder="Email"
-                      value={values.email} // Use values.username
-                      onChange={e => setValues({ ...values, email: e.target.value })} // Update values.username
-                      className={`mt-2 block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-                        emailError  ? 'border-red-600' : '' // Apply border-red-600 class when there's an error
-                      }`}
-                    />
-                  </div>
-                  {/* <div className="h-4">  */}
-                    {emailError && <div className="text-red-600 text-sm">{emailError}</div>}
-                  {/* </div> */}
+                  <span className="text-sm text-[#9E9E9E] mx-2">|</span>
+                  <button 
+                    type="button"  // add type button to prevent form submission
+                    className="text-sm text-[#1A9CB7]"
+                    // onClick={() => 
+                    // handleChangeUsername()}
+                    >
+                    Change
+                </button>
+                    </div>
+                
+                <div className="flex flex-col items-start">
+                    <p className="text-gray-900 dark:text-white py-2">{values.email}</p>
+                </div>
                 </div>
                 <div className="mt-2">
                   <label
@@ -304,9 +287,8 @@ const AddAdmin = () => {
         </div>
               </form>
         </div>
-    }
     </div>
   )
 }
 
-export default AddAdmin
+export default EditAdmin

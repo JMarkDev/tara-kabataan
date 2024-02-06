@@ -73,7 +73,7 @@ function VerifyOTP() {
 
         // setSuccessMessage(response.data.message)
   
-        Cookies.set('token', response.data.token, { expires: 1 });
+        Cookies.set('token', response.data.token,{httpOnly: true}, { expires: 1 });
         Cookies.set('role', response.data.role, { expires: 1 });
         Cookies.set('userId', response.data.userId, { expires: 1 });
 

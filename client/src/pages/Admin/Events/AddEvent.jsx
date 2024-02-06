@@ -306,19 +306,13 @@ const AddEvent = () => {
             onChange={(e) => setFormData({...formData, location: e.target.value})}
           />
         </div>
-        {/* <div className='mb-4'>
-          <label htmlFor="title" className="block text-gray-700 font-bold dark:text-white">
-            Location
-          </label>
-          <LocationComponent />
-        </div> */}
         <div className='flex justify-end'>
-        <Link to="/admin-events" className="w-[150px] text-center mr-2 py-2 bg-gray-500 text-white px-4 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-red-200">   
+        <Link to="/admin-events" className="w-full text-center mr-2 py-2 bg-gray-500 text-white px-4 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-red-200">   
           Cancel
         </Link>
         <button
           type="submit"
-          className="w-[150px] py-2 h-10 bg-indigo-600 text-white px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200"
+          className="w-full py-2 h-10 bg-indigo-600 text-white px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200"
         >
           Save
         </button>

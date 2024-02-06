@@ -1,13 +1,12 @@
 import { useState } from "react";
+import { Link } from "react-router-dom"
 import PropTypes from "prop-types";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { MdRemoveRedEye } from "react-icons/md";
 
 const UserTable = ({ data, handleDelete }) => {
-    const [openAction, setOpenAction] = useState(false);
-
-    
     
   return (
 <div className="relative overflow-x-auto rounded-md">
@@ -55,26 +54,17 @@ const UserTable = ({ data, handleDelete }) => {
                         </td>
                         <td className=" flex justify-center items-center align-middle m-auto text-md gap-5 relative">
                             {/* <div > */}
-                                <button className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-blue-600 text-center flex items-center"
-                                ><FaRegEdit /></button>
+                                { role === 'admin' ? 
+                                <Link to={`/edit-admin/${id}`} className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-blue-600 text-center flex items-center">
+                                    <FaRegEdit />
+                                </Link> : 
+                                  <Link to={`/view-user/${id}`} className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-blue-600 text-center flex items-center">
+                                  <MdRemoveRedEye />
+                                </Link>
+                                }
                                 <button className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-red-500"><RiDeleteBin6Line 
                                  onClick={() => handleDelete(id)}
                                 /></button>
-                                {/* <button onClick={() => {
-                                    setOpenAction(id === openAction ? null : id)
-                                    }}
-                                    className="text-xl text-gray-800 font-semibold"
-                                >
-                                <BsThreeDots />
-                                </button>
-                                {openAction === id && (
-                                <div className="z-20 absolute flex flex-col right-[-25px] bottom-2 w-48 py-2 mt-2 bg-white rounded-md shadow-2xl transform translate-y-full">
-                                    <a href="#" className="px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">View</a>
-                                    <a href="#" className="px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Edit</a>
-                                    <a href="#" className="px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Delete</a>
-                                </div>
-                                )} */}
-                            {/* </div> */}
                         </td>
                     </tr>
                 )

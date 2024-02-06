@@ -32,6 +32,8 @@ import ConfirmPassword from './pages/Verification/ConfirmPassword'
 import Profile from './pages/User/Profile'
 import Attendees from './pages/Admin/Attendees/Attendees'
 import AddAdmin from './pages/Admin/Admin/AddAdmin'
+import EditAdmin from './pages/Admin/Admin/EditAdmin'
+import ViewUser from './pages/Admin/Users/ViewUser'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -69,11 +71,13 @@ function App() {
     { title: 'Add Event', path: '/add-event', component: <AddEvent />},
     { title: 'Attendees', path: '/admin-attendees', component: <Attendees />},
     { title: 'Users', path: '/admin-users', component: <DashboardUser />},
+    { title: 'View User', path: '/view-user/:id', component: <ViewUser />},
     { title: 'Admin', path: '/admin', component: <Admin />},
     { title: 'Profile', path: '/admin-profile', component: <AdminProfile />},
     { title: 'Edit Event', path: '/edit-event/:id', component: <EditEvent />},
     { title: 'View Event', path: '/view-event/:id', component: <ViewEvent />},
-    { title: 'Add Admin', path: '/add-admin', component: <AddAdmin />}
+    { title: 'Add Admin', path: '/add-admin', component: <AddAdmin />},
+    { title: 'Edit Admin', path: '/edit-admin/:id', component: <EditAdmin />}
   ];
 
   return (

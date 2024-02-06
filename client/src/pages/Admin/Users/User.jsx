@@ -60,6 +60,9 @@ const User = () => {
   return (
     <div>
       <div className="flex justify-between items-center pb-5">
+        <div className="flex justify-center items-center">
+            <Dropdown handleFilter={handleFilter}/>
+        </div>
         <div className="flex justify-center items-center relative"> 
           <input type="text" placeholder="search user..." 
             className="lg:w-[350px] p-2 px-5 outline-none focus:border-indigo-600 border shadow-lg rounded-full"
@@ -69,9 +72,6 @@ const User = () => {
             <MdSearch  />
           </button>
         </div>
-          <div className="flex justify-center items-center">
-            <Dropdown handleFilter={handleFilter}/>
-          </div>
       </div>
 
       <UserTable data={data} handleDelete={handleDelete}/>
