@@ -161,14 +161,14 @@ const EditAdmin = () => {
                     Email
                   </label>
                   <span className="text-sm text-[#9E9E9E] mx-2">|</span>
-                  <button 
-                    type="button"  // add type button to prevent form submission
+                  <Link to ={`/update-email/${id}`}
+                    // type="button"  // add type button to prevent form submission
                     className="text-sm text-[#1A9CB7]"
                     // onClick={() => 
                     // handleChangeUsername()}
                     >
                     Change
-                </button>
+                </Link>
                     </div>
                 
                 <div className="flex flex-col items-start">

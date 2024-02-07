@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { Link } from "react-router-dom"
 import PropTypes from "prop-types";
-import { BsThreeDots } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdRemoveRedEye } from "react-icons/md";

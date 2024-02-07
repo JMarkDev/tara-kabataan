@@ -1,10 +1,11 @@
 import api from '../../../api/api'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 // import LocationComponent from '../../../components/LocationComponent'
 
 const AddEvent = () => {
     const navigate = useNavigate()
+    const [category, setCategory] = useState([])
     const [eventType, setEventType] = useState(false)
     const [formData, setFormData] = useState({
       title: '',
@@ -72,6 +73,18 @@ const AddEvent = () => {
         console.log(error) 
       }
     }
+
+    useEffect(() => {
+      const fetchCategories = async () => {
+        try {
+          const response = await api.get('/category/all')
+          setCategory(response.data)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      fetchCategories()
+    }, [])
 
   return (
     <div className="max-w-xl mx-auto p-4 border rounded-lg shadow-lg bg-white">
@@ -218,7 +231,12 @@ const AddEvent = () => {
               value={formData.event_category}
               name='event_category'  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 " id="">
               <option value="" className="">Select Event Category</option>
-              <option value="Conference">Conference</option>
+              { category.map(({ id, category_name}) => {
+                return (
+                  <option key={id} value={category_name}>{category_name}</option>
+                )
+              })}
+              {/* <option value="Conference">Conference</option>
               <option value="Seminar">Seminar</option>
               <option value="Workshop">Workshop</option>
               <option value="Webinar">Webinar</option>
@@ -228,7 +246,7 @@ const AddEvent = () => {
               <option value="Symposium">Symposium</option>
               <option value="Networking-event">Networking Event</option>
               <option value="Summit">Summit</option>
-              <option value="Online-event">Online Event</option>
+              <option value="Online-event">Online Event</option> */}
             </select>
           </div>
 
@@ -316,7 +334,7 @@ const AddEvent = () => {
         >
           Save
         </button>
-</div>
+        </div>
 
 
         </form>

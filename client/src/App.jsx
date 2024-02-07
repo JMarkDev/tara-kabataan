@@ -22,6 +22,7 @@ import AdminProfile from './pages/Admin/Admin/AdminProfile'
 import AddEvent from './pages/Admin/Events/AddEvent'
 import EditEvent from './pages/Admin/Events/EditEvent'
 import ViewEvent from './pages/Admin/Events/ViewEvent'
+import Category from './pages/Admin/Category/Category'
 
 import ProtectedRoute from './route/ProtectedRoute'
 import VerifyOTP from './pages/Verification/VerifyOTP'
@@ -34,6 +35,7 @@ import Attendees from './pages/Admin/Attendees/Attendees'
 import AddAdmin from './pages/Admin/Admin/AddAdmin'
 import EditAdmin from './pages/Admin/Admin/EditAdmin'
 import ViewUser from './pages/Admin/Users/ViewUser'
+import UpdateUsername from './pages/Admin/Admin/UpdateUsername'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -77,7 +79,9 @@ function App() {
     { title: 'Edit Event', path: '/edit-event/:id', component: <EditEvent />},
     { title: 'View Event', path: '/view-event/:id', component: <ViewEvent />},
     { title: 'Add Admin', path: '/add-admin', component: <AddAdmin />},
-    { title: 'Edit Admin', path: '/edit-admin/:id', component: <EditAdmin />}
+    { title: 'Edit Admin', path: '/edit-admin/:id', component: <EditAdmin />},
+    { title: 'Update Email', path: '/update-email/:id', component: <UpdateUsername />},
+    { title: 'Category', path: '/admin-category', component: <Category />},
   ];
 
   return (

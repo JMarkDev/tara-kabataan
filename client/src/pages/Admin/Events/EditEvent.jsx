@@ -5,6 +5,7 @@ import api from '../../../api/api'
 const EditEvent = () => {
     const { id } = useParams()
     const navigate = useNavigate()
+    const [category, setCategory] = useState([])
     const [eventType, setEventType] = useState(false)
     const [formData, setFormData] = useState({
       title: '',
@@ -117,6 +118,18 @@ const EditEvent = () => {
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+          try {
+            const response = await api.get('/category/all')
+          setCategory(response.data) 
+          } catch (error) {
+            console.log(error)
+          }
+        } 
+        fetchCategories()
+    }, [])
     
 
   return (
@@ -265,7 +278,12 @@ const EditEvent = () => {
               value={formData.event_category}
               name='event_category'  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 " id="">
               <option value="" className="">Select Event Category</option>
-              <option value="Conference">Conference</option>
+              {category.map(({ id, category_name}) => {
+                return (
+                  <option key={id} value={category_name}>{category_name}</option>
+                )
+              })}
+              {/* <option value="Conference">Conference</option>
               <option value="Seminar">Seminar</option>
               <option value="Workshop">Workshop</option>
               <option value="Webinar">Webinar</option>
@@ -275,7 +293,7 @@ const EditEvent = () => {
               <option value="Symposium">Symposium</option>
               <option value="Networking-event">Networking Event</option>
               <option value="Summit">Summit</option>
-              <option value="Online-event">Online Event</option>
+              <option value="Online-event">Online Event</option> */}
             </select>
           </div>
 

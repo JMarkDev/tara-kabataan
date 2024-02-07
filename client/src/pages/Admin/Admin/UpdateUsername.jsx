@@ -5,9 +5,9 @@ import api from '../../../api/api'
 import Loading from '../../../components/loading/otpLoader/otpLoader'
 
 function UpdateUsername() {
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [otp, setOTP] = useState('')
-  const [usernameError, setUsernameError] = useState('')
+  const [emailError, setEmailError] = useState('')
   const [otpError, setOtpError] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
   const [loader, setLoader] = useState(false)
@@ -17,13 +17,15 @@ function UpdateUsername() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     
-    setUsernameError('')
+    setEmailError('')
     setOtpError('')
+    setSuccessMessage('')
 
     setLoader(true)
     try {
-      const response = await api.post(`/admin/update-username/${id}`,  { username: username })
+      const response = await api.post(`/user/update/username/${id}`, { email })
       console.log(response.data)
+      console.log(response)
       if (response.data.status === 'success') {
         setSuccessMessage(response.data.message)
         setLoader(false)
@@ -31,9 +33,9 @@ function UpdateUsername() {
     } catch (error) {
       setLoader(false)
         if (error.response.data.errors) {
-          setUsernameError(error.response.data.errors[0].msg)
+          setEmailError(error.response.data.errors[0].msg)
         } else if (error.response.data.status === 'error') {
-          setUsernameError(error.response.data.message)
+          setEmailError(error.response.data.message)
         }
       console.log(error)
     }
@@ -42,22 +44,21 @@ function UpdateUsername() {
   const handleChangeUsername = async (e) => {
     e.preventDefault()
     const values = {
-      id: id,
-      username: username,
+      email: email,
       otp: otp,
-      role: 'admin'
     }
 
     setLoader(true)
-    setUsernameError('')
+    setEmailError('')
     setOtpError('')
     setSuccessMessage('')
 
     try {
-      const response = await api.put(`/admin/update-username-verifyOTP/${id}`, values)
+      const response = await api.put(`/user/update/username/verify-otp/${id}`, values)
       console.log(response.data)
+      console.log(response)
       if (response.data.status === 'success') {
-        setSuccessMessage('Your Username has been updated successfully')
+        setSuccessMessage('Email updated successfully')
       }
       setTimeout(() => {
         navigate('/admin')
@@ -68,13 +69,13 @@ function UpdateUsername() {
       if(error.response.data.status === 'error') {
         setOtpError(error.response.data.message)
       } else if (error.response.data.errors) {
-        setUsernameError(error.response.data.errors[0].msg)
+        setEmailError(error.response.data.errors[0].msg)
       }
       console.log(error)
     }
   }
 
-  const submitDisable = !(username && otp)
+  const submitDisable = !(email && otp)
 
 
   return (
@@ -87,7 +88,7 @@ function UpdateUsername() {
     {
       successMessage &&
       <div
-        className="absolute right-0 flex w-[70%] mx-auto rounded-lg bg-green-100 px-6 py-5 text-base text-green-500 justify-center items-center"
+        className="absolute right-0 top-16 mt-2 flex w-[70%] mx-auto rounded-lg bg-green-100 px-6 py-5 text-base text-green-500 justify-center items-center"
         role="alert"
       >
         <span className="flex-1 mr-3">{successMessage}</span>
@@ -106,7 +107,7 @@ function UpdateUsername() {
         </svg>
       </div>
     }
-        <Link to={'/admin'} className="py-2 rounded-lg bg-gray-700 text-white flex items-center justify-center w-20 text-center"><TbArrowBackUp />Back</Link>
+        {/* <Link to={'/admin'} className="py-2 rounded-lg bg-gray-700 text-white flex items-center justify-center w-20 text-center"><TbArrowBackUp />Back</Link> */}
       
         {/* <div className='flex items-center justify-center'> */}
 
@@ -118,18 +119,18 @@ function UpdateUsername() {
 
         {/* <form  > */}
           <div>
-            <label className='block text-gray-700'>Username</label>
+            <label className='block text-gray-700'>Email</label>
             <input
-              name='username'
+              name='email'
               type="text"
-              placeholder='Username'
-              onChange={(e) => setUsername(e.target.value)}
+              placeholder='enter new email'
+              onChange={(e) => setEmail(e.target.value)}
               className={`block w-full rounded-md border py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
-                usernameError  ? 'border-red-600' : '' // Apply border-red-600 class when there's an error
+                emailError  ? 'border-red-600' : '' // Apply border-red-600 class when there's an error
               }`}
             />
           </div>
-          {usernameError && <div className="text-red-600 text-sm">{usernameError}</div>}
+          {emailError && <div className="text-red-600 text-sm">{emailError}</div>}
           <div className='mt-4'>
             <label className='block text-gray-700'>OTP</label>
             <div className='flex relative items-center'>
@@ -146,6 +147,7 @@ function UpdateUsername() {
             />
             <button 
               onClick={handleSubmit} 
+              type='button'
               className='text-[#1A9CE7] text-sm absolute right-5'>
             SEND
           </button>

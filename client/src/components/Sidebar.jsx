@@ -4,9 +4,10 @@ import { RiDashboardLine } from 'react-icons/ri';
 import { CgProfile } from 'react-icons/cg';
 import { FaUserShield } from 'react-icons/fa';
 import { MdLogout } from 'react-icons/md';
-import { FaUsersLine } from "react-icons/fa6";
 import logo from '../assets/images/logo.jpg';
 import { BsFillJournalBookmarkFill } from 'react-icons/bs';
+import { CiBoxList } from "react-icons/ci";
+import { FaUsers } from "react-icons/fa";
 import { useLogout } from '../hooks/useLogout';
 import { useResizeLayout } from '../hooks/resizeLayout';
 
@@ -18,7 +19,8 @@ const Sidebar = ({ open, setOpen }) => {
   const Menus = [
     { title: 'Dashboard', path: '/dashboard', src: <RiDashboardLine /> },
     { title: 'Event List', path: '/admin-events', src: <BsFillJournalBookmarkFill /> },
-    { title: 'Attendees', path: '/admin-attendees', src: <FaUsersLine />},
+    { title: 'Category', path: '/admin-category', src: <CiBoxList />},
+    { title: 'Attendees', path: '/admin-attendees', src: <FaUsers />},
     { title: 'Users', path: '/admin-users', src: <CgProfile /> },
     { title: 'Admin', path: '/admin', src: <FaUserShield /> },
   ];
@@ -40,7 +42,7 @@ const Sidebar = ({ open, setOpen }) => {
                   location.pathname === menu.path && 'bg-[#607D8B] '
                 }`}
               >
-                <span className="text-2xl">{menu.src}</span>
+                <span className="text-2xl px-2">{menu.src}</span>
                 {!open && !isSmallScreen && (
                   <span className="origin-left duration-300 hover:block">{menu.title}</span>
                 )}
@@ -49,11 +51,14 @@ const Sidebar = ({ open, setOpen }) => {
           </li>
         ))}
         <Link to="/login" onClick={handleLogout}>
-          <div className="w-full mt-[220px] flex items-center gap-x-6 p-3 text-base font-normal rounded-lg cursor-pointer hover:bg-[#607D8B]">
-            <span className={`${!open && 'block'} text-2xl`}><MdLogout /></span>
+          <div className="w-full absolute bottom-10 left-0  flex items-center  ">
+            <div className='w-full p-3 mx-2 rounded-lg flex gap-x-6   text-base font-normal cursor-pointer hover:bg-[#607D8B]'>
+            <span className={`${!open ? 'block': 'm-auto '} text-2xl`}><MdLogout /></span>
             {!open && !isSmallScreen && (
               <span className="origin-left duration-300 hover:block">Logout</span>
             )}
+            </div>
+
           </div>
         </Link>
       </ul>
@@ -82,9 +87,11 @@ const Sidebar = ({ open, setOpen }) => {
           </li>
         ))}
         <Link to="/login" onClick={handleLogout}>
-          <div className="w-full mt-[220px] flex items-center gap-x-6 p-3 text-base font-normal rounded-lg cursor-pointer hover:bg-[#607D8B]">
+          <div className="w-full absolute bottom-10 left-0 flex items-center gap-x-6">
+          <div className='w-full p-3 mx-2 rounded-lg flex gap-x-6   text-base font-normal cursor-pointer hover:bg-[#607D8B]'>
             <span className='text-2xl'><MdLogout /></span>
               <span className="origin-left duration-300 hover:block">Logout</span>
+          </div>
           </div>
         </Link>
       </ul>

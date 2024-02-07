@@ -43,7 +43,7 @@ const Events = () => {
           to='/add-event'
           className=" w-[150px] text-center rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58] px-5 py-2 text-md font-normal text-white hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58] "
         >
-          Create Event
+          Add Event
         </Link>
         <div className="flex justify-center items-center relative"> 
           <input type="text" placeholder="search events..." 
