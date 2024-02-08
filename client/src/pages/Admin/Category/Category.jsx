@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom'
 import Pagination from "../../../components/Pagination"
 import api from "../../../api/api"
 import { MdSearch } from 'react-icons/md'
@@ -117,7 +118,10 @@ const Category = () => {
       <div className="flex justify-between items-center pb-5">
       <div>
     <button
-        onClick={( ) => setModal(true)}
+        onClick={( ) => { 
+          setModal(true)
+          setErrorMessage('')
+        }}
         className="w-[150px] text-center rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58] px-5 py-2 text-md font-normal text-white hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58]"
     >
         Add Category
@@ -265,9 +269,11 @@ const Category = () => {
                                   handleCategoryUpdate={handleCategoryUpdate}
                                   />
                                 )}
-                                  <button className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-blue-600 text-center flex items-center">
+                                  <Link 
+                                    to={`/filter-event-category/${category_name}`}
+                                  className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-blue-600 text-center flex items-center">
                                   <MdRemoveRedEye />
-                                </button>
+                                </Link>
                                 <button className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-red-500"><RiDeleteBin6Line 
                                  onClick={() => handleDelete(id)}
                                 /></button>

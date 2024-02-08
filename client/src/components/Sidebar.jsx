@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
-import { RiDashboardLine } from 'react-icons/ri';
-import { CgProfile } from 'react-icons/cg';
+import { FaBoxArchive } from "react-icons/fa6";
 import { FaUserShield } from 'react-icons/fa';
 import { MdLogout } from 'react-icons/md';
 import logo from '../assets/images/logo.jpg';
-import { BsFillJournalBookmarkFill } from 'react-icons/bs';
-import { CiBoxList } from "react-icons/ci";
 import { FaUsers } from "react-icons/fa";
 import { useLogout } from '../hooks/useLogout';
 import { useResizeLayout } from '../hooks/resizeLayout';
+import { FaList } from "react-icons/fa";
+import { RiDashboardFill } from "react-icons/ri";
+import { BiSolidCalendarEvent } from "react-icons/bi";
 
 const Sidebar = ({ open, setOpen }) => {
   const location = useLocation();
@@ -17,11 +17,11 @@ const Sidebar = ({ open, setOpen }) => {
   const { isSmallScreen } = useResizeLayout();
 
   const Menus = [
-    { title: 'Dashboard', path: '/dashboard', src: <RiDashboardLine /> },
-    { title: 'Event List', path: '/admin-events', src: <BsFillJournalBookmarkFill /> },
-    { title: 'Category', path: '/admin-category', src: <CiBoxList />},
-    { title: 'Attendees', path: '/admin-attendees', src: <FaUsers />},
-    { title: 'Users', path: '/admin-users', src: <CgProfile /> },
+    { title: 'Dashboard', path: '/dashboard', src: <RiDashboardFill /> },
+    { title: 'Event List', path: '/admin-events', src: <BiSolidCalendarEvent /> },
+    { title: 'Category', path: '/admin-category', src: <FaList />},
+    { title: 'Archives', path: '/archives', src: <FaBoxArchive />},
+    { title: 'Users', path: '/admin-users', src: <FaUsers /> },
     { title: 'Admin', path: '/admin', src: <FaUserShield /> },
   ];
 

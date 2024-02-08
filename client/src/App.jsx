@@ -31,11 +31,12 @@ import ChangePasswordOTP from './pages/Verification/ChangePasswordOTP'
 import ConfirmPassword from './pages/Verification/ConfirmPassword'
 
 import Profile from './pages/User/Profile'
-import Attendees from './pages/Admin/Attendees/Attendees'
 import AddAdmin from './pages/Admin/Admin/AddAdmin'
 import EditAdmin from './pages/Admin/Admin/EditAdmin'
 import ViewUser from './pages/Admin/Users/ViewUser'
 import UpdateUsername from './pages/Admin/Admin/UpdateUsername'
+import ViewEventCategory from './pages/Admin/Category/ViewEventCategory'
+import Archives from './pages/Admin/Archives/Attendees'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -71,7 +72,7 @@ function App() {
     { title: 'Dashboard', path: '/dashboard', component: <Dashboard />},
     { title: 'Events', path: '/admin-events', component: <DashboardEvents />},
     { title: 'Add Event', path: '/add-event', component: <AddEvent />},
-    { title: 'Attendees', path: '/admin-attendees', component: <Attendees />},
+    { title: 'Arvhives', path: '/archives', component: <Archives />},
     { title: 'Users', path: '/admin-users', component: <DashboardUser />},
     { title: 'View User', path: '/view-user/:id', component: <ViewUser />},
     { title: 'Admin', path: '/admin', component: <Admin />},
@@ -82,6 +83,7 @@ function App() {
     { title: 'Edit Admin', path: '/edit-admin/:id', component: <EditAdmin />},
     { title: 'Update Email', path: '/update-email/:id', component: <UpdateUsername />},
     { title: 'Category', path: '/admin-category', component: <Category />},
+    { title: 'FilterEvent', path: '/filter-event-category/:category_name', component: <ViewEventCategory />}
   ];
 
   return (

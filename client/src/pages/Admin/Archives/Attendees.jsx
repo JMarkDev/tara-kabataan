@@ -1,6 +1,6 @@
 // import LocationComponent from '../../../components/LocationComponent'
 
-const Attendees = () => {
+const Archives = () => {
   return (
     <div>
       {/* <LocationComponent /> */}
@@ -8,4 +8,4 @@ const Attendees = () => {
   )
 }
 
-export default Attendees
+export default Archives

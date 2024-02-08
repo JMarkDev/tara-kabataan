@@ -52,7 +52,7 @@ const AddEvent = () => {
       data.append('description', description);
       data.append('organizer_name', organizer_name);
       data.append('event_type', event_type);
-      data.append('event_category', event_category);
+      data.append('event_category', event_category.trim());
       data.append('start_date', start_date);
       data.append('end_date', end_date);
       data.append('start_time', start_time);
