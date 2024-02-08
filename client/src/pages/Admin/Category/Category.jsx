@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
-import { Link } from 'react-router-dom'
-import EventsTable from "../../../components/EventsTable"
 import Pagination from "../../../components/Pagination"
 import api from "../../../api/api"
 import { MdSearch } from 'react-icons/md'
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdRemoveRedEye } from "react-icons/md";
+import EditCategory from "./EditCategory";
 
 
 const Category = () => {
   const [data, setData] = useState([])
+  const [categoryID, setCategoryID] = useState('')
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
   const [modal, setModal] = useState(false)
+  const [edit, setEdit] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [formData, setFormData] = useState({
     category_name: '',
@@ -79,17 +80,12 @@ const Category = () => {
 
   }
 
-
   const handleDelete = async (id) => {
     try {
       const response = await api.delete(`/category/delete/${id}`)
       if (response.data.status === 'success') {
         const updatedData = data.filter((category) => category.id !== id)
         setData(updatedData)
-        //   const updatedData = await api.get(`/category/pagination?page=${currentPage}&size=10`)
-        //   console.log(updatedData)
-        //  setData(updatedData.data.category)
-          // setTotalPages(response.data.totalItems)
         alert('Category deleted successfully')
       }
     } catch (error) {
@@ -97,21 +93,31 @@ const Category = () => {
     }
   }
 
-  const handleModal = () => {
-    setModal(!modal)
+  const handleCategoryUpdate = async () => {
+    try {
+      const updatedData = await api.get(`/category/pagination?page=${currentPage}&size=10`)
+      setData(updatedData.data.category)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const handleClose = () => {
     setModal(false)
+    setEdit(false)
+  }
+
+  const handleEdit = (id) => {
+    setEdit(!edit)
+    setCategoryID(id)
   }
 
   return (
     <div className="flex flex-col">
       <div className="flex justify-between items-center pb-5">
       <div>
-    {/* Add Category Button */}
     <button
-        onClick={handleModal}
+        onClick={( ) => setModal(true)}
         className="w-[150px] text-center rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58] px-5 py-2 text-md font-normal text-white hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58]"
     >
         Add Category
@@ -159,11 +165,10 @@ const Category = () => {
                       type="text"
                       id="category_name"
                       name="category_name"
-                      // className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                       required
                       onChange={handleInputChange}
                       className={`block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-                        errorMessage ? 'border-red-600' : '' // Apply border-red-600 class when there's an error
+                        errorMessage ? 'border-red-600' : ''
                       }`}
                     />
                     {errorMessage && <div className="text-red-600 text-sm">{errorMessage}</div>}
@@ -247,16 +252,22 @@ const Category = () => {
                             {category_name}
                         </td>
                         <td className=" m-auto text-md relative">
-                            {/* <div > */}
-                                {/* { role === 'admin' ?  */}
                                 <div className="flex items-center justify-center gap-5">
-                                <button  className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-blue-600 text-center flex items-center">
+                                <button 
+                                onClick={() => handleEdit(id)}
+                                className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-blue-600 text-center flex items-center">
                                     <FaRegEdit />
                                 </button> 
+                                {edit && (
+                                  <EditCategory 
+                                  categoryID={categoryID}
+                                  handleClose={handleClose}
+                                  handleCategoryUpdate={handleCategoryUpdate}
+                                  />
+                                )}
                                   <button className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-blue-600 text-center flex items-center">
                                   <MdRemoveRedEye />
                                 </button>
-                                {/* } */}
                                 <button className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-red-500"><RiDeleteBin6Line 
                                  onClick={() => handleDelete(id)}
                                 /></button>

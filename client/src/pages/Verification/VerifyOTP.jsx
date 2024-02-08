@@ -73,13 +73,13 @@ function VerifyOTP() {
 
         // setSuccessMessage(response.data.message)
   
-        Cookies.set('token', response.data.token,{httpOnly: true}, { expires: 1 });
+        Cookies.set('token', response.data.token, { expires: 1 });
         Cookies.set('role', response.data.role, { expires: 1 });
         Cookies.set('userId', response.data.userId, { expires: 1 });
 
         // const userRole = localStorage.getItem('role');
         const userRole = response.data.role;
-        const dashboardURL = userRole === 'admin' ? '/dashboard' : '/Home';
+        const dashboardURL = userRole === 'admin' ? '/dashboard' : '/home';
 
         setTimeout(() => {
           navigate(dashboardURL);

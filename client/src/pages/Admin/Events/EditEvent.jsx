@@ -8,8 +8,8 @@ const EditEvent = () => {
     const [category, setCategory] = useState([])
     const [eventType, setEventType] = useState(false)
     const [formData, setFormData] = useState({
-      title: '',
-      description: '',
+      event_title: '',
+      event_description: '',
       image: null,
       organizer_name: '',
       event_type: eventType,
@@ -41,23 +41,24 @@ const EditEvent = () => {
         const fetchEvent = async () => {
           try {
             const response = await api.get(`/event/id/${id}`)
+            const { event_title, event_description, image, organizer_name, event_type, event_category, start_date, end_date, start_time, end_time, location, attendance_count, price, discount, status } = response.data
             setFormData(prevData => ({
               ...prevData, 
-              title: response.data.event_title,
-              description: response.data.event_description,
-              image: response.data.image,
-              organizer_name: response.data.organizer_name,
-              event_type: response.data.event_type,
-              event_category: response.data.event_category,
-              start_date: response.data.start_date,
-              end_date: response.data.end_date,
-              start_time: response.data.start_time,
-              end_time: response.data.end_time,
-              location: response.data.location,
-              attendance_count: response.data.attendance_count,
-              price: response.data.price,
-              discount: response.data.discount,
-              status: response.data.status
+              event_title,
+              event_description,
+              image,
+              organizer_name,
+              event_type,
+              event_category,
+              start_date,
+              end_date,
+              start_time,
+              end_time,
+              location,
+              attendance_count,
+              price,
+              discount,
+              status
             })
             )
 
@@ -78,15 +79,15 @@ const EditEvent = () => {
       const handleUpdateEvent = async (e) => {
         e.preventDefault();
 
-        const { image, title, description, organizer_name, event_type, event_category, start_date, end_date, start_time, end_time, location, attendance_count, price, discount } = formData;
+        const { image, event_title, event_description, organizer_name, event_type, event_category, start_date, end_date, start_time, end_time, location, attendance_count, price, discount } = formData;
         const data = new FormData();
 
         for(let i = 0; i < image.length; i++) {
           data.append('image', image[i]);
         } 
     
-        data.append('title', title);
-        data.append('description', description);
+        data.append('event_title', event_title);
+        data.append('event_description', event_description);
         data.append('organizer_name', organizer_name);
         data.append('event_type', event_type);
         data.append('event_category', event_category);
@@ -143,11 +144,11 @@ const EditEvent = () => {
             <input
               type="text"
               id="title"
-              name="title"
+              name="event_title"
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
               required
-              value={formData.title}
-              onChange={(e) => setFormData({...formData, title: e.target.value})}
+              value={formData.event_title}
+              onChange={(e) => setFormData({...formData, event_title: e.target.value})}
             />
           </div>
           <div className="mb-4">
@@ -184,12 +185,12 @@ const EditEvent = () => {
             </label>
             <textarea
               id="description"
-              name="description"
+              name="event_description"
               rows="6"
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
               required
-              value={formData.description}
-              onChange={(e) => setFormData({...formData, description: e.target.value})}
+              value={formData.event_description}
+              onChange={(e) => setFormData({...formData, event_description: e.target.value})}
             />
           </div>
           <div className="lg:flex justify-between gap-3">

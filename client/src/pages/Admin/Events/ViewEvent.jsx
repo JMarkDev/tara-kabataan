@@ -65,7 +65,7 @@ const ViewEvent = () => {
       <div className="flex my-5 gap-5 lg:flex-row flex-col justify-between">
         <div className="text-[#3d4465] lg:w-[70%] h-fit bg-white p-5 rounded-md">
           <img src={`${api.defaults.baseURL}${image}`} alt="" 
-          className='w-full h-[300px]'
+          className='w-full'
           />
           <h1 className='text-xl pt-4 font-semibold '>{title}</h1>
           <h2 className='py-2'>Organizer Name:<span className='font-bold'>{organizer}</span></h2>
@@ -125,8 +125,8 @@ const ViewEvent = () => {
         </div>
       <div className='mt-10'>
         <h1 className='mt-3 font-semibold'>Event Category: <span className='font-normal'>{eventCategory}</span></h1>
+        <h1 className='mt-3 font-semibold'>Event Status: <span className='font-normal'>{status}</span></h1>
         <h1 className='mt-3 font-semibold'>Event Type: <span className='font-normal'>{eventType}</span></h1>
-        <h1 className='mt-3 font-semibold'>Event Type: <span className='font-normal'>{status}</span></h1>
         { displayPrice && (
           <>
         <h1 className='mt-3 font-semibold'>Attendance Count: <span className='font-normal'>{attendanceCount}</span></h1>

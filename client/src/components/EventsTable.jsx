@@ -72,9 +72,6 @@ const EventsTable = ({ data }) => {
         <th scope="col" className="px-6 py-3">
             Location
         </th>
-        {/* <th scope="col" className="px-6 py-3">
-            No. Attendees
-        </th> */}
         <th scope="col" className="px-6 py-3">
             Status
         </th>
@@ -160,7 +157,3 @@ EventsTable.propTypes = {
 }
 
 export default EventsTable
-
-{/* <span className="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-blue-100">
-                        Upcoming
-                    </span> */}
