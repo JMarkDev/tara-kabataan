@@ -36,7 +36,7 @@ import EditAdmin from './pages/Admin/Admin/EditAdmin'
 import ViewUser from './pages/Admin/Users/ViewUser'
 import UpdateUsername from './pages/Admin/Admin/UpdateUsername'
 import ViewEventCategory from './pages/Admin/Category/ViewEventCategory'
-import Archives from './pages/Admin/Archives/Attendees'
+import Archives from './pages/Admin/Archives/Archive'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)

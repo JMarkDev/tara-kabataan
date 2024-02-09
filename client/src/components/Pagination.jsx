@@ -4,7 +4,6 @@ const Pagination = ({ currentPage, onPageChange, totalPages}) => {
 
   const handlePageClick = (newPage) => {
     onPageChange(newPage);
-    console.log('click')
   }
 
 

@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import { BsThreeDots } from "react-icons/bs";
 import PropTypes from "prop-types";
 import api from '../api/api'
+import CompleteEvent from "./CompleteEvent";
 
 const EventsTable = ({ data }) => {
+    const [openModal, setOpenModal] = useState(false);
     const [openAction, setOpenAction] = useState(false);
     const [eventData, setEventData] = useState([]);
+    const [eventID, setEventID] = useState(null)
 
     useEffect(() => {
         setEventData(data)
@@ -44,6 +47,19 @@ const EventsTable = ({ data }) => {
         const formatedHour = hour % 12 === 0 ? 12 : hour % 12;
 
         return `${formatedHour}:${minutes} ${period}`
+    }
+
+    const handleOpenModal = (id) => {
+        setOpenModal(true)
+        setOpenAction(false)
+        setEventID(id)
+    }
+
+    const handleCloseModal = (id) => {
+        const newEventData = eventData.filter((event) => event.id !== id)
+        setEventData(newEventData)
+        setOpenModal(false)
+        setOpenAction(false)
     }
      
   return (
@@ -105,15 +121,20 @@ const EventsTable = ({ data }) => {
                         <td className="px-6 py-4 whitespace-nowrap">
                             {location}
                         </td>
-                        {/* <td className="px-6 py-4">
-                            {max_attendees}
-                        </td> */}
                         <td className="px-6 py-4">
-                            <span className={`px-2 py-1 font-normal leading-tight ${status === 'Completed' ? 'text-green-700  green-blue-700 bg-green-100 rounded-full green:bg-blue-700 ' : ' text-blue-700 bg-blue-100 rounded-full  dark:text-blue-100'}rounded-full`}>
+                            <span className={`px-2 py-2 font-normal leading-tight ${status === 'Completed' ? 'text-green-700  green-blue-700 bg-green-100 rounded-full green:bg-blue-700 ' : ' text-blue-700 bg-blue-100 rounded-full  dark:text-blue-100'}rounded-full`}>
                                 {status}
                             </span>
                         </td>
                         <td className="px-6 py-4 flex justify-center text-md gap-5 relative">
+                                { openModal && (
+                                        <CompleteEvent 
+                                        openModal={openModal} 
+                                        handleCloseModal={handleCloseModal}
+                                        eventID={eventID}
+                                        eventData={eventData}
+                                        />
+                                )}
                             <div className="relative">
                                 <button onClick={() => {
                                     setOpenAction(id === openAction ? null : id)
@@ -124,9 +145,14 @@ const EventsTable = ({ data }) => {
                                 </button>
                                 {openAction === id && (
                                 <div className="z-20 absolute flex flex-col right-[-25px] bottom-2 w-48 py-2 mt-2 bg-white rounded-md shadow-2xl transform translate-y-full">
-                                    <button className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
-                                    Complete
-                                    </button>
+                                    {  status === 'Completed' ? null : (
+                                        <button 
+                                        onClick={() => handleOpenModal(id)}
+                                        className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
+                                            Complete
+                                        </button>
+                                    )}
+                                    
                                     <Link to={`/view-event/${id}`} className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
                                     View
                                     </Link>
