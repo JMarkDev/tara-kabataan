@@ -7,6 +7,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import PieChart from '../../../components/PieChart'
 import AttendeesTable from '../../../components/AttendeesTable';
 import { useFormat } from '../../../hooks/useFormatDate'
+import ImageGalery from '../../../components/ImageGalery';
 
 const ViewEvent = () => {
   const { id } = useParams()
@@ -148,6 +149,9 @@ const ViewEvent = () => {
       </div>
       <div className='mt-7'>
         <AttendeesTable />
+      </div>
+      <div className='mt-7'>
+        <ImageGalery />
       </div>
     </div>
   )
