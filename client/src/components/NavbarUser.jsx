@@ -63,7 +63,7 @@ const NavbarUser = () => {
 
 
   return (
-    <header className='h-[100px] w-full m-auto px-5 fixed z-10 bg-[#efeff5] shadow-lg'>
+    <header className='h-[100px] z-20 w-full m-auto px-5 fixed z-10 bg-[#efeff5] shadow-lg'>
       <div className="hidden md:block">
       <div className='flex justify-between items-center'>
         <img src={logo} alt="logo" className='w-[100px] h-[100px]' />

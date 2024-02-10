@@ -10,7 +10,7 @@ const ImageGalery = () => {
         const fetchData = async () => {
             try {
                 const response = await api.get(`/archive/id/${id}`)
-                const imageData = response.data.images.split(',')
+                const imageData = response.data?.images.split(',')
                 setData(imageData)
             } catch (error) {
                 console.log(error)
@@ -20,17 +20,20 @@ const ImageGalery = () => {
     }, [])
 
   return (
-
-<div className="grid grid-cols-2 md:grid-cols-3 gap-5">
-    { data.map((image, index) => (
-        <div key={index} className='transition-transform transform scale-100 group-hover:scale-150 hover:z-50 hover:scale-150'>
-            <img className=" h-auto max-w-full rounded-lg " 
-            src={`${api.defaults.baseURL}/uploads/${image}`} alt="" 
-            />
-        </div>
-    )) }
-</div>
-
+    <div>
+        { data && (
+            <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold m-10">Event <span className="text-[#6415ff]">Gallery</span></h1>
+        )}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+        {data?.map((image, index) => (
+            <div key={index} className='hover:scale-110 transition-all hover:z-50 '>
+                <img className=" h-[250px] max-w-full rounded-lg " 
+                src={`${api.defaults.baseURL}/uploads/${image}`} alt="" 
+                />
+            </div>
+        )) }
+    </div>
+    </div>
   )
 }
 

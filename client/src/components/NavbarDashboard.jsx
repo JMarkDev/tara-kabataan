@@ -7,8 +7,10 @@ import Cookies from 'js-cookie';
 import userIcon from '../assets/images/user.png';
 import UserProfile from './UserProfile';
 import { useResizeLayout } from '../hooks/resizeLayout';
+import { IoNotificationsOutline } from "react-icons/io5";
 
 function NavbarDashboard({ setOpen}) {
+  const [openNotification, setOpenNotification] = useState(false);
   const [name, setName] = useState('');
   const [openProfile, setOpenProfile] = useState(false); 
   const userId = Cookies.get('userId');
@@ -41,7 +43,7 @@ function NavbarDashboard({ setOpen}) {
       try {
         if (userId) {
           const response = await api.get(`/user/id/${userId}`);
-          setName(response.data.firstname);
+          setName(response.data.firstname + ' ' + response.data.lastname);
         }
       } catch (error) {
         console.log(error);
@@ -52,6 +54,7 @@ function NavbarDashboard({ setOpen}) {
   }, [userId]);
 
   const showProfile = () => {
+    setOpenNotification(false);
     setOpenProfile(!openProfile);
   };
 
@@ -73,8 +76,39 @@ function NavbarDashboard({ setOpen}) {
           <h1 className="text-2xl font-bold">{title}</h1>
         </div>
         <div className='relative'>
-          <div className="flex gap-10">
-            <h1 className="text-lg font-semibold text-center m-auto">{name}</h1>
+          <div className="flex items-center gap-5">
+            <IoNotificationsOutline 
+              onClick={() => {
+                setOpenNotification(!openNotification)
+                setOpenProfile(false)
+              }}
+              onMouseEnter={() => {
+                setOpenNotification(!openNotification)
+                setOpenProfile(false)
+              }}
+              className="text-2xl cursor-pointer" 
+            />
+            {openNotification && (
+              <div className="absolute top-[60px] right-40 mr-[-10px]">
+                <div className="bg-white rounded-lg border h-[120px] w-[250px] absolute bottom-[-100px] z-20 right-2">
+                  <h1 className='text-md pl-3 font-semibold border-b border-gray-300 py-2'>Notifications</h1>
+                  <ul className="w-full">
+                    <li>
+                      <div className="gap-2 text-sm text-gray-600 flex pl-3 items-center  p-2  cursor-pointer
+                      hover:bg-gray-200 border-b-2 border-transparent dark:hover:bg-gray-20 "
+                    >
+                     sample notifications
+                    </div>
+                    </li>
+                  </ul>  
+                </div>
+              </div>
+            )}
+            
+            <div>
+              <h1 className="text-lg font-semibold leading-6 text-center">{name}</h1>
+              <span className='text-sm leading-5 flex justify-end'>Admin</span>
+            </div>
             <img onClick={showProfile}
                 onMouseEnter={showProfile}
                 className="w-8 h-8 rounded-full object-cover cursor-pointer"

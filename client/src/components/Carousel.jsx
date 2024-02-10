@@ -116,14 +116,17 @@ function Carousel() {
 
 
         <div className='mt-5'>
-          <Link  to={'/events'} 
-            className=" p-3 px-6 inline-block rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58] text-md font-semibold leading-6 text-white shadow-sm transition-all duration-300 ease-in-out hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58] hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Explore Now!
-          </Link>
+        <Link to="/events" className=" justify-center mt-10">
+          <button className="px-7 py-3 rounded-full bg-gradient-to-r from-indigo-400 via-purple-600 to-pink-600 text-md font-semibold leading-6 text-white shadow-sm transition-all duration-300 ease-in-out hover:from-pink-600 hover:to-purple-600 hover:via-indigo-400 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            View All Events
+          </button>
+        </Link>
+
         </div>
       </div>
 
-      <div className="flex absolute bottom-0 text-white left-[50%] justify-center py-2">
+      <div className='flex justify-center'>
+      <div className="flex absolute bottom-0 text-white justify-center py-2">
         {strandImages.map((_, slideIndex) => (
           <RxDotFilled
             key={slideIndex}
@@ -131,6 +134,7 @@ function Carousel() {
             onClick={() => goToSlide(slideIndex)}
           />
         ))}
+      </div>
       </div>
     </div>
   );

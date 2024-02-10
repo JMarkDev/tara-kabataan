@@ -27,7 +27,7 @@ const ViewEvent = () => {
   const [price, setPrice] = useState('')
   const [discount, setDiscount] = useState('')
   const [status, setStatus] = useState('')
-  const { dateFormat, formatTime} = useFormat()
+  const { extractYear, dateFormat, formatTime} = useFormat()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,7 +80,7 @@ const ViewEvent = () => {
               </span>
               <div className='leading-6 px-2 flex flex-col justify-center'>
                 <p className='text-md font-normal'>Date</p>
-                <h1 className='font-semibold'>{dateFormat(startDate)} - {dateFormat(endDate)}</h1>
+                <h1 className='font-semibold'>{extractYear(startDate)} - {dateFormat(endDate)}</h1>
               </div>
               </div>
               

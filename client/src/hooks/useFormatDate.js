@@ -1,13 +1,20 @@
 
 export const useFormat = () => {
+    let monthName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const dateFormat = (date) => {
-        const monthName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         const month = parseInt(date.substring(5, 7), 10) - 1;
         const day = date.substring(8, 10);
         const year = date.substring(0, 4);
     
-        return `${day} ${monthName[month]} ${year}`
-      }
+        return `${monthName[month]} ${day}, ${year}`
+    }
+
+    const extractYear = (date) => {
+        const month = parseInt(date.substring(5, 7), 10) - 1;
+        const day = date.substring(8, 10);
+
+        return `${monthName[month]} ${day}`
+    }
 
     const formatTime = (time) => {
         const hour = time.substring(0, 2);
@@ -22,7 +29,8 @@ export const useFormat = () => {
 
     return {
         dateFormat,
-        formatTime
+        formatTime, 
+        extractYear
     }
 
 }

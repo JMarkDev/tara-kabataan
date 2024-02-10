@@ -4,12 +4,14 @@ import { BsThreeDots } from "react-icons/bs";
 import PropTypes from "prop-types";
 import api from '../api/api'
 import CompleteEvent from "./CompleteEvent";
+import { useFormat } from "../hooks/useFormatDate"; 
 
 const EventsTable = ({ data }) => {
     const [openModal, setOpenModal] = useState(false);
     const [openAction, setOpenAction] = useState(false);
     const [eventData, setEventData] = useState([]);
     const [eventID, setEventID] = useState(null)
+    const { formatTime } = useFormat()
 
     useEffect(() => {
         setEventData(data)
@@ -29,8 +31,8 @@ const EventsTable = ({ data }) => {
         }
     }
 
+    let monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     const dateFormat = (date) => {
-        const monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         const month = parseInt(date.substring(5, 7), 10) - 1;
         const day = date.substring(8, 10);
         const year = date.substring(0, 4);
@@ -38,15 +40,11 @@ const EventsTable = ({ data }) => {
         return `${day} ${monthName[month]} ${year}`
     }
 
-    const formatTime = (time) => {
-        const hour = time.substring(0, 2);
-        const period = hour >= 12 ? 'PM' : 'AM';
-        const minutes = time.substring(3, 5);
+    const extractYear = (date) => {
+        const month = parseInt(date.substring(5, 7), 10) - 1;
+        const day = date.substring(8, 10);
 
-        // convert to 12 hour format
-        const formatedHour = hour % 12 === 0 ? 12 : hour % 12;
-
-        return `${formatedHour}:${minutes} ${period}`
+        return `${day} ${monthName[month]}`
     }
 
     const handleOpenModal = (id) => {
@@ -107,7 +105,7 @@ const EventsTable = ({ data }) => {
                             {event_title}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                            {dateFormat(start_date)} - {dateFormat(end_date)}
+                            {extractYear(start_date)} - {dateFormat(end_date)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                             {formatTime(start_time)} - {formatTime(end_time)}
@@ -148,18 +146,18 @@ const EventsTable = ({ data }) => {
                                     {  status === 'Completed' ? null : (
                                         <button 
                                         onClick={() => handleOpenModal(id)}
-                                        className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
+                                        className="text-left px-6 py-2 text-gray-800 hover:bg-gray-200">
                                             Complete
                                         </button>
                                     )}
                                     
-                                    <Link to={`/view-event/${id}`} className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
+                                    <Link to={`/view-event/${id}`} className="text-left px-6 py-2 text-gray-800 hover:bg-gray-200">
                                     View
                                     </Link>
-                                    <Link to={`/edit-event/${id}`} className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white" >
+                                    <Link to={`/edit-event/${id}`} className="text-left px-6 py-2 text-gray-800 hover:bg-gray-200" >
                                     Edit
                                     </Link>
-                                    <button className="text-left px-6 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white" onClick={() => handleDelete(id)}>
+                                    <button className="text-left px-6 py-2 text-gray-800 hover:bg-gray-200" onClick={() => handleDelete(id)}>
                                     Delete
                                     </button>
                                 </div>

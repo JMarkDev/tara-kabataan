@@ -107,10 +107,6 @@ const EditEvent = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log(data)
-    
-            console.log(response.data);
-    
             if (response.data.status === 'success') {
                 alert('Event updated successfully');
                 navigate('/admin-events');
@@ -174,8 +170,7 @@ const EditEvent = () => {
               id="image"
               name="image"
               className="w-full px-3 py-2 border rounded-lg focus:outline-none text-center"
-              // required
-              // value={formData.image}
+              required
               onChange={handleInputChange}              
             />
           </div>
