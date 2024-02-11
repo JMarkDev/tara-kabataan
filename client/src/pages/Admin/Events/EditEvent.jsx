@@ -215,8 +215,8 @@ const EditEvent = () => {
           </div>
           { eventType && (
             <div className='mb-4 w-full lg:w-[50%]'>
-            <label htmlFor="description" className="block text-gray-700 dark:text-white font-bold ">
-              Attendance Count
+            <label htmlFor="attendance" className="block text-gray-700 dark:text-white font-bold ">
+             Attendance Count For Discount
             </label>
             <input
               type="number"
@@ -234,7 +234,7 @@ const EditEvent = () => {
           { eventType && (
             <div className='lg:flex justify-between gap-3'>
             <div className="mb-4 w-full lg:w-[50%]">
-              <label htmlFor="title" className="block text-gray-700 font-bold dark:text-white">
+              <label htmlFor="price" className="block text-gray-700 font-bold dark:text-white">
                 Price
               </label>
               <input
@@ -248,7 +248,7 @@ const EditEvent = () => {
               />
             </div>
               <div className="mb-4 w-full lg:w-[50%]">
-              <label htmlFor="title" className="block text-gray-700 font-bold dark:text-white">
+              <label htmlFor="discount" className="block text-gray-700 font-bold dark:text-white">
                 Discount
               </label>
               <input

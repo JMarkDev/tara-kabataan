@@ -52,7 +52,7 @@ function Carousel() {
         if (!isLoading) {
           nextSlide();
         }
-      }, 5000); // Adjusted the auto-slide interval to 5 seconds
+      }, 3000); // Adjusted the auto-slide interval to 5 seconds
 
       return () => clearInterval(interval);
     }
@@ -126,10 +126,11 @@ function Carousel() {
       </div>
 
       <div className='flex justify-center'>
-      <div className="flex absolute bottom-0 text-white justify-center py-2">
+      <div className="flex absolute bottom-0 justify-center py-2 text-lg">
         {strandImages.map((_, slideIndex) => (
           <RxDotFilled
             key={slideIndex}
+            className={`${currentIndex === slideIndex ? 'text-white' : 'text-gray-600' }`}
             active={slideIndex === currentIndex ? 'true' : 'false'}
             onClick={() => goToSlide(slideIndex)}
           />

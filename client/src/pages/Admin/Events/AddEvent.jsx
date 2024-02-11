@@ -173,7 +173,7 @@ const AddEvent = () => {
           { eventType && (
             <div className='mb-4 w-full lg:w-[50%]'>
             <label htmlFor="description" className="block text-gray-700 dark:text-white font-bold ">
-              Attendance Count
+              Attendance Count For Discount
             </label>
             <input
               type="number"
