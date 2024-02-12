@@ -67,7 +67,7 @@ function Carousel() {
    <div
       className="relative"
       style={{
-        height: 'calc(100vh - 100px)',
+        height: 'calc(100vh - 70px)',
       }}
     >
     <div
@@ -106,7 +106,7 @@ function Carousel() {
 
       <div className="absolute top-[30%] text-center m-auto w-[100%]">
         
-      <h1 className="px-5 tracking-wide lg:text-4xl text-2xl font-bold text-white" style={{ 
+      <h1 className="px-5 tracking-wide lg:text-4xl font-serif text-2xl font-bold text-white" style={{ 
         textShadow: '100px 100px 100px rgba(0,0,0,0.1)',
       }}>
         Break free from ordinary: Live, learn, and

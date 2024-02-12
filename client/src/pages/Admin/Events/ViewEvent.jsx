@@ -153,7 +153,9 @@ const ViewEvent = () => {
       </div>
       <div className='mt-7'>
         {/* <ImageGalery /> */}
-        <FeaturedImageGallery />
+        <FeaturedImageGallery 
+          id={id}
+          />
       </div>
     </div>
   )

@@ -18,7 +18,7 @@ const EventCard = ({ event }) => {
 
             <img src={`${api.defaults.baseURL}${image}`} alt={event_title} className="w-full h-[250px] object-cover rounded-md" />
             <div className='p-3'>
-              <p className='bg-[#efe5fa] text-[#6415ff] text-md px-5 w-fit rounded-full'>{event_category}</p>
+              <p className='bg-[#f6f6f6] text-[#6415ff] text-md px-5 w-fit rounded-full'>{event_category}</p>
               <h1 className="text-[#243e63] text-xl font-bold mt-3">{event_title}</h1>
               <p className='text-[15px]'><span className='font-semibold text-[#243e63] text-sm'>Date: </span>{extractYear(start_date)} - {dateFormat(end_date)}</p>
               <p className='text-[15px]'><span className='font-semibold text-[#243e63] text-sm'>Time: </span>{formatTime(start_time)} - {formatTime(end_time)}</p>
@@ -31,7 +31,7 @@ const EventCard = ({ event }) => {
                   </div>
                 </div>
                 )}
-                <Link className='bg-[#854ef3] rounded-full px-3 py-2 text-sm text-white'>
+                <Link className='bg-[#854ef3] rounded-lg px-5 py-3 text-sm text-white'>
                       View Details
                 </Link>
                 </div>

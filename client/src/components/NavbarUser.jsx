@@ -63,10 +63,10 @@ const NavbarUser = () => {
 
 
   return (
-    <header className='h-[100px] z-20 w-full m-auto px-5 fixed bg-[#efeff5] shadow-lg'>
+    <header className='z-20 w-full h-[70px] m-auto px-5 py-1 bg-[#efeff5] shadow-lg'>
       <div className="hidden md:block">
       <div className='flex justify-between items-center'>
-        <img src={logo} alt="logo" className='w-[100px] h-[100px]' />
+        <img src={logo} alt="logo" className='w-auto h-[60px]' />
         <ul className='flex gap-10'>
           <li>
             <Link
@@ -162,7 +162,7 @@ const NavbarUser = () => {
       </div>
 
       <div className="md:hidden flex w-full justify-between items-center">
-        <img src={logo} alt="logo" className="w-24 h-24" />
+        <img src={logo} alt="logo" className='w-auto h-[60px]' />
         <div className='flex items-center'>
         {
           userData && (

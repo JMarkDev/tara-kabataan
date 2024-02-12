@@ -1,33 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; 
 import api from "../api/api";  
-export default function FeaturedImageGallery() {
-    const [data, setData] = useState([])
-    const [active, setActive] = useState('')
-    const { id } = useParams()
+export default function FeaturedImageGallery({ id }) {
+  const [data, setData] = useState([])
+  const [active, setActive] = useState('')
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await api.get(`/archive/id/${id}`)
-                const imageData = response.data?.images.split(',')
-                setData(imageData)
+  useEffect(() => {
+      const fetchData = async () => {
+          try {
+            if(id) {
+              const response = await api.get(`/archive/id/${id}`)
+              const imageData = response.data?.images.split(',')
+              setData(imageData)
+              if(typeof imageData !== 'undefined') {
                 imageData !== 'undefined' && setActive(`${api.defaults.baseURL}/uploads/${imageData[0]}`)
-            } catch (error) {
-                console.log(error)
+              }
             }
-        }
-        fetchData()
-    }, [id])
+          } catch (error) {
+              console.log(error)
+          }
+      }
+      fetchData()
+  }, [id])
+
+  const handleImageLink = (image) => {
+      setActive(`${api.defaults.baseURL}/uploads/${image}`)
+  }
  
-    const handleImageLink = (image) => {
-        setActive(`${api.defaults.baseURL}/uploads/${image}`)
-    }
- 
+
   return (
 <>
     { data && (
-        <div className="grid gap-4">
+        <div className="grid gap-4 bg-[#f6f6f6] p-5">
       <div>
         <img
           className="h-auto w-full max-w-full rounded-lg object-cover object-center md:h-[480px]"
