@@ -53,9 +53,9 @@ const Home = () => {
   return (
     <>
       <Carousel />
-<div className="">
-    <div>
-      <h1 className="pt-10 text-center text-[#243e63] lg:text-4xl text-2xl font-bold mt-10">Discover Our Exciting <span className="text-[#6415ff]">Categories</span></h1>
+<div className="bg-white">
+    <div className="px-10 pt-10">
+      <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold">Discover Our Exciting <span className="text-[#6415ff]">Categories</span></h1>
       <p className="text-center text-[#6b7280] lg:text-lg text-md mt-4">Explore a diverse range of event categories curated just for you. We have something amazing for everyone.</p>
     
       <div className="lg:px-10 grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7 mt-10">
@@ -75,10 +75,9 @@ const Home = () => {
       <div>
     </div>
     <div>
-  <div>
-    <h1 className="pt-10 text-center text-[#243e63] lg:text-4xl text-2xl font-bold mt-10">Upcoming <span className="text-[#6415ff]">Events</span></h1>
+  <div className="px-10">
+    <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold mt-10">Upcoming <span className="text-[#6415ff]">Events</span></h1>
     <p className="text-center text-[#6b7280] lg:text-lg text-md mt-4">Stay ahead of the curve with our upcoming events. Don't miss out - mark your calendar and join the fun!</p>
-  </div>
       <div className="flex flex-col justify-center items-center">
         <EventCard event={event} />
         <Link to="/events" className=" mt-10">
@@ -87,11 +86,10 @@ const Home = () => {
           </button>
         </Link>
       </div>  
-
-      <div>
-    <h1 className="pt-10 text-center text-[#243e63] lg:text-4xl text-2xl font-bold mt-10">Completed <span className="text-[#6415ff]">Events</span></h1>
-    <p className="text-center text-[#6b7280] lg:text-lg text-md mt-4">Stay ahead of the curve with our upcoming events. Don't miss out - mark your calendar and join the fun!</p>
   </div>
+  <div className="px-10">
+    <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold mt-10">Completed <span className="text-[#6415ff]">Events</span></h1>
+    <p className="text-center text-[#6b7280] lg:text-lg text-md mt-4">Stay ahead of the curve with our upcoming events. Don't miss out - mark your calendar and join the fun!</p>
       <div className=" flex flex-col justify-center items-center">
         <EventCard event={completedEvent} />
         <Link to="/events" className=" mt-10">
@@ -100,7 +98,8 @@ const Home = () => {
           </button>
         </Link>
       </div>  
-      <div className="px-5 pt-10">
+  </div>
+      <div className="lg:px-[200px] px-10 pt-10">
         <p className="flex justify-center text-[#6415ff] font-bold">FAQS</p>
         <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold">You have <span className="text-[#6415ff]">Questions ?</span></h1>
         <AccordionCustomIcon />

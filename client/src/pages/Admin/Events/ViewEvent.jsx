@@ -8,6 +8,7 @@ import PieChart from '../../../components/PieChart'
 import AttendeesTable from '../../../components/AttendeesTable';
 import { useFormat } from '../../../hooks/useFormatDate'
 import ImageGalery from '../../../components/ImageGalery';
+import FeaturedImageGallery from '../../../components/FeaturedImageGallery';
 
 const ViewEvent = () => {
   const { id } = useParams()
@@ -151,7 +152,8 @@ const ViewEvent = () => {
         <AttendeesTable />
       </div>
       <div className='mt-7'>
-        <ImageGalery />
+        {/* <ImageGalery /> */}
+        <FeaturedImageGallery />
       </div>
     </div>
   )
