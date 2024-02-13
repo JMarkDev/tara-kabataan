@@ -19,7 +19,7 @@ const UserProfile = ({ handleDropdownClick, hideProfile }) => {
     <div 
     onClick={handleDropdownClick}
     onMouseLeave={hideProfile}
-    className="bg-white dark:bg-[#075985] rounded-lg border h-[120px] w-[150px] absolute bottom-[-100px] z-20 right-2 pt-[15px] space-y-[10px]">
+    className={`${role === 'user' && 'top-20'} bg-white dark:bg-[#075985] rounded-lg border h-[120px] w-[150px] absolute z-20 right-2 pt-[15px] space-y-[10px] `}>
     <ul className="w-full">
       <li>
         <Link
