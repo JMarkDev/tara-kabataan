@@ -20,8 +20,8 @@ const EventCard = ({ event }) => {
             <div className='p-3'>
               <p className='bg-[#f6f6f6] text-[#6415ff] text-md px-5 w-fit rounded-full'>{event_category}</p>
               <h1 className="text-[#243e63] text-xl font-bold mt-3">{event_title}</h1>
-              <p className='text-[15px]'><span className='font-semibold text-[#243e63] text-sm'>Date: </span>{extractYear(start_date)} - {dateFormat(end_date)}</p>
-              <p className='text-[15px]'><span className='font-semibold text-[#243e63] text-sm'>Time: </span>{formatTime(start_time)} - {formatTime(end_time)}</p>
+              <p className='text-[15px]'>Date: {extractYear(start_date)} - {dateFormat(end_date)}</p>
+              <p className='text-[15px]'>Time: {formatTime(start_time)} - {formatTime(end_time)}</p>
               <div className='flex justify-between items-center'>
               { event_type === 'Free'? <p className='text-lg py-2'>Free</p> : (
                 <div className='py-2 flex items-center justify-between gap-5 text-lg'>

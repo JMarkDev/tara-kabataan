@@ -8,12 +8,15 @@ import FeaturedImageGallery from "../../components/FeaturedImageGallery"
 import Accordion from "../../components/Accordion"
 import FAQimage from '../../assets/images/FAQ.webp'
 import ChatIcon from '../../assets/images/chat-message-icon-design-in-blue-circle-png.webp'
+import ChatbotIMG from '../../assets/images/pngegg.png'
+import CrossIcon from '../../assets/images/cross.png'
+import { FiSend } from "react-icons/fi";
 
 const Home = () => {
   const [completedEventID, setCompletedEventID] = useState('')
   const [category, setCategory] = useState([])
   const [event, setEvent] = useState([])
-  const [openChat, setOpenChat] = useState(true)
+  const [openChat, setOpenChat] = useState(false)
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -55,12 +58,45 @@ const Home = () => {
     fetchEventCompleted()
   }, [])
 
+  const currentYear = new Date().getFullYear()
+
   return (
     <>
       <div className="z-20 fixed right-5 bottom-5">
         {openChat && (
-            <div className="bg-white h-[350px] w-[320px] fixed  bottom-[90px] rounded-lg right-5 flex justify-center items-center">
-              <p className="text-[#243e63] text-lg font-semibold">Welcome to Event Management System</p>
+            <div className="bg-[#f2f2f2] h-[420px] transition-all shadow-2xl drop-shadow-xl w-[340px] fixed  bottom-[90px] rounded-lg right-5">
+              <div className="flex bg-[#5e35af] p-1 rounded-t-lg justify-between">
+                <div className="flex">
+                  <img src={ChatbotIMG} alt="chatbot" className="w-10 h-10 rounded-full"/>
+                  <p className="text-sm text-white p-3 rounded-t-lg ">Event Management Chatbot</p>
+                </div>
+                <div className="">
+                  <img onClick={() => setOpenChat(!openChat)} className="w-6 invert m-1 cursor-pointer" src={CrossIcon} alt="cross" />
+                </div>
+              </div>
+              <div className="h-[270px] pb-2 overflow-y-auto">
+                  <div className="flex gap-2 mt-7 mx-3 my-3">
+                    <img src={ChatbotIMG} alt="chatbot" className="w-7 h-7 rounded-full"/>
+                    <p className="text-sm rounded-lg p-2 mr-8 bg-gray-300">Welcome to out Chatbot? How can I assist you today?</p>
+                  </div>
+                  <div className="mr-3 flex justify-end">
+                    <p className="text-sm ml-12 p-2 rounded-lg bg-slate-500 text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt nesciunt illo excepturi odio alias commodi veritatis libero quos distinctio quasi consectetur, a repudiandae enim deleniti nobis ipsam praesentium nam nostrum.</p>
+                  </div>      
+                  <div className="flex gap-2 mt-7 mx-3 my-3">
+                    <img src={ChatbotIMG} alt="chatbot" className="w-7 h-7 rounded-full"/>
+                    <p className="text-sm rounded-lg p-2 mr-8 bg-gray-300">Welcome to out Chatbot? How can I assist you today?</p>
+                  </div>
+                  <div className="mr-3 flex justify-end">
+                    <p className="text-sm ml-12 p-2 rounded-lg bg-slate-500 text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi aperiam saepe consequatur natus dignissimos quasi voluptates libero, quos doloremque excepturi explicabo perferendis voluptatum est aut odit atque magnam laborum voluptatem.</p>
+                  </div>                 
+              </div>
+                <div className="absolute rounded-b-lg bg-[#f2f2f2] left-0 bottom-0 w-full px-3">
+                  <div className="flex relative flex-row-reverse justify-center items-center"> 
+                  <FiSend className="text-xl text-[#6415ff] cursor-pointer absolute z-10 bottom-4 right-3"/>
+                  <input type="text" className="relative w-full my-2 p-2 rounded-full text-sm focus:outline-none border border-indigo-400 focus:border-[#6415ff]" placeholder="Type a message"/>
+                  </div>
+                  <p className="text-sm p-2 flex justify-center">@tarakabataan{currentYear}</p>
+                </div>
             </div>
        )} 
         <img src={ChatIcon} alt="chat icon" className="w-[60px] h-[60px] cursor-pointer hover:scale-110 transition-all"
