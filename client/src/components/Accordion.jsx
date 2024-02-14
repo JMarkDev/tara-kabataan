@@ -29,14 +29,14 @@ export default function AccordionCustomIcon() {
     <>
       <div className="flex flex-col">
       <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
-        <AccordionHeader onClick={() => handleOpen(1)} className="text-lg">How do I register for an event?</AccordionHeader>
+        <AccordionHeader onClick={() => handleOpen(1)} className="text-md lg:text-lg">How do I register for an event?</AccordionHeader>
         <AccordionBody className=''>
         To register for an event, simply navigate to the event page and click on the event card. Then, fill out the required information.
 
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 2} icon={<Icon id={2} open={open} />}>
-      <AccordionHeader onClick={() => handleOpen(2)} className="text-lg">
+      <AccordionHeader onClick={() => handleOpen(2)} className="text-md lg:text-lg">
         Are there discounts available for event registrations?
       </AccordionHeader>
       <AccordionBody className=''>
@@ -44,7 +44,7 @@ export default function AccordionCustomIcon() {
       </AccordionBody>
       </Accordion>
       <Accordion open={open === 3} icon={<Icon id={3} open={open} />}>
-      <AccordionHeader onClick={() => handleOpen(3)} className="text-lg">
+      <AccordionHeader onClick={() => handleOpen(3)} className="text-md lg:text-lg">
         What payment methods are accepted?
       </AccordionHeader>
       <AccordionBody className=''>
@@ -53,7 +53,7 @@ export default function AccordionCustomIcon() {
 
       </Accordion>
       <Accordion open={open === 4} icon={<Icon id={4} open={open} />}>
-      <AccordionHeader onClick={() => handleOpen(4)} className="text-lg">
+      <AccordionHeader onClick={() => handleOpen(4)} className="text-md lg:text-lg">
         How can I get a refund?
       </AccordionHeader>
       <AccordionBody className=''>
@@ -61,7 +61,7 @@ export default function AccordionCustomIcon() {
       </AccordionBody>
       </Accordion>
       <Accordion open={open === 5} icon={<Icon id={5} open={open} />}>
-      <AccordionHeader onClick={() => handleOpen(5)} className="text-lg">
+      <AccordionHeader onClick={() => handleOpen(5)} className="text-md lg:text-lg">
       How can I sponsor or donate to support the event?
       </AccordionHeader>
       <AccordionBody className=''>
@@ -69,7 +69,7 @@ export default function AccordionCustomIcon() {
       </AccordionBody>
       </Accordion>
       <Accordion open={open === 6} icon={<Icon id={6} open={open} />}>
-      <AccordionHeader onClick={() => handleOpen(6)} className="text-lg">
+      <AccordionHeader onClick={() => handleOpen(6)} className="text-md lg:text-lg">
       How can I provide feedback or suggestions about the event?
       </AccordionHeader>
       <AccordionBody className=''>

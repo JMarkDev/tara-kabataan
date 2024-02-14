@@ -71,7 +71,7 @@ const Home = () => {
       </div>
       <Carousel/>
 <div className="bg-white">
-    <div className="px-10 pt-10">
+    <div className="px-10 lg:px-20 pt-10">
       <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold">Discover Our Exciting <span className="text-[#6415ff]">Categories</span></h1>
       <p className="text-center text-[#6b7280] lg:text-lg text-md mt-4">Explore a diverse range of event categories curated just for you. We have something amazing for everyone.</p>
     
@@ -92,7 +92,7 @@ const Home = () => {
       <div>
     </div>
     <div>
-  <div className="px-10">
+  <div className="px-10 lg:px-20">
     <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold mt-10">Upcoming <span className="text-[#6415ff]">Events</span></h1>
     <p className="text-center text-[#6b7280] lg:text-lg text-md mt-4">Stay ahead of the curve with our upcoming events. Don't miss out - mark your calendar and join the fun!</p>
       <div className="flex flex-col justify-center items-center">
