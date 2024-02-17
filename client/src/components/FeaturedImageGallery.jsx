@@ -3,12 +3,14 @@ import api from "../api/api";
 export default function FeaturedImageGallery({ id }) {
   const [data, setData] = useState([])
   const [active, setActive] = useState('')
+  const [title, setTitle] = useState('')
 
   useEffect(() => {
       const fetchData = async () => {
           try {
             if(id) {
               const response = await api.get(`/archive/id/${id}`)
+              setTitle(response.data.event_name)
               const imageData = response.data?.images.split(',')
               setData(imageData)
               if(typeof imageData !== 'undefined') {
@@ -30,6 +32,10 @@ export default function FeaturedImageGallery({ id }) {
   return (
 <>
     { data && (
+      <>
+        <h1 className="py-2 font-bold text-xl text-[#243e63]">
+          Event Gallery {title}
+        </h1>
         <div className="grid gap-4 bg-[#f6f6f6] p-5">
       <div>
         <img
@@ -51,6 +57,7 @@ export default function FeaturedImageGallery({ id }) {
         ))}
       </div>
     </div>
+    </>
      )} 
         
 </>

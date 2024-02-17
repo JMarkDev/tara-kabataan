@@ -259,7 +259,7 @@ const Category = () => {
                                 <div className="flex items-center justify-center gap-5">
                                 <button 
                                 onClick={() => handleEdit(id)}
-                                className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-blue-600 text-center flex items-center">
+                                className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-green-600 text-center flex items-center">
                                     <FaRegEdit />
                                 </button> 
                                 {edit && (

@@ -21,7 +21,10 @@ function NavbarDashboard({ setOpen}) {
   const pageTitles = {
     '/dashboard': 'Dashboard',
     '/admin-events': 'Event List',
+    [`/edit-admin/${id}`] : 'Edit Admin',
     '/admin-users': 'User List',
+    '/admin-category': 'Event Category',
+    '/archives': 'Archive List',
     '/admin': 'Admin List',
     '/admin-profile': 'Admin Profile',
     '/add-event': 'Add Event',

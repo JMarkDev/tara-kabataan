@@ -88,12 +88,12 @@ export default function FooterWithSocialLinks() {
             ))}
           </div>
         </div>
-        <div className="mt-12 flex w-full items-center justify-center border-t border-blue-gray-50 py-4 ">
+        <div className="mt-12 flex w-full items-center justify-center border-t border-blue-gray-50 py-4">
           {/* <Typography
             variant="small"
             className="flex mb-4 text-center font-normal text-blue-gray-900 md:mb-0"
           > */}
-            <p className="">&copy; {currentYear}  Tara Kabataan All Rights Reserved.</p>.
+            <p>&copy; {currentYear}  Tara Kabataan Organization. All Rights Reserved.</p>.
           {/* </Typography> */}
           
         </div>

@@ -2,17 +2,24 @@ import React, { useEffect, useState } from 'react'
 import api from '../../api/api'
 import EventCard from '../../components/EventCard'
 import { MdSearch } from 'react-icons/md'
+import DropdownCategory from '../../components/DropdownCategory'
 
 const Events = () => {
   const [category , setCategory] = useState([])
   const [event, setEvent] = useState([])
   const [search, setSearch] = useState('')
+  const [categoryName, setCategoryName] = useState([])
 
   useEffect(() => {
     const fetchCategory = async () => {
       try {
         const response = await api.get('/category/all')
         setCategory(response.data)
+
+        const getCategoryName = response.data.map((name) => (
+          name.category_name
+        ))
+        setCategoryName(getCategoryName)
       } catch (error) {
         console.log(error)
       }
@@ -38,8 +45,9 @@ const Events = () => {
     fetchEvent()
   }, [search])
 
+
   return (
-    <div>
+    <div className='bg-white'>
   <div className="flex justify-between p-5 items-center"> 
     <h1 className='font-bold text-xl text-[#243e63]'>All Events</h1>
     <div className='flex justify-end items-center'>
@@ -52,13 +60,33 @@ const Events = () => {
       </button>
     </div>
   </div>
-  <div className='flex'>
-    <div className='w-[250px] p-5 text-[#243e63]'>
+  <div className='flex lg:flex-row flex-col'>
+    <div className='lg:hidden flex justify-evenly px-5 items-center'>
+    <h1 className='text-md font-bold text-[#243e63]'>Filters By:</h1>
+      <DropdownCategory 
+        options={[
+          { label: 'Status', 
+            links: ['Upcoming','Completed']
+          }
+        ]}
+      />
+      <DropdownCategory 
+        options={[
+          { label: 'Category', 
+            links: categoryName
+          }
+        ]}
+      />
+     <DropdownCategory 
+        options={[
+          { label: 'Price', 
+            links: ['Free','Paid']
+          }
+        ]}
+      />
+    </div>
+    <div className='w-[250px] hidden lg:block  p-5 text-[#243e63]'>
       <h1 className='text-lg font-bold text-[#243e63]'>Filters By:</h1>
-      <div className='flex gap-3'>
-        <input type="radio" name="default" value="default" className='ml-3'/>
-        <label>Default</label>
-      </div>
       <div>
         <h1 className='mt-5 font-bold'>Status</h1> 
         <div className='p-3 flex flex-col gap-3 py-2'>
@@ -97,7 +125,7 @@ const Events = () => {
         </div>
       </div>
     </div>
-    <div>
+    <div className='px-10 sm:px-10 lg:px-0 flex justify-center'>
       <EventCard event={event}/>
     </div>
   </div>

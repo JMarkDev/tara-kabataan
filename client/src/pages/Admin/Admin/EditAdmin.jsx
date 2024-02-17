@@ -26,7 +26,6 @@ const EditAdmin = () => {
         const fetchData = async () => {
             try {
                 const response = await api.get(`/user/id/${id}`)
-                console.log(response.data)
                 setValues((prevData) => ({
                     ...prevData,
                     firstname: response.data.firstname,

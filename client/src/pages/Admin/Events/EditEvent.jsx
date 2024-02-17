@@ -99,7 +99,6 @@ const EditEvent = () => {
         data.append('attendance_count', attendance_count);
         data.append('price', price);
         data.append('discount', discount);
-        console.log(title)
     
         try {
             const response = await api.put(`/event/update/${id}`, data, {

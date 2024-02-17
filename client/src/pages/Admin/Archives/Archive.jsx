@@ -37,8 +37,7 @@ const Archives = () => {
 
   return (
     <div>
-      <h1 className="font-bold text-xl">Completed Events</h1>
-        <div className="flex justify-center items-center relative"> 
+        <div className="flex justify-center items-center relative mt-5"> 
           <input type="text" placeholder="search events..." 
             className="lg:w-[350px] absolute right-0 p-2 px-5 outline-none focus:border-indigo-600 border shadow-lg rounded-full"
             onChange={(e) => setSearch(e.target.value)}

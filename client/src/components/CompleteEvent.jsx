@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../api/api";
 
-const CompleteEvent = ({ handleCloseModal, eventID, eventData }) => {
+const CompleteEvent = ({ handleCloseModal, eventID }) => {
   const [images, setImages] = useState([])
+  const [title, setTitle] = useState('')
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
@@ -11,6 +12,18 @@ const CompleteEvent = ({ handleCloseModal, eventID, eventData }) => {
       [name]: name === 'image' ? files : value
     }))
   }
+  
+  useEffect(() => {
+    const fetchEventByID = async () => {
+      try {
+        const response = await api.get(`/event/id/${eventID}`)
+        setTitle(response.data.event_title)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchEventByID()
+  }, [eventID])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -22,6 +35,7 @@ const CompleteEvent = ({ handleCloseModal, eventID, eventData }) => {
         for(let i = 0; i < image.length; i++) {
         data.append('image', image[i]);
         }
+        data.append('event_name', title)
 
         const response = await api.put(`/archive/update/${eventID}`, data)
         console.log(response.data)
