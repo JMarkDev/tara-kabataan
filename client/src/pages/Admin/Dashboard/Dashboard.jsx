@@ -19,7 +19,7 @@ const Dashboard = () => {
   const cards = [
     { name: 'Total Events', count: 100 },
     { name: 'Total Revenue', count: '₱ 100'},
-    { name: 'Total Attendees', count: 100 },
+    { name: 'Total Users', count: 100 },
     { name: 'Upcoming Events', count: 100 },
   ]
 

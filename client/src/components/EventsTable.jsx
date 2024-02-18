@@ -154,9 +154,12 @@ const EventsTable = ({ data }) => {
                                     <Link to={`/view-event/${id}`} className="text-left px-6 py-2 text-gray-800 hover:bg-gray-200">
                                     View
                                     </Link>
-                                    <Link to={`/edit-event/${id}`} className="text-left px-6 py-2 text-gray-800 hover:bg-gray-200" >
-                                    Edit
-                                    </Link>
+                                    {  status === 'Completed' ? null : (
+                                        <Link to={`/edit-event/${id}`} className="text-left px-6 py-2 text-gray-800 hover:bg-gray-200" >
+                                            Edit
+                                        </Link>
+                                    )}
+   
                                     <button className="text-left px-6 py-2 text-gray-800 hover:bg-gray-200" onClick={() => handleDelete(id)}>
                                     Delete
                                     </button>

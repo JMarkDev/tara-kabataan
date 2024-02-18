@@ -21,7 +21,7 @@ const currentYear = new Date().getFullYear();
 export default function FooterWithSocialLinks() {
   return (
     <footer className="relative w-full border py-5 border-t-gray-300">
-      <div className="mx-auto w-full max-w-7xl px-8">
+      <div className="mx-auto w-full max-w-7xl px-5">
         <div className="">
           {/* <Typography variant="h5" className="mb-6"> */}
           {/* </Typography> */}
@@ -93,7 +93,7 @@ export default function FooterWithSocialLinks() {
             variant="small"
             className="flex mb-4 text-center font-normal text-blue-gray-900 md:mb-0"
           > */}
-            <p>&copy; {currentYear}  Tara Kabataan Organization. All Rights Reserved.</p>.
+            <p>&copy; {currentYear} Tara Kabataan Organization. All Rights Reserved.</p>.
           {/* </Typography> */}
           
         </div>

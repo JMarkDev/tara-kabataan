@@ -5,10 +5,16 @@ import { MdSearch } from 'react-icons/md'
 import DropdownCategory from '../../components/DropdownCategory'
 
 const Events = () => {
+  const [filterSelected, setFilterSelected] = useState('');
+  const [filterCategoryMobile, setFilterCategoryMobile] = useState('')
+  const [defaultEvent, setDefault] = useState(false)
   const [category , setCategory] = useState([])
   const [event, setEvent] = useState([])
   const [search, setSearch] = useState('')
   const [categoryName, setCategoryName] = useState([])
+  const [selectedStatus, setSelectedStatus] = useState('')
+  const [filterCategory, setFilterCategory] = useState('')
+  const [filterEventType, setFilterEventType] = useState('')
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -45,6 +51,74 @@ const Events = () => {
     fetchEvent()
   }, [search])
 
+  useEffect(() => {
+    const fetchByStatus = async () => {
+      try {
+        let response;
+        if (selectedStatus && filterEventType && filterCategory) {
+          response = await api.get(`/event/filter/${selectedStatus}/${filterEventType}/${filterCategory}`)
+          setEvent(response.data)
+        }else if (filterEventType && filterCategory) {
+          response = await api.get(`/event/filter/event_type?event_type=${filterEventType}&event_category=${filterCategory}`)
+          setEvent(response.data)
+        } else if (selectedStatus && filterCategory) {
+          response = await api.get(`/event/filter/${selectedStatus}/${filterCategory}`)
+          setEvent(response.data)
+        } else if (selectedStatus && filterEventType) {
+          response = await api.get(`/event/filter/status/${selectedStatus}/event-type/${filterEventType}`)
+          setEvent(response.data)
+        }
+          else if(selectedStatus) {
+          response = await api.get(`/event/filter-status/${selectedStatus}`)
+          setEvent(response.data)
+        } else if (filterCategory) {
+          response = await api.get(`/event/filter/${filterCategory}`)
+          setEvent(response.data)
+        } else if (filterEventType) {
+          response = await api.get(`/event/filter/event-type/${filterEventType}`)
+          setEvent(response.data)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchByStatus()
+  }, [selectedStatus, filterCategory, filterEventType])
+
+
+  const handleFilter = async (filterSelected, selectedCategory) => {
+    console.log(filterSelected, selectedCategory)
+    try {
+      let response;
+      if(filterSelected) {
+        response = await api.get(`/event/filter-status/${filterSelected}`)
+        setEvent(response.data)
+        console.log('stat')
+      } else if (selectedCategory) {
+        console.log('cat')
+        response = await api.get(`/event/filter/${selectedCategory}`)
+        console.log(response.data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+  const handleDefault = async () => {
+    try { 
+      const response = await api.get('/event/all');
+      setEvent(response.data);
+      setDefault(true);
+      setSelectedStatus('');
+      setFilterCategory('');
+      setFilterEventType('');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+
 
   return (
     <div className='bg-white'>
@@ -61,7 +135,7 @@ const Events = () => {
     </div>
   </div>
   <div className='flex lg:flex-row flex-col'>
-    <div className='lg:hidden flex justify-evenly px-5 items-center'>
+    <div className='lg:hidden flex justify-evenly py-5 items-center'>
     <h1 className='text-md font-bold text-[#243e63]'>Filters By:</h1>
       <DropdownCategory 
         options={[
@@ -69,6 +143,9 @@ const Events = () => {
             links: ['Upcoming','Completed']
           }
         ]}
+        handleFilter={handleFilter} // Pass the callback function directly
+        setFilterSelected={setFilterSelected} // Pass the setter function to update the state
+        setFilterCategoryMobile={setFilterCategoryMobile} // Pass the setter function for category
       />
       <DropdownCategory 
         options={[
@@ -76,6 +153,9 @@ const Events = () => {
             links: categoryName
           }
         ]}
+        handleFilter={handleFilter} // Pass the callback function directly
+        setFilterSelected={setFilterSelected} // Pass the setter function to update the state
+        setFilterCategoryMobile={setFilterCategoryMobile} // P
       />
      <DropdownCategory 
         options={[
@@ -87,16 +167,30 @@ const Events = () => {
     </div>
     <div className='w-[250px] hidden lg:block  p-5 text-[#243e63]'>
       <h1 className='text-lg font-bold text-[#243e63]'>Filters By:</h1>
+      <div className='flex gap-3 p-3'>
+          <input 
+          onChange={() => handleDefault()}
+          type="radio" name="default" value="default"
+          checked={selectedStatus || filterCategory ||filterEventType ? false : true}
+          />
+          <label>Default</label>
+      </div>
       <div>
         <h1 className='mt-5 font-bold'>Status</h1> 
         <div className='p-3 flex flex-col gap-3 py-2'>
           <div className='flex gap-3'>
-            <input type="radio" name="status" value="upcoming" />
+            <input 
+            onChange={(e) => setSelectedStatus('Upcoming')}
+            type="radio" name="status" value="upcoming"
+            checked={selectedStatus === 'Upcoming'} />
             <label>Upcoming</label>
           </div>
           <div className='flex gap-3'>
-            <input type="radio" name="status" value="completed" />
-            <label>Completed</label>
+            <input 
+            onChange={(e) => setSelectedStatus('Completed')}
+            type="radio" name="status" value="completed"
+            checked={selectedStatus === 'Completed'} />
+          <label>Completed</label>
           </div>
         </div>
       </div>
@@ -105,7 +199,11 @@ const Events = () => {
         <div className='p-3 flex flex-col gap-3 py-2'>
           {category.map((cat) => (
             <div key={cat.id} className='flex gap-3'>
-              <input type="radio" name="category" value={cat.category_name} />
+              <input 
+              onChange={(e) => setFilterCategory(cat.category_name)}
+              type="radio" name="category" value={cat.category_name} 
+              checked={filterCategory === cat.category_name}
+              />
               <label>{cat.category_name}</label>
             </div>
           ))}
@@ -115,17 +213,25 @@ const Events = () => {
         <h2 className='mt-5 font-bold'>Price</h2>
         <div className='p-3 flex flex-col gap-3 py-2'>
           <div className='flex gap-3'> 
-            <input type="radio" name="price" value="free" />
+            <input 
+            onChange={(e) => setFilterEventType('Free')}
+            type="radio" name="price" value="free" 
+            checked={filterEventType === 'Free'}
+            />
             <label>Free</label>
           </div>
           <div className='flex gap-3'>
-            <input type="radio" name="price" value="paid"/>
+            <input 
+            onChange={(e) => setFilterEventType('Paid')}
+            type="radio" name="price" value="paid"
+            checked={filterEventType === 'Paid'}
+            />
             <label>Paid</label>
           </div>
         </div>
       </div>
     </div>
-    <div className='px-10 sm:px-10 lg:px-0 flex justify-center'>
+    <div className='px-5 sm:px-10 lg:px-0 flex justify-center'>
       <EventCard event={event}/>
     </div>
   </div>

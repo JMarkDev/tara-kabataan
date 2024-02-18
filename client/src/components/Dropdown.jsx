@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import PropTypes from 'prop-types'
@@ -8,16 +8,19 @@ function classNames(...classes) {
 }
 
 export default function Dropdown({ handleFilter }) {
-    Dropdown.propTypes = {
-      handleFilter: PropTypes.func.isRequired
-    }
+  const [selectedGender, setSelectedGender] = useState('Filter by gender')
+
+  const handleSelectGender = (gender) => {
+    setSelectedGender(gender)
+    handleFilter(gender)
+  }
 
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-5 py-2 text-sm  text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+        <Menu.Button className="inline-flex w-[150px] whitespace-nowrap justify-center gap-x-1.5 rounded-md bg-white px-5 py-2 text-sm  text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
         >
-          Filter by gender
+          {selectedGender}
           <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
         </Menu.Button>
       </div>
@@ -41,7 +44,7 @@ export default function Dropdown({ handleFilter }) {
                     active ? ' bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm w-full text-left'
                   )}
-                    onClick={(e) => handleFilter(e.target.textContent)}
+                    onClick={(e) => handleSelectGender('Filter by gender')}
                 >
                   Default
                 </button>
@@ -55,7 +58,7 @@ export default function Dropdown({ handleFilter }) {
                     active ? ' bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm w-full text-left'
                   )}
-                    onClick={(e) => handleFilter(e.target.textContent)}
+                    onClick={(e) => handleSelectGender('Male')}
                 >
                   Male
                 </button>
@@ -69,7 +72,7 @@ export default function Dropdown({ handleFilter }) {
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm w-full text-left'
                   )}
-                    onClick={(e) => handleFilter(e.target.textContent)}
+                    onClick={(e) => handleSelectGender('Female')}
                 >
                   Female
                 </button>
@@ -83,7 +86,7 @@ export default function Dropdown({ handleFilter }) {
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm w-full text-left'
                   )}
-                    onClick={(e) => handleFilter(e.target.textContent)}
+                    onClick={(e) => handleSelectGender('Non-Binary')}
                 >
                   Non-Binary
                 </button>
@@ -95,4 +98,8 @@ export default function Dropdown({ handleFilter }) {
       </Transition>
     </Menu>
   )
+}
+
+Dropdown.propTypes = {
+  handleFilter: PropTypes.func.isRequired
 }

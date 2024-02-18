@@ -17,10 +17,10 @@ const Events = () => {
       try {
         let response;
           if(search) {
-            response = await api.get(`/event/search/${search}`)
+            response = await api.get(`/event/search/${search}/Upcoming`)
             setData(response.data)
           } else {
-            response = await api.get(`/event/pagination?page=${currentPage}&size=10`)
+            response = await api.get(`/event/pagination?page=${currentPage}&size=10&status=Upcoming`)
             setData(response.data.events)
             setTotalPages(response.data.totalItems) 
           }

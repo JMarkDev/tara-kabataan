@@ -10,7 +10,7 @@ export default function FeaturedImageGallery({ id }) {
           try {
             if(id) {
               const response = await api.get(`/archive/id/${id}`)
-              setTitle(response.data.event_name)
+              setTitle(response.data?.event_name)
               const imageData = response.data?.images.split(',')
               setData(imageData)
               if(typeof imageData !== 'undefined') {

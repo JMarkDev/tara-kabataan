@@ -9,7 +9,7 @@ const EventCard = ({ event }) => {
   return (
     <div className="lg:px-10 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
         {event.map(({ id, event_title, event_category, image, start_date, end_date, start_time, end_time, price, discount, event_type}) => (
-          <div key={id} className="max-w-sm bg-[#f2f2f2] cursor-pointer rounded-md shadow-md hover:shadow-2xl">
+          <div key={id} className="max-w-sm h-fit bg-gray-200 cursor-pointer rounded-md shadow-md hover:shadow-2xl">
         <div className='relative'>
           <p className={`${discount !== "0.00" ? "block" : "hidden"} bg-[#ffe97a] rounded-bl-lg text-[#ec3814] py-2 px-2  shadow-md absolute right-0`}>
             {((price - discount) / price * 100 - 100).toFixed(2)}%

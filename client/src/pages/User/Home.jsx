@@ -73,7 +73,7 @@ const Home = () => {
       </div>
       <Carousel/>
 <div className="bg-white">
-    <div className="px-10 xl:px-20 pt-10 flex flex-col justify-center">
+    <div className="px-5 xl:px-20 pt-10 flex flex-col justify-center">
       <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold">Discover Our Exciting <span className="text-[#6415ff]">Categories</span></h1>
       <p className="text-center text-[#6b7280] lg:text-lg text-md mt-4">Explore a diverse range of event categories curated just for you. We have something amazing for everyone.</p>
     
@@ -93,7 +93,7 @@ const Home = () => {
       <div>
     </div>
     <div>
-  <div className="px-10 xl:px-20">
+  <div className="px-5 xl:px-20">
     <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold mt-10">Upcoming <span className="text-[#6415ff]">Events</span></h1>
     <p className="text-center text-[#6b7280] lg:text-lg text-md mt-4">Stay ahead of the curve with our upcoming events. Don't miss out - mark your calendar and join the fun!</p>
       <div className="flex flex-col mt-7 justify-center items-center">
@@ -105,14 +105,14 @@ const Home = () => {
         </Link>
       </div>  
   </div>
-  <div className="lg:px-[200px] px-10">
+  <div className="lg:px-[200px] px-5">
     <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold mt-10">Recent Completed <span className="text-[#6415ff]">Event</span></h1>
     <p className="text-center text-[#6b7280] lg:text-lg text-md mt-4">Stay ahead of the curve with our upcoming events. Don't miss out - mark your calendar and join the fun!</p>
       <div className="mt-10">
         <FeaturedImageGallery id={completedEventID}/>
       </div>  
   </div>
-      <div className="lg:px-20 pt-10 px-10">
+      <div className="lg:px-20 pt-10 px-5">
           <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold mt-10">Frequently Asked <span className="text-[#6415ff]">Questions</span></h1>
           <p className=" text-center text-[#6b7280] lg:text-lg text-md mt-4">We have answers to all your questions. If you have any other queries, feel free to reach out to us.</p>
           <div className="lg:flex lg:flex-row-reverse lg:justify-between gap-5 items-center">
