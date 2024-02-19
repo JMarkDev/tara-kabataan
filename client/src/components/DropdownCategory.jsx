@@ -11,13 +11,14 @@ export default function DropdownCategory({ options, handleFilter, setFilterSelec
 
   const handleSelectFilter = async (selectedFilter) => {
     setSelectedOption(selectedFilter);
-    if(selectedOption.label === 'Status') {
-      setFilterSelected(selectedFilter)
-    } else if (selectedOption.label === 'Category') {
-      console.log('category')
-      setFilterCategoryMobile(selectedFilter)
-    }
-    await handleFilter(selectedFilter, selectedOption.label === 'Category' ? selectedFilter : '');
+    await handleFilter(selectedFilter)
+    // if(selectedOption.label === 'Status') {
+    //   setFilterSelected(selectedFilter)
+    // } else if (selectedOption.label === 'Category') {
+    //   console.log('category')
+    //   setFilterCategoryMobile(selectedFilter)
+    // }
+    // await handleFilter(selectedFilter, selectedOption.label === 'Category' ? selectedFilter : '');
   };
 
   return (

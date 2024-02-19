@@ -7,6 +7,7 @@ import DropdownCategory from '../../components/DropdownCategory'
 const Events = () => {
   const [filterSelected, setFilterSelected] = useState('');
   const [filterCategoryMobile, setFilterCategoryMobile] = useState('')
+  const [filterType, setFilterType] = useState('')
   const [defaultEvent, setDefault] = useState(false)
   const [category , setCategory] = useState([])
   const [event, setEvent] = useState([])
@@ -86,19 +87,28 @@ const Events = () => {
   }, [selectedStatus, filterCategory, filterEventType])
 
 
-  const handleFilter = async (filterSelected, selectedCategory) => {
-    console.log(filterSelected, selectedCategory)
+  const handleFilter = async (filterSelected) => {
     try {
-      let response;
-      if(filterSelected) {
-        response = await api.get(`/event/filter-status/${filterSelected}`)
+        const response = await api.get(`/event/filter-status/${filterSelected}`)
         setEvent(response.data)
-        console.log('stat')
-      } else if (selectedCategory) {
-        console.log('cat')
-        response = await api.get(`/event/filter/${selectedCategory}`)
-        console.log(response.data)
-      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleFilterCategory = async (selectedCategory) => {
+    try {
+      const response = await api.get(`/event/filter/${selectedCategory}`)
+      setEvent(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  } 
+
+  const handleFilterType = async(selectedType) => {
+    try {
+      const response = await api.get(`/event/filter/event-type/${selectedType}`)
+      setEvent(response.data)
     } catch (error) {
       console.log(error)
     }
@@ -123,7 +133,9 @@ const Events = () => {
   return (
     <div className='bg-white'>
   <div className="flex justify-between p-5 items-center"> 
-    <h1 className='font-bold text-xl text-[#243e63]'>All Events</h1>
+    <h1 className='font-bold text-xl text-[#243e63] cursor-pointer'
+    onClick={() => handleDefault()}
+    >All Events</h1>
     <div className='flex justify-end items-center'>
       <input type="text" placeholder="search events..." 
         className="lg:w-[350px] p-2 px-5 outline-none focus:border-indigo-600 border shadow-lg rounded-full"
@@ -153,7 +165,7 @@ const Events = () => {
             links: categoryName
           }
         ]}
-        handleFilter={handleFilter} // Pass the callback function directly
+        handleFilter={handleFilterCategory} // Pass the callback function directly
         setFilterSelected={setFilterSelected} // Pass the setter function to update the state
         setFilterCategoryMobile={setFilterCategoryMobile} // P
       />
@@ -163,6 +175,9 @@ const Events = () => {
             links: ['Free','Paid']
           }
         ]}
+        handleFilter={handleFilterType} 
+        setFilterSelected={setFilterSelected} 
+        setFilterCategoryMobile={setFilterCategoryMobile} 
       />
     </div>
     <div className='w-[250px] hidden lg:block  p-5 text-[#243e63]'>
