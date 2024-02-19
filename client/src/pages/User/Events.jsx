@@ -131,7 +131,7 @@ const Events = () => {
 
 
   return (
-    <div className='bg-white'>
+    <div className=''>
   <div className="flex justify-between p-5 items-center"> 
     <h1 className='font-bold text-xl text-[#243e63] cursor-pointer'
     onClick={() => handleDefault()}

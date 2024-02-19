@@ -2,6 +2,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { RxDotFilled } from 'react-icons/rx';
 import { Link } from 'react-router-dom';
+import tarakabataanIMG from '../assets/images/tarakabataan.jpg'
+import img2 from '../assets/images/tarakabataan1.jpg'
+import mission from '../assets/images/mission.jpg'
 
 function Carousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -11,7 +14,10 @@ function Carousel() {
 
   useEffect(() => {
     const imagesLink = [
-      'https://avenueevents.co.uk/wp-content/uploads/2017/08/annual-conference-event-2.jpg',
+      tarakabataanIMG,
+      img2,
+      mission,
+      // 'https://avenueevents.co.uk/wp-content/uploads/2017/08/annual-conference-event-2.jpg',
       'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       'https://images.unsplash.com/photo-1582192730841-2a682d7375f9?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -106,7 +112,7 @@ function Carousel() {
 
       <div className="absolute top-[30%] text-center m-auto w-[100%]">
         
-      <h1 className="px-5 tracking-wide lg:text-4xl font-serif text-2xl font-bold text-white" style={{ 
+      <h1 className="px-5 tracking-wide lg:text-5xl font-serif text-2xl font-bold text-white" style={{ 
         textShadow: '100px 100px 100px rgba(0,0,0,0.1)',
       }}>
         Break free from ordinary: Live, learn, and

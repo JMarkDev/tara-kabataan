@@ -12,6 +12,7 @@ import ChatbotIMG from '../../assets/images/pngegg.png'
 import CrossIcon from '../../assets/images/cross.png'
 import { FiSend } from "react-icons/fi";
 import Chatbot from "../../components/Chatbot"
+import logo from '../../assets/images/tarakabataanLogo.jpg'
 
 const Home = () => {
   const [completedEventID, setCompletedEventID] = useState('')
@@ -72,7 +73,24 @@ const Home = () => {
         />
       </div>
       <Carousel/>
-<div className="bg-white">
+      <div className="lg:p-20 p-10 flex flex-col lg:flex-row justify-center items-center">
+        <div className=" md:w-[50%] lg:w-[50%] flex justify-center items-center">
+        <img src={logo} alt="logo" className="w-[350px] lg:h-[300px] rounded-xl"/>
+        </div>
+          <div className="shadow-lg bg-blue-100 mt-5 lg:w-[50%]  p-10">
+            <h1 className="text-2xl text-[#6415ff] py-5 font-bold">
+              Tara Kabataan
+            </h1>
+            <div className="max-w-3xl mx-auto">
+              <p className=" leading-7 text-gray-800 rounded-lg">
+                <span className="font-bold">"Tara Kabataan: Web-Boosted Empowerment Hub" </span>
+                 is an innovative aimed at fostering the growth and development of the youth. It is a platform that provides a wide range of opportunities for the youth to engage in various activities, events, and programs that are designed to help them grow and develop their skills, talents, and abilities. The platform is designed to provide the youth with a safe and supportive environment where they can connect with other like-minded individuals, learn new things, and explore new opportunities.
+              </p>
+      </div>
+
+          </div>
+      </div>
+<div className="">
     <div className="px-5 xl:px-20 pt-10 flex flex-col justify-center">
       <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold">Discover Our Exciting <span className="text-[#6415ff]">Categories</span></h1>
       <p className="text-center text-[#6b7280] lg:text-lg text-md mt-4">Explore a diverse range of event categories curated just for you. We have something amazing for everyone.</p>
