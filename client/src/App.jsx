@@ -12,6 +12,7 @@ import LayoutUser from './components/LayoutUser'
 import Events from './pages/User/Events'
 import About from './pages/User/About'
 import ContactUs from './pages/User/ContactUs'
+import ViewEventDetails from './pages/User/ViewEventDetails'
 
 import LayoutAdmin from './components/LayoutAdmin'
 import Dashboard from './pages/Admin/Dashboard/Dashboard'
@@ -171,6 +172,11 @@ function App() {
       <Route path='/events' element={
         <LayoutUser>
           <Events />
+        </LayoutUser>
+      }/>
+       <Route path='/event/:id' element={
+        <LayoutUser>
+          <ViewEventDetails />
         </LayoutUser>
       }/>
       <Route path='/about' element={

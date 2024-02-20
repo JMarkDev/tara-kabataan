@@ -1,4 +1,5 @@
 import NavbarUser from './NavbarUser'
+import Footer from './Footer'
 import PropTypes from 'prop-types'
 
 const LayoutUser = ({ children }) => {
@@ -10,6 +11,7 @@ const LayoutUser = ({ children }) => {
                 <div className='grow'>
                     <NavbarUser />
                     <div className=''>{children}</div>
+                    <Footer />
                 </div>
             </div>
         </>

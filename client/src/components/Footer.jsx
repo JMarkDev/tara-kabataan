@@ -3,8 +3,9 @@ import Logo from '../assets/images/logo.jpg'
 
 const LINKS = [
   {
-    title: "Product",
-    items: ["Overview", "Features", "Solutions", "Tutorials"],
+    title: "LINKS",
+    items: ["Home", "Events", "About Us", "Contact"],
+    links: ["/home", "/events", "/about", "/contact-us"]
   },
   {
     title: "CONTACT US",
@@ -20,7 +21,7 @@ const currentYear = new Date().getFullYear();
  
 export default function FooterWithSocialLinks() {
   return (
-    <footer className="relative w-full border py-5 border-t-gray-300">
+    <footer className="relative w-full border py-5 mt-20 border-t-gray-300">
       <div className="mx-auto w-full max-w-7xl px-5">
         <div className="">
           {/* <Typography variant="h5" className="mb-6"> */}
@@ -72,11 +73,11 @@ export default function FooterWithSocialLinks() {
                 >
                   {title}
                 </Typography>
-                {items.map((link) => (
+                {items.map((link, links) => (
                   <li key={link}>
                     <Typography
                       as="a"
-                      href="#"
+                      href={LINKS[0].links[links]}
                       color="gray"
                       className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
                     >

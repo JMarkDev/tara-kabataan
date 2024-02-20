@@ -1,6 +1,6 @@
 import React from 'react'
 import api from '../api/api'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useFormat } from '../hooks/useFormatDate'
 
 const EventCard = ({ event }) => {
@@ -31,7 +31,7 @@ const EventCard = ({ event }) => {
                   </div>
                 </div>
                 )}
-                <Link className='bg-[#854ef3] rounded-lg px-5 py-3 text-sm text-white'>
+                <Link to={`/event/${id}`} className='bg-[#854ef3] rounded-lg px-5 py-3 text-sm text-white'>
                       View Details
                 </Link>
                 </div>

@@ -3,14 +3,10 @@ import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import api from '../../api/api'
 import EventCard from "../../components/EventCard"
-import Footer from "../../components/Footer"
 import FeaturedImageGallery from "../../components/FeaturedImageGallery"
 import Accordion from "../../components/Accordion"
 import FAQimage from '../../assets/images/FAQ.webp'
 import ChatIcon from '../../assets/images/chat-message-icon-design-in-blue-circle-png.webp'
-import ChatbotIMG from '../../assets/images/pngegg.png'
-import CrossIcon from '../../assets/images/cross.png'
-import { FiSend } from "react-icons/fi";
 import Chatbot from "../../components/Chatbot"
 import logo from '../../assets/images/tarakabataanLogo.jpg'
 
@@ -139,9 +135,6 @@ const Home = () => {
           </div>
 
       </div>
-  <div className="mt-20 ">
-    <Footer />
-  </div>
   </div>
 </div>    
     </>

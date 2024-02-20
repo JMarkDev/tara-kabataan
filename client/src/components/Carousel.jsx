@@ -15,7 +15,7 @@ function Carousel() {
   useEffect(() => {
     const imagesLink = [
       tarakabataanIMG,
-      img2,
+      // img2,
       mission,
       // 'https://avenueevents.co.uk/wp-content/uploads/2017/08/annual-conference-event-2.jpg',
       'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
