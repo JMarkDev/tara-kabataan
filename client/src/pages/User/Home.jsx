@@ -9,6 +9,7 @@ import FAQimage from '../../assets/images/FAQ.webp'
 import ChatIcon from '../../assets/images/chat-message-icon-design-in-blue-circle-png.webp'
 import Chatbot from "../../components/Chatbot"
 import logo from '../../assets/images/tarakabataanLogo.jpg'
+import EventCalendar from "../../components/EventCalendar"
 
 const Home = () => {
   const [completedEventID, setCompletedEventID] = useState('')
@@ -69,7 +70,7 @@ const Home = () => {
         />
       </div>
       <Carousel/>
-      <div className="lg:p-20 p-10 flex flex-col lg:flex-row justify-center items-center">
+      {/* <div className="lg:p-20 p-10 flex flex-col lg:flex-row justify-center items-center">
         <div className=" md:w-[50%] lg:w-[50%] flex justify-center items-center">
         <img src={logo} alt="logo" className="w-[350px] lg:h-[300px] rounded-xl"/>
         </div>
@@ -85,6 +86,10 @@ const Home = () => {
       </div>
 
           </div>
+      </div> */}
+      <div>
+      <h1 className="my-10 text-center text-[#243e63] lg:text-4xl text-2xl font-bold">Event<span className="text-[#6415ff]">Calendar</span></h1>
+      <EventCalendar />
       </div>
 <div className="">
     <div className="px-5 xl:px-20 pt-10 flex flex-col justify-center">
