@@ -6,36 +6,36 @@ import { FaLocationDot } from "react-icons/fa6";
 
 const ContactUs = () => {
   return (
-    <div className='px-20'>
+    <div className='lg:px-20'>
       <h1 className='text-center text-2xl lg:text-4xl p-10 font-bold'>Get In <span className='text-[#6415ff]'>Touch</span></h1>
-      <div className='flex justify-center bg-white p-10'>
-        <div className='w-[50%] p-10 flex-col'>
+      <div className='flex md:flex-row flex-col justify-center bg-white md:p-10 p-5'>
+        <div className='md:w-[50%] w-full md:p-10 flex-col'>
           <div className='flex justify-center'>
             <img src={img} alt="contact us" className=' h-[200px]'/>
           </div>
           <div className='mt-5'>
             <div className='flex items-center gap-3'>
-              <FaPhone className='text-[#6415ff] text-2xl'/>
-              <h1 className='text-xl font-bold p-2'>Call Us</h1>
+              <FaPhone className='text-[#6415ff] md:text-2xl text-xl'/>
+              <h1 className='md:text-xl text-lg font-bold p-2'>Call Us</h1>
             </div>
             <p className='text-md text-gray-600 p-2'>09123456789, 09123456789</p>
           </div>
           <div className='mt-5'>
             <div className='flex items-center gap-3'>
-              <MdEmail className='text-[#6415ff] text-2xl'/>
-              <h1 className='text-xl font-bold p-2'>Email</h1>
+              <MdEmail className='text-[#6415ff] md:text-2xl text-xl'/>
+              <h1 className='md:text-xl text-lg font-bold p-2'>Email</h1>
             </div>
             <p className='text-md text-gray-600 p-2'>tarakabataan2024@gmail.com</p>
           </div>
           <div className='mt-5'>
             <div className='flex items-center gap-3'>
-              <FaLocationDot className='text-[#6415ff] text-2xl'/>
+              <FaLocationDot className='text-[#6415ff] md:text-2xl text-xl'/>
               <h1 className='text-xl font-bold p-2'>Location</h1>
             </div>
             <p className='text-md text-gray-600 p-2'>Brgy. Bulatok Pagadian City</p>
           </div>
         </div>
-        <div className='rounded-lg bg-gray-200 p-10 w-[50%] flex flex-col'>
+        <div className='mt-5 md:mt-0 rounded-lg bg-gray-200 md:p-10 p-5 md:w-[50%] w-full flex flex-col'>
           <h1 className='text-center text-xl font-bold'>Contact Us</h1>
           <form action="">
             <div>
@@ -95,7 +95,7 @@ const ContactUs = () => {
                     Message
                   </label>
                   <div className="flex flex-col items-start">
-                    <textarea rows={8}
+                    <textarea rows={6}
                       type="text"
                       name="Type message here..."
                       placeholder="Send message here..."
