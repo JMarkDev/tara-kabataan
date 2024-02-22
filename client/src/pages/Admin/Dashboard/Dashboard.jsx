@@ -53,7 +53,7 @@ const Dashboard = () => {
             <div className=' flex lg:flex-row flex-col md:flex-col md:gap-6 mt-[16px] w-full'>
             <div className=' basis-[60%] rounded dark:border-white bg-white shadow-md cursor-pointer  mb-4 md:mb-0 lg:mb-0 lg:mr-4'>
                     <div className='bg-gray-500 flex items-center justify-between py-[15px] px-[20px] border-b-4 mb-[20px]'>
-                        <h2 className='text-[#020617]  dark:text-white text-[16px] leading-[19px] font-bold '>Events Chart</h2>
+                        <h2 className='text-white text-[16px] leading-[19px] font-bold '>Events Chart</h2>
                         {/* <YearDropdown 
                             selectedYear={selectedYear} 
                             onYearSelect={handleYearChange} 

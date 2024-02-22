@@ -38,6 +38,7 @@ import ViewUser from './pages/Admin/Users/ViewUser'
 import UpdateUsername from './pages/Admin/Admin/UpdateUsername'
 import ViewEventCategory from './pages/Admin/Category/ViewEventCategory'
 import Archives from './pages/Admin/Archives/Archive'
+import FilteredCategory from './pages/User/FilteredCategory'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -177,6 +178,11 @@ function App() {
        <Route path='/event/:id' element={
         <LayoutUser>
           <ViewEventDetails />
+        </LayoutUser>
+      }/>
+       <Route path='/event/filter/:category' element={
+        <LayoutUser>
+          <FilteredCategory />
         </LayoutUser>
       }/>
       <Route path='/about' element={

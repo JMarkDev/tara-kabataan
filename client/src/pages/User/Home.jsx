@@ -98,13 +98,15 @@ const Home = () => {
     
       <div className="mx-auto lg:px-10 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7 mt-10">
         {category.map(({ id, category_name, image }) => (
-          <div key={id} className="max-w-sm relative hover:scale-110 transition-all bg-white cursor-pointer rounded-md shadow-md">
+          <Link key={id} to={`/event/filter/${category_name}`}>
+              <div className="max-w-sm relative hover:scale-110 transition-all bg-white cursor-pointer rounded-md shadow-md">
             <img src={`${api.defaults.baseURL}${image}`} alt={category_name} className="w-full h-[250px] object-cover rounded-md" />
             <div className=" absolute inset-0 flex items-end p-5">
               <div className="absolute inset-0 bg-black opacity-40 rounded-md"></div>
               <h1 className="text-[#fff] text-xl font-bold z-10">{category_name}</h1>
             </div>
           </div>
+          </Link>
         ))}
       </div>
 

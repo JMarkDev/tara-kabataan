@@ -50,11 +50,6 @@ const EventCalendar = () => {
     const daysInMonth = new Date(year, monthIndex, 0).getDate();
     const daysArray = Array.from({ length: daysInMonth }, (_, index) => index + 1);
 
-    const dateFormat = (date) => {
-        const eventDate = new Date(date);
-        return `${eventDate.getDate()} ${monthList[eventDate.getMonth()]} ${eventDate.getFullYear()}`;
-    };
-
     const getEventsForDay = (day) => {
         const filteredEvents = events.filter(event => {
             const eventDate = new Date(event.start_date);
@@ -86,32 +81,34 @@ const EventCalendar = () => {
       };
 
     return (
-        <div className='overflow-x-auto overflow-y-auto w-full lg:px-20 px-5 rounded-lg'>
+        <div className=''>
+        <div className=' lg:px-20 px-5 rounded-lg'>
             <div className='px-5 flex justify-between items-center bg-blue-200'>
                 <h1 className='p-3 text-[#243e63] text-lg lg:text-2xl font-bold'>{monthName} {year}</h1>
-                <div className='flex gap-5 bg-[#6415ff] hover:bg-indigo-600 text-white p-2 px-5 rounded-lg'>
-                    <button className='text-lg lg:text-2xl' onClick={handleBack}><MdArrowBackIos /></button>
-                    <button className='text-lg lg:text-2xl' onClick={handleNext}><MdArrowForwardIos /></button>
+                <div className='flex items-center bg-[#6415ff] hover:bg-indigo-600 text-white px-3 rounded-lg'>
+                    <button className='text-lg lg:text-xl p-2' onClick={handleBack}><MdArrowBackIos /></button>
+                    <span className="font-bold text-xl text-[#9E9E9E] mx-2">|</span>
+                    <button className='text-lg lg:text-xl p-2' onClick={handleNext}><MdArrowForwardIos /></button>
                 </div>
             </div>
-            <div className=' grid grid-cols-7 bg-white border-gray-300 border'>
+            <div className='overflow-x-auto grid grid-cols-7 bg-white border-gray-300 border'>
                 {week.map((day, index) => (
-                    <div key={index} className='p-3 md:text-lg text-sm text-center border-gray-200 border'>{day}</div>
+                    <div key={index} className='w-auto p-3 md:text-lg text-sm text-center border-gray-200 border'>{day}</div>
                 ))}
                 {Array.from({ length: firstDayOfWeek }, (_, index) => (
-                    <div key={`empty-${index}`} className='h-20 p-1 md:text-lg text-sm border border-gray-200'></div>
+                    <div key={`empty-${index}`} className='hover:bg-gray-200 h-auto p-1 md:text-lg text-sm border border-gray-200'></div>
                 ))}
                 {daysArray.map((day, index) => (
-                    <div key={index} 
-                    // style={{background: getEventsForDay(day) ? getNextColor() : null}}
-                    className={`p-2 min-h-20 text-sm border  border-gray-200`}>
+                    <div key={index} className={`hover:bg-gray-200 p-2 min-h-20 text-sm border  border-gray-200`}>
                         {day}
-                        <span>{getEventsForDay(day)}</span>
+                        <span className=''>{getEventsForDay(day)}</span>
                     </div>
                 ))}
             </div>
-            <div></div>
         </div>
+    </div>
+    
+
     );
 };
 
