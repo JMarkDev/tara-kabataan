@@ -2,6 +2,7 @@ import api from '../../../api/api'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 // import LocationComponent from '../../../components/LocationComponent'
+import BackBtn from '../../../components/BackBtn'
 
 const AddEvent = () => {
     const navigate = useNavigate()
@@ -87,7 +88,9 @@ const AddEvent = () => {
     }, [])
 
   return (
-    <div className="max-w-xl mx-auto p-4 border rounded-lg shadow-lg bg-white">
+    <div className=''>
+      {/* <BackBtn /> */}
+      <div className="max-w-xl mx-auto p-4 border rounded-lg shadow-lg bg-white">
         <h2 className="text-2xl font-semibold text-center mt-4 dark:text-white  ">Event Information </h2>
         <form onSubmit={handleSubmit} method="POST" encType="multipart/form-data"  className="mt-4">
           <div className="mb-4">
@@ -339,6 +342,8 @@ const AddEvent = () => {
 
         </form>
       </div>
+    </div>
+   
   )
 }
 

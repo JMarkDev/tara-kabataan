@@ -18,9 +18,11 @@ const ContactUs = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await api.get(`/user/id/${id}`)
-        setName(response.data.firstname + ' ' + response.data.lastname)
-        setEmail(response.data.email)
+        if(id) {
+          const response = await api.get(`/user/id/${id}`)
+          setName(response.data.firstname + ' ' + response.data.lastname)
+          setEmail(response.data.email)
+        }
       } catch (error) {
         console.log(error)
       }
@@ -49,7 +51,7 @@ const ContactUs = () => {
     <div className='lg:px-20'>
       <h1 className='text-center text-2xl lg:text-4xl p-10 font-bold'>Get In <span className='text-[#6415ff]'>Touch</span></h1>
       <div className='flex md:flex-row flex-col justify-center bg-white lg:p-10 p-5'>
-        <div className='md:w-[50%] w-[450px] m-auto md:p-10 flex-col'>
+        <div className='md:w-[50%] w-full m-auto md:p-10 flex-col'>
           <div className='flex justify-center'>
             <img src={img} alt="contact us" className=' h-[200px]'/>
           </div>
@@ -75,7 +77,7 @@ const ContactUs = () => {
             <p className='text-md text-gray-600 p-2'>Brgy. Bulatok Pagadian City</p>
           </div>
         </div>
-        <div className='m-auto mt-5 md:mt-0 rounded-lg bg-gray-200 lg:p-10 p-5 w-[450px] md:w-[50%] flex flex-col'>
+        <div className='m-auto mt-5 md:mt-0 rounded-lg bg-gray-200 lg:p-10 p-5 w-full md:w-[50%] flex flex-col'>
           <h1 className='text-center text-xl font-bold'>Contact Us</h1>
           <form action="" ref={form} onSubmit={sendEmail}>
             <div>

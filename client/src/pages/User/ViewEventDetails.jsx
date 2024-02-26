@@ -42,7 +42,6 @@ const ViewEventDetails = () => {
         setPrice(response.data.price)
         setDiscount(response.data.discount)
         setStatus(response.data.status)
-        console.log(response.data)
       } catch (error) {
         console.error(error)
       }
@@ -50,7 +49,7 @@ const ViewEventDetails = () => {
     getEventDetails()
   }, [id])
   return (
-    <div className="lg:px-20 py-10 flex flex-col gap-5">
+    <div className="lg:px-20 px-5 py-10 flex flex-col gap-5">
       {/* <h1>Event Details</h1> */}
       <img src={`${api.defaults.baseURL}${image}`} alt="" 
           className='w-[600px]'
@@ -63,21 +62,21 @@ const ViewEventDetails = () => {
               <div className="mb-10">
                 <h1 className="text-xl font-bold mb-3">Date</h1>
                 <div className="flex items-center gap-3">
-                  <FaCalendarAlt className='text-lg text-[#6415ff]'/>
+                  <FaCalendarAlt className='md:text-2xl text-lg text-[#6415ff]'/>
                   <p>{extractYear(startDate)} - {dateFormat(endDate)}</p>
                 </div>
               </div>
               <div className="mb-10">
                 <h1 className="text-xl font-bold mb-3">Time</h1>
                 <div className="flex items-center gap-3">
-                  <IoIosTime className='text-lg text-[#6415ff]'/>
+                  <IoIosTime className='md:text-2xl text-lg text-[#6415ff]'/>
                   <p>{formatTime(startTime)} - {formatTime(endTime)}</p>
                 </div>
               </div>
               <div className="mb-10">
                 <h1 className="text-xl font-bold mb-3">Location</h1>
                 <div className="flex items-center gap-3">
-                  <IoIosTime className='text-lg text-[#6415ff]'/>
+                  <FaLocationDot className='md:text-2xl text-lg text-[#6415ff]'/>
                   <p>{location}</p>
                 </div>
               </div>

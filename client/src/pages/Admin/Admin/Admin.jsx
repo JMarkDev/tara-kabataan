@@ -59,13 +59,13 @@ const Admin = () => {
   // }
   return (
     <div>
-        <div className="flex justify-between items-center pb-5">
-          <div className="flex justify-center items-center">
+        <div className="flex flex-col md:flex-row gap-3 justify-between pb-5">
+          <div className="flex justify-start items-center">
             <Link to='/add-admin' className=" w-[150px] text-center rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58] px-5 py-2 text-md font-normal text-white hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58] ">
               Add Admin
             </Link>
           </div>
-        <div className="flex justify-center items-center relative"> 
+        <div className="flex justify-end items-center relative"> 
           <input type="text" placeholder="search admin..." 
             className="lg:w-[350px] p-2 px-5 outline-none focus:border-indigo-600 border shadow-lg rounded-full"
             onChange={(e) => setSearch(e.target.value)}

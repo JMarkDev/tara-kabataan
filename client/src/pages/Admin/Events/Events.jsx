@@ -38,14 +38,14 @@ const Events = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between items-center pb-5">
+      <div className="flex gap-3 flex-col md:flex-row justify-between pb-5">
         <Link
           to='/add-event'
-          className=" w-[150px] text-center rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58] px-5 py-2 text-md font-normal text-white hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58] "
+          className="w-[150px] flex justify-center items-center text-center rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58] px-5 py-2 text-md font-normal text-white hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58] "
         >
           Add Event
         </Link>
-        <div className="flex justify-center items-center relative"> 
+        <div className="flex justify-end items-center relative"> 
           <input type="text" placeholder="search events..." 
             className="lg:w-[350px] p-2 px-5 outline-none focus:border-indigo-600 border shadow-lg rounded-full"
             onChange={(e) => setSearch(e.target.value)}

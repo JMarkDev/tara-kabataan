@@ -7,6 +7,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import PropTypes from 'prop-types'
 import Pagination from '../../../components/Pagination'
+import BackBtn from '../../../components/BackBtn'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -49,11 +50,13 @@ const ViewEventCategory = () => {
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
-    }  
+    }
+    
 
   return (
     <div>
-        <div className='flex justify-end mb-5'>
+        <div className='flex justify-between mb-5'>
+        <BackBtn />
         <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-5 py-2 text-sm  text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -77,7 +80,6 @@ const ViewEventCategory = () => {
           <Menu.Item>
               {({ active }) => (
                 <button
-                  // href="#"
                   className={classNames(
                     active ? ' bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm w-full text-left'
@@ -91,7 +93,6 @@ const ViewEventCategory = () => {
             <Menu.Item>
               {({ active }) => (
                 <button
-                  // href="#"
                   className={classNames(
                     active ? ' bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm w-full text-left'
@@ -105,7 +106,6 @@ const ViewEventCategory = () => {
             <Menu.Item>
               {({ active }) => (
                 <button
-                  // href="#"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm w-full text-left'
@@ -124,13 +124,15 @@ const ViewEventCategory = () => {
 
         </div>
         <EventsTable data={data} />
-        <div className='flex justify-end pt-10'>
-            <Pagination 
-                currentPage={currentPage} 
-                onPageChange={handlePageChange}
-                totalPages={totalPages}
-            />
+        {data.length !== 0 && (
+          <div className='flex justify-end pt-10'>
+          <Pagination 
+              currentPage={currentPage} 
+              onPageChange={handlePageChange}
+              totalPages={totalPages}
+          />
         </div>
+        )}
     </div>
   )
 }

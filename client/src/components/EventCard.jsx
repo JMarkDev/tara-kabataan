@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import api from '../api/api'
 import { Link, useParams } from 'react-router-dom'
 import { useFormat } from '../hooks/useFormatDate'
+import imgNotify from '../assets/images/undraw_notify_re_65on.svg'
 
 const EventCard = ({ event }) => {
   const { dateFormat, formatTime, extractYear } = useFormat()
 
   return (
-    <div className="lg:px-10 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
+    <div>
+      {event.length === 0 ? (
+        <div className='flex flex-col justify-center w-full'>
+          <h1 className='lg:text-4xl font-bold'>No Events Available</h1>
+          <img src={imgNotify} alt="empty" className='h-[50vh] mt-5'/>
+        </div>
+      ) : (
+        <div className="lg:px-10 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
         {event.map(({ id, event_title, event_category, image, start_date, end_date, start_time, end_time, price, discount, event_type}) => (
           <div key={id} className="max-w-sm h-fit bg-white cursor-pointer rounded-md shadow-md hover:shadow-2xl">
         <div className='relative'>
@@ -40,6 +48,10 @@ const EventCard = ({ event }) => {
           </div>
         ))}
       </div>
+      )}
+     
+    </div>
+    
   )
 }
 

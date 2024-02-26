@@ -133,7 +133,7 @@ const Events = () => {
   return (
     <div className=''>
   <div className="flex justify-between p-5 items-center"> 
-    <h1 className='font-bold text-xl text-[#243e63] cursor-pointer'
+    <h1 className='font-bold  lg:text-4xl text-xl text-[#243e63] cursor-pointer'
     onClick={() => handleDefault()}
     >All Events</h1>
     <div className='flex justify-end items-center'>
@@ -246,7 +246,7 @@ const Events = () => {
         </div>
       </div>
     </div>
-    <div className='px-5 sm:px-10 lg:px-0 flex justify-center'>
+    <div className='px-5 sm:px-10 lg:px-0 flex justify-center w-full'>
       <EventCard event={event}/>
     </div>
   </div>

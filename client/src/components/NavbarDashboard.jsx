@@ -23,7 +23,7 @@ function NavbarDashboard({ setOpen}) {
     '/admin-events': 'Event List',
     [`/edit-admin/${id}`] : 'Edit Admin',
     '/admin-users': 'User List',
-    '/admin-category': 'Event Category',
+    '/admin-category': 'Category List',
     '/archives': 'Archive List',
     '/admin': 'Admin List',
     '/admin-profile': 'Admin Profile',
@@ -46,7 +46,7 @@ function NavbarDashboard({ setOpen}) {
       try {
         if (userId) {
           const response = await api.get(`/user/id/${userId}`);
-          setName(response.data.firstname + ' ' + response.data.lastname);
+          setName(response.data.firstname);
         }
       } catch (error) {
         console.log(error);
@@ -92,7 +92,7 @@ function NavbarDashboard({ setOpen}) {
               className="text-2xl cursor-pointer" 
             />
             {openNotification && (
-              <div className="absolute top-[60px] right-40 mr-[-10px]">
+              <div className="absolute top-[60px] right-0 mr-[-10px]">
                 <div className="bg-white rounded-lg border h-[120px] w-[250px] absolute bottom-[-100px] z-20 right-2">
                   <h1 className='text-md pl-3 font-semibold border-b border-gray-300 py-2'>Notifications</h1>
                   <ul className="w-full">
@@ -119,7 +119,7 @@ function NavbarDashboard({ setOpen}) {
                 alt=""
               />
             {openProfile && (
-              <div className="absolute top-[60px] right-0 mr-[-10px]">
+              <div className="absolute top-10 right-0 mr-[-10px]">
                 <UserProfile
                   handleDropdownClick={handleDropdownClick}
                   hideProfile={hideProfile}

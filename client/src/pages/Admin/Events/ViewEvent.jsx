@@ -9,6 +9,7 @@ import AttendeesTable from '../../../components/AttendeesTable';
 import { useFormat } from '../../../hooks/useFormatDate'
 import ImageGalery from '../../../components/ImageGalery';
 import FeaturedImageGallery from '../../../components/FeaturedImageGallery';
+import BackBtn from '../../../components/BackBtn'
 
 const ViewEvent = () => {
   const { id } = useParams()
@@ -63,7 +64,10 @@ const ViewEvent = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold text-[#3d4465]">Event Details</h1>
+      <div className='flex items-center'>
+        <BackBtn />
+        <h1 className="text-2xl font-semibold text-[#3d4465]">Event Details</h1>
+      </div>
       <div className="flex my-5 gap-5 lg:flex-row flex-col justify-between">
         <div className="text-[#3d4465] lg:w-[70%] h-fit bg-white p-5 rounded-md">
           <img src={`${api.defaults.baseURL}${image}`} alt="" 

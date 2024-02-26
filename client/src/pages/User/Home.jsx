@@ -88,7 +88,7 @@ const Home = () => {
           </div>
       </div> */}
       <div>
-      <h1 className="my-10 text-center text-[#243e63] lg:text-4xl text-2xl font-bold">Event<span className="text-[#6415ff]">Calendar</span></h1>
+      <h1 className="my-10 text-center text-[#243e63] lg:text-4xl text-2xl font-bold">Event<span className="text-[#6415ff]"> Calendar</span></h1>
       <EventCalendar />
       </div>
 <div className="">
