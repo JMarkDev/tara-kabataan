@@ -8,6 +8,7 @@ import userIcon from '../assets/images/user.png';
 import UserProfile from './UserProfile';
 import { useResizeLayout } from '../hooks/resizeLayout';
 import { IoNotificationsOutline } from "react-icons/io5";
+import Notification from './Notification';
 
 function NavbarDashboard({ setOpen}) {
   const [openNotification, setOpenNotification] = useState(false);
@@ -92,20 +93,7 @@ function NavbarDashboard({ setOpen}) {
               className="text-2xl cursor-pointer" 
             />
             {openNotification && (
-              <div className="absolute top-[60px] right-0 mr-[-10px]">
-                <div className="bg-white rounded-lg border h-[120px] w-[250px] absolute bottom-[-100px] z-20 right-2">
-                  <h1 className='text-md pl-3 font-semibold border-b border-gray-300 py-2'>Notifications</h1>
-                  <ul className="w-full">
-                    <li>
-                      <div className="gap-2 text-sm text-gray-600 flex pl-3 items-center  p-2  cursor-pointer
-                      hover:bg-gray-200 border-b-2 border-transparent dark:hover:bg-gray-20 "
-                    >
-                     sample notifications
-                    </div>
-                    </li>
-                  </ul>  
-                </div>
-              </div>
+              <Notification />
             )}
             
             <div>

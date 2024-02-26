@@ -6,6 +6,8 @@ import Cookies from 'js-cookie';
 import api from '../api/api';
 import userIcon from '../assets/images/user.png';
 import UserProfile from './UserProfile';
+import Notification from './Notification';
+import { IoNotificationsOutline } from "react-icons/io5";
 
 const NavbarUser = () => {
   const location = useLocation();
@@ -13,6 +15,7 @@ const NavbarUser = () => {
   const [userData, setUserData] = useState(false);
   const [name, setName] = useState('');
   const [open, setOpen] = useState(false); 
+  const [openNotification, setOpenNotification] = useState(false);
 
   const userId = Cookies.get('userId'); 
 
@@ -49,6 +52,7 @@ const NavbarUser = () => {
 
   const showProfile = () => {
     setOpen(!open);
+    setOpenNotification(false)
   };
 
   const hideProfile = () => {
@@ -118,7 +122,22 @@ const NavbarUser = () => {
           </li>
         </ul>
         { userData ? (
-          <div className='flex gap-10'>
+          <div className='flex items-center gap-10'>
+           <IoNotificationsOutline 
+              onClick={() => {
+                setOpenNotification(!openNotification)
+                setOpen(false)
+              }}
+              onMouseEnter={() => {
+                setOpenNotification(!openNotification)
+                setOpen(false)
+              }}
+              className="text-2xl cursor-pointer" 
+            />
+            {openNotification && (
+              <Notification />
+            )}
+            
             <h1 className='text-lg font-semibold text-center m-auto'>{name}</h1>
             <img onClick={showProfile}
                 onMouseEnter={showProfile}
@@ -166,12 +185,28 @@ const NavbarUser = () => {
         <div className='flex items-center'>
         {
           userData && (
-            <img onClick={showProfile}
-            onMouseEnter={showProfile}
-            className="w-8 mr-[50px] h-8 rounded-full object-cover cursor-pointer"
-            src={userIcon}
-            alt=""
-        />
+            <div className='flex gap-5 flex-row items-center'>
+              <IoNotificationsOutline 
+                onClick={() => {
+                  setOpenNotification(!openNotification)
+                  setOpen(false)
+                }}
+                onMouseEnter={() => {
+                  setOpenNotification(!openNotification)
+                  setOpen(false)
+                }}
+                className="text-2xl cursor-pointer" 
+              />
+              {openNotification && (
+                <Notification />
+              )}
+              <img onClick={showProfile}
+              onMouseEnter={showProfile}
+              className="w-8 mr-[50px] h-8 rounded-full object-cover cursor-pointer"
+              src={userIcon}
+              alt=""
+              />
+            </div>
           )
         }
          {open && (
