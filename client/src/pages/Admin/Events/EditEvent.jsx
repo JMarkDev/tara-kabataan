@@ -62,7 +62,7 @@ const EditEvent = () => {
             })
             )
 
-            if(response.data.event_type === 'Paid') {
+            if(response.data.event_type === 'Registration Fee') {
               setEventType(true)
             } else {
               setEventType(false)
@@ -196,7 +196,7 @@ const EditEvent = () => {
               required
               onChange={(e) => {
                 handleInputChange(e);
-                if(e.target.value === 'Paid') {
+                if(e.target.value === 'Registration Fee') {
                   setEventType(true)
                 } else {
                   setEventType(false)
@@ -209,7 +209,7 @@ const EditEvent = () => {
             >
               <option value="">Select Event Type</option>
               <option value="Free">Free</option>
-              <option value="Paid">Paid</option>
+              <option value="Registration Fee">Registration Fee</option>
             </select>
           </div>
           { eventType && (

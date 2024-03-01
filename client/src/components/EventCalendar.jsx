@@ -24,7 +24,7 @@ const EventCalendar = () => {
     useEffect(() => {
         const fetchUpcomingEvents = async () => {
             try {
-                const response = await api.get('/event/upcoming');
+                const response = await api.get('/event/all/upcoming');
                 setEvents(response.data);
             } catch (error) {
                 console.log(error);

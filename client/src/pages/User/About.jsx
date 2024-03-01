@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import mission from '../../assets/images/mission.jpg'
 import tarakabataan from '../../assets/images/tarakabataan.jpg'
 import img1 from '../../assets/images/Mark Kevin Cervas Nugas.jpg'
@@ -39,12 +40,17 @@ const About = () => {
             <h1 className='text-xl p-3 font-bold text-[#243e63]'>Mark Kevin Cervas Nugas</h1>
             <p>Founder and Chair</p>
             <div className='flex gap-5 p-3'>
-              <div className='bg-white gray-200 rounded-full p-2 text-lg'>
-                <FaFacebookF/>
+              <div className='bg-white gray-200 rounded-full p-2 text-lg text-blue-500'>
+                <Link to='https://web.facebook.com/markkevin.nugas.5'>
+                  <FaFacebookF/>
+                </Link>
               </div>
-              <div className='bg-white gray-200 rounded-full p-2 text-lg'>
-                <RiInstagramFill/>
+              <div className='bg-white gray-200 rounded-full p-2 text-lg text-blue-500'>
+                <Link to='https://www.instagram.com/krammynugas/'>
+                  <RiInstagramFill/>
+                </Link>
               </div>
+
               <div className='bg-white gray-200 rounded-full p-2 text-lg'>
                 <FaLinkedin/>
               </div>

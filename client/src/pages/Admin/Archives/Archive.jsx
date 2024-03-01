@@ -15,8 +15,7 @@ const Archives = () => {
       try {
         let response;
           if(search) {
-            response = await api.get(`/event/search/${search}/Completed`)
-            console.log(response.data)
+            response = await api.get(`/event/search-by/${search}/Completed`)
             setData(response.data)
           } else {
             response = await api.get(`/event/pagination?page=${currentPage}&size=10&status=Completed`)

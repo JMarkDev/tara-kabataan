@@ -42,7 +42,7 @@ const Events = () => {
           response = await api.get(`/event/search-all/${search}`)
           setEvent(response.data)
         } else {
-          response = await api.get('/event/upcoming')
+          response = await api.get('/event/all/upcoming')
           setEvent(response.data)
         }
       } catch (error) {
@@ -172,7 +172,7 @@ const Events = () => {
      <DropdownCategory 
         options={[
           { label: 'Price', 
-            links: ['Free','Paid']
+            links: ['Free','Registration Fee']
           }
         ]}
         handleFilter={handleFilterType} 
@@ -237,11 +237,11 @@ const Events = () => {
           </div>
           <div className='flex gap-3'>
             <input 
-            onChange={(e) => setFilterEventType('Paid')}
-            type="radio" name="price" value="paid"
-            checked={filterEventType === 'Paid'}
+            onChange={(e) => setFilterEventType('Registration Fee')}
+            type="radio" name="price" value="Registration Fee"
+            checked={filterEventType === 'Registration Fee'}
             />
-            <label>Paid</label>
+            <label>Registration Fee</label>
           </div>
         </div>
       </div>

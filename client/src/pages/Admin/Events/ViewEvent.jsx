@@ -51,7 +51,7 @@ const ViewEvent = () => {
         setPrice(data.price)
         setDiscount(data.discount)
         setStatus(data.status)
-        if(data.event_type === 'Paid') {
+        if(data.event_type === 'Registration Fee') {
           setDisplayPrice(true)
         }
       } catch (error) {
