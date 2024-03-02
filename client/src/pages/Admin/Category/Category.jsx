@@ -118,7 +118,7 @@ const Category = () => {
       <div className="flex flex-col md:flex-row gap-3 justify-between pb-5">
       <div>
     <button
-        onClick={( ) => { 
+        onClick={() => { 
           setModal(true)
           setErrorMessage('')
         }}

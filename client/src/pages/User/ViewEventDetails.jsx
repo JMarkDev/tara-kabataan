@@ -6,9 +6,11 @@ import { IoIosTime } from "react-icons/io";
 import { FaLocationDot } from "react-icons/fa6";
 import { useFormat } from "../../hooks/useFormatDate";
 import FeatureImageGallery from '../../components/FeaturedImageGallery'
+import JoinEvent from './JoinEvent'
 
 const ViewEventDetails = () => {
   const { id }  = useParams();
+  const [modal, setModal] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -50,6 +52,21 @@ const ViewEventDetails = () => {
     getEventDetails()
   }, [id])
 
+  const handleJoinAttendees = async (e) => {
+    e.preventDefault()
+
+    try {
+      const response = await api.post('/attendees/add')
+      console.log(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleClose = () => {
+    setModal(false)
+  }
+
   return (
     <>
     <div className="lg:px-20  py-10 flex flex-col-2 md:flex-row flex-col gap-5">
@@ -87,7 +104,7 @@ const ViewEventDetails = () => {
                 </div>
                 <div>
                   <h1 className="font-bold text-xl text-[#6415ff]">About this event</h1>
-                  <p>{description}</p>
+                  <p className="mt-5">{description}</p>
                 </div>
           </div>
       </div>
@@ -129,7 +146,14 @@ const ViewEventDetails = () => {
                     <p>Registration</p>
                     <p>Open</p>
                   </div>
-                  <button className="p-2 w-full px-5 bg-blue-600 hover:bg-blue-700 text-white mt-5 rounded-full">Join Now</button>
+                  <button
+                      onClick={() => setModal(true)}
+                      className="p-2 w-full px-5 bg-blue-600 hover:bg-blue-700 text-white mt-5 rounded-full">
+                    Join Now
+                  </button>
+                  {modal && (
+                    <JoinEvent handleClose={handleClose}/>
+                  )}
                 </>
               ) : (
                 <>
