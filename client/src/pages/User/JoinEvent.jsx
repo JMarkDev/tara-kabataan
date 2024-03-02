@@ -35,33 +35,75 @@ const JoinEvent = ({ handleClose }) => {
                     <div className="p-4 space-y-4">
                       <form action="" method="POST" encType="multipart/form-data">
                       <div className="mb-4">
-                    <label htmlFor="title" className="block text-gray-700 font-bold dark:text-white">
-                      Category Name
-                    </label>
-                    <input
-                      type="text"
-                      id="category_name"
-                      name="category_name"
-                      required
-                    //   onChange={handleInputChange}
-                      className='block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-                    />
-                    {/* {errorMessage && <div className="text-red-600 text-sm">{errorMessage}</div>} */}
-                  </div>
-                  <div className="mb-4 dark:text-white">
-                        <label htmlFor="image" className="block text-gray-700 font-bold dark:text-white ">
-                          Image
+                        <label htmlFor="title" className="block text-gray-700 font-bold dark:text-white">
+                          First Name
                         </label>
                         <input
-                          type="file"
-                          id="image"
-                          name="image"
-                          className="w-full px-3 py-2 border rounded-lg focus:outline-none text-center"
+                          type="text"
+                          id="category_name"
+                          name="category_name"
                           required
-                        //   onChange={handleInputChange}              
+                        //   onChange={handleInputChange}
+                          className='block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                         />
-                        
-                    </div>
+                        {/* {errorMessage && <div className="text-red-600 text-sm">{errorMessage}</div>} */}
+                      </div>
+                      <div className="mb-4">
+                        <label htmlFor="title" className="block text-gray-700 font-bold dark:text-white">
+                          Last Name
+                        </label>
+                        <input
+                          type="text"
+                          id="category_name"
+                          name="category_name"
+                          required
+                        //   onChange={handleInputChange}
+                          className='block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                        />
+                        {/* {errorMessage && <div className="text-red-600 text-sm">{errorMessage}</div>} */}
+                      </div>
+                      <div className="mb-4">
+                        <label htmlFor="title" className="block text-gray-700 font-bold dark:text-white">
+                          Email
+                        </label>
+                        <input
+                          type="text"
+                          id="category_name"
+                          name="category_name"
+                          required
+                        //   onChange={handleInputChange}
+                          className='block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                        />
+                        {/* {errorMessage && <div className="text-red-600 text-sm">{errorMessage}</div>} */}
+                      </div>
+                      <div className="mb-4">
+                        <label htmlFor="title" className="block text-gray-700 font-bold dark:text-white">
+                          Phone Number
+                        </label>
+                        <input
+                          type="text"
+                          id="category_name"
+                          name="category_name"
+                          required
+                        //   onChange={handleInputChange}
+                          className='block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                        />
+                        {/* {errorMessage && <div className="text-red-600 text-sm">{errorMessage}</div>} */}
+                      </div>
+                      <div className="mb-4">
+                        <label htmlFor="title" className="block text-gray-700 font-bold dark:text-white">
+                          Location
+                        </label>
+                        <input
+                          type="text"
+                          id="category_name"
+                          name="category_name"
+                          required
+                        //   onChange={handleInputChange}
+                          className='block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                        />
+                        {/* {errorMessage && <div className="text-red-600 text-sm">{errorMessage}</div>} */}
+                      </div>
                       <div className='flex justify-end pt-5'>
                         <button onClick={handleClose} className="w-full text-center mr-2 py-2 bg-gray-500 text-white px-4 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-red-200">   
                           Cancel
@@ -70,7 +112,7 @@ const JoinEvent = ({ handleClose }) => {
                           type="submit"
                           className="w-full py-2 h-10 bg-indigo-600 text-white px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200"
                         >
-                          Save
+                          Submit
                         </button>
                         </div>
                       </form>

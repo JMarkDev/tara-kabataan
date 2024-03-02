@@ -4,6 +4,7 @@ import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import sendEmail from '../../assets/images/send-email.jpg'
 import api from '../../api/api';
 import Loading from "../../components/loading/otpLoader/otpLoader";
+
 function AdminOTP({ email }) {
   const [countDown, setCountDown] = useState(0);
   const [successMessage, setSuccessMessage] = useState('');

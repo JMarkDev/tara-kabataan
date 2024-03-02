@@ -3,9 +3,10 @@ import UserTable from "../../../components/UserTable"
 import api from '../../../api/api'
 import { MdSearch } from 'react-icons/md'
 import { Link } from "react-router-dom"
-// import Dropdown from "../../../components/Dropdown"
+import { useToast } from "../../../hooks/useToast"
 
 const Admin = () => {
+  const toast = useToast();
   const [data, setData] = useState([])
   const [search, setSearch] = useState('')
 
@@ -29,11 +30,11 @@ const Admin = () => {
   }, [search])
 
   const handleDelete = async (id) => {
-    console.log('click')
+    
     try {
       const response = await api.delete(`/user/delete/${id}`)
       if(response.data.status === 'success') {
-        alert(response.data.message)
+        toast.success(response.data.message)
         const updatedData = data.filter((user) => user.id !== id)
         setData(updatedData)
       }

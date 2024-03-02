@@ -6,8 +6,10 @@ import api from '../api/api'
 import CompleteEvent from "./CompleteEvent";
 import { useFormat } from "../hooks/useFormatDate"; 
 import imgNotify from '../assets/images/undraw_notify_re_65on.svg'
+import { useToast } from "../hooks/useToast";
 
 const EventsTable = ({ data }) => {
+    const toast = useToast();
     const [openModal, setOpenModal] = useState(false);
     const [openAction, setOpenAction] = useState(false);
     const [eventData, setEventData] = useState([]);
@@ -22,7 +24,7 @@ const EventsTable = ({ data }) => {
         try {
             const response = await api.delete(`/event/delete/${id}`)
             if(response.data.status === 'success') {
-                alert(response.data.message)
+                toast.success(response.data.message)
             
                 const newEventData = eventData.filter((event) => event.id !== id)
                 setEventData(newEventData)

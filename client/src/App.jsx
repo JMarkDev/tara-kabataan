@@ -3,6 +3,8 @@ import api from './api/api'
 import Cookies from 'js-cookie'
 import { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Home from './pages/User/Home'
 import Register from './pages/Login/Register'
@@ -90,7 +92,7 @@ function App() {
 
   return (
     <>
-
+  <ToastContainer />
 
 
      <Routes>

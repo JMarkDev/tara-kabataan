@@ -17,7 +17,6 @@ const EditCategory = ({ handleClose, categoryID, handleCategoryUpdate}) => {
     }
 
     useEffect(() => {
-        console.log(categoryID)
         const fetchCategory = async () => {
             try {
                 if (categoryID) {
@@ -47,9 +46,9 @@ const EditCategory = ({ handleClose, categoryID, handleCategoryUpdate}) => {
             data.append('image', image[0])
             const response = await api.put(`/category/update/${categoryID}`, data)
             if(response.data.status === 'success') {
+              // toast.success('Category updated successfully');
                 handleClose()
                 handleCategoryUpdate()
-                alert(response.data.message)
             }
         } catch(err) {
             console.error(err)
@@ -61,6 +60,7 @@ const EditCategory = ({ handleClose, categoryID, handleCategoryUpdate}) => {
   return (
     
     <div className="fixed inset-0 z-50 flex justify-center items-center overflow-y-auto  bg-black bg-opacity-10">
+      {/* <ToastContainer /> */}
     <div className="relative p-4 w-full max-w-lg">
         <div className="relative bg-white rounded-lg shadow">
             <div className="flex items-center justify-between p-4 border-b rounded-t ">

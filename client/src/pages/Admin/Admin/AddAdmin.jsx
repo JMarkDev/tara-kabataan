@@ -5,7 +5,7 @@ import { TbArrowBackUp } from "react-icons/tb";
 import api from "../../../api/api";
 import AdminOTP from "../../Verification/AdminOTP";
 import Loading from "../../../components/loading/otpLoader/otpLoader";
-
+ 
 const AddAdmin = () => {
     const [displayOTP, setDisplayOTP] = useState(false)
     const [loader, setLoader] = useState(false);

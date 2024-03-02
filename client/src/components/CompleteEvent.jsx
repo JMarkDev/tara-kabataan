@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
+import { useToast } from '../hooks/useToast'
 
 const CompleteEvent = ({ handleCloseModal, eventID }) => {
+  const toast = useToast();
   const [images, setImages] = useState([])
   const [title, setTitle] = useState('')
 
@@ -40,8 +42,8 @@ const CompleteEvent = ({ handleCloseModal, eventID }) => {
         const response = await api.put(`/archive/update/${eventID}`, data)
         console.log(response.data)
         if(response.data.status === 'success') {
+            toast.success(response.data.message)
             handleCloseModal(eventID)
-            alert(response.data.message)
         }
     } catch (error) {
         console.log(error)

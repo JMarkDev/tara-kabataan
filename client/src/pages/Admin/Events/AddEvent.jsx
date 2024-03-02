@@ -1,10 +1,11 @@
 import api from '../../../api/api'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-// import LocationComponent from '../../../components/LocationComponent'
-import BackBtn from '../../../components/BackBtn'
+import { useToast } from '../../../hooks/useToast'
+
 
 const AddEvent = () => {
+    const toast = useToast();
     const navigate = useNavigate()
     const [category, setCategory] = useState([])
     const [eventType, setEventType] = useState(false)
@@ -67,7 +68,7 @@ const AddEvent = () => {
       try {
         const response = await api.post('/event/add', data)
         if(response.data.status === 'success') {
-          alert(response.data.message)
+          toast.success(response.data.message)
           navigate('/admin-events')
         }
       } catch (error) {

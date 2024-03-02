@@ -1,8 +1,10 @@
 import  { useState, useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import api from '../../../api/api'
+import { useToast } from '../../../hooks/useToast'
 
 const EditEvent = () => {
+    const toast = useToast();
     const { id } = useParams()
     const navigate = useNavigate()
     const [category, setCategory] = useState([])
@@ -107,7 +109,7 @@ const EditEvent = () => {
                 },
             });
             if (response.data.status === 'success') {
-                alert('Event updated successfully');
+                toast.success('Event updated successfully')
                 navigate('/admin-events');
             }
         } catch (error) {

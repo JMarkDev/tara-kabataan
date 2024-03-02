@@ -7,9 +7,12 @@ import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdRemoveRedEye } from "react-icons/md";
 import EditCategory from "./EditCategory";
-
+// import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useToast } from '../../../hooks/useToast'
 
 const Category = () => {
+  const toast = useToast(); 
   const [data, setData] = useState([])
   const [categoryID, setCategoryID] = useState('')
   const [search, setSearch] = useState('')
@@ -69,7 +72,7 @@ const Category = () => {
     try {
       const response = await api.post('/category/add', data)
       if(response.data.status === 'success') {
-        alert(response.data.message)
+        toast.success(response.data.message);
         const updatedData = await api.get(`/category/pagination?page=${currentPage}&size=10`)
         setData(updatedData.data.category)
         setModal(false)
@@ -85,9 +88,9 @@ const Category = () => {
     try {
       const response = await api.delete(`/category/delete/${id}`)
       if (response.data.status === 'success') {
+        toast.success('Category deleted successfully');
         const updatedData = data.filter((category) => category.id !== id)
         setData(updatedData)
-        alert('Category deleted successfully')
       }
     } catch (error) {
       console.log(error)
@@ -98,6 +101,7 @@ const Category = () => {
     try {
       const updatedData = await api.get(`/category/pagination?page=${currentPage}&size=10`)
       setData(updatedData.data.category)
+      toast.success('Category updated successfully');
     } catch (error) {
       console.log(error)
     }
