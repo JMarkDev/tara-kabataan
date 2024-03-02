@@ -52,7 +52,7 @@ const ViewEventDetails = () => {
 
   return (
     <>
-    <div className="lg:px-20 px-5 py-10 flex flex-col-2 md:flex-row flex-col gap-5">
+    <div className="lg:px-20  py-10 flex flex-col-2 md:flex-row flex-col gap-5">
       {/* <h1>Event Details</h1> */}
       <div className="w-full bg-gray-100 p-5">
         <img src={`${api.defaults.baseURL}${image}`} alt="" 
@@ -111,12 +111,16 @@ const ViewEventDetails = () => {
                 <>
                 <div className="flex justify-between">
                   <p>Price</p>
-                  <p>{price}</p>
+                  <p>₱ {price}</p>
                 </div>
-                <div className="flex justify-between">
+                { discount !== '0.00' && (
+                  <>
+                  <div className="flex justify-between">
                   <p>Discount</p>
-                  <p>{discount}</p>
+                  <p>₱ {discount}</p>
                 </div>
+                  </>
+                )}
                 </>
               )}
               { status === 'Upcoming' ? (
@@ -145,20 +149,22 @@ const ViewEventDetails = () => {
         </div>
     </div>
     {status === 'Completed' && (
-      <div className="bg-gray-100 p-5 lg:px-[200px]">
+      <div className="bg-white p-5 lg:px-[200px]">
         <FeatureImageGallery id={id}/>
-
-        <h1 className="font-bold text-lg md:text-2xl my-5">Event Review</h1>
-        <div className="flex">
-          <textarea name="" id="" className="w-full p-5" rows="7" placeholder="Tell me about your experience"></textarea>
-          <div className="p-5">
-            <input type="file"/>
-            <button className="p-2 mt-5 w-[200px] rounded-full bg-blue-400">Submit</button>
+        <div className="bg-gray-100 p-5">
+          <h1 className="font-bold text-lg md:text-2xl my-5">Event Feedback</h1>
+          <div className="flex md:flex-row flex-col">
+            <textarea name="" id="" className="w-full p-5 border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm " 
+            rows="5" placeholder="Tell me about your experience"></textarea>
+            <div className="p-5">
+              <input type="file" className="w-full p-2 border border-gray-300 rounded-md" accept="image/*" onchange="previewImage(event)" />
+              <button className="p-2 mt-5 w-full rounded-full bg-blue-500 text-white">Submit</button>
+            </div>
           </div>
+          <p className="my-5">There are no reviews for this event yet</p>
         </div>
-        <p>There are no reviews for this event yet</p>
+
       </div>
-    
     )}
     </>
     
