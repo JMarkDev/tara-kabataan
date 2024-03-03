@@ -163,7 +163,10 @@ const ViewEventDetails = () => {
                     Join Now
                   </button>
                   {modal && (
-                    <JoinEvent handleClose={handleClose}/>
+                    <JoinEvent 
+                      handleClose={handleClose}
+                      eventType={eventType}
+                      />
                   )}
                 </>
               ) : (

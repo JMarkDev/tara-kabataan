@@ -19,8 +19,9 @@ const UserProfile = ({ handleDropdownClick, hideProfile }) => {
     <div 
     onClick={handleDropdownClick}
     onMouseLeave={hideProfile}
-    className={`${role === 'user' && 'top-[55px]'} bg-white dark:bg-[#075985] rounded-lg border h-[120px] w-[150px] absolute z-20 right-2 pt-[15px] space-y-[10px] `}>
+    className={`${role === 'user' && 'top-[55px]'} py-5 bg-white dark:bg-[#075985] rounded-lg border max-h-[120px] w-[150px] absolute z-20 right-2 pt-[15px] space-y-[10px] `}>
     <ul className="w-full">
+    {role === 'user' && (
       <li>
         <Link
         to={`${role === 'user' ? '/profile' : '/admin-profile'}`}
@@ -31,7 +32,8 @@ const UserProfile = ({ handleDropdownClick, hideProfile }) => {
           Profile
       </Link>
       </li>
-      <li>
+    )}
+        <li>
         <div>
         <button
         onClick={handleLogout}

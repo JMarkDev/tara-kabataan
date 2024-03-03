@@ -94,6 +94,7 @@ const ContactUs = () => {
                       name="name"
                       placeholder="Name"
                       defaultValue={name}
+                      disabled
                       className="mt-2 block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
@@ -110,6 +111,7 @@ const ContactUs = () => {
                       type="text"
                       name="email"
                       defaultValue={email}
+                      disabled
                       placeholder="Email"
                       className="mt-2 block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
