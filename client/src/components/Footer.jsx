@@ -21,7 +21,7 @@ const currentYear = new Date().getFullYear();
  
 export default function FooterWithSocialLinks() {
   return (
-    <footer className="relative w-full border py-5 mt-20 border-t-gray-300">
+    <footer className=" w-full border py-5 mt-20 border-t-gray-300">
       <div className="mx-auto w-full max-w-7xl px-5">
         <div className="">
           {/* <Typography variant="h5" className="mb-6"> */}

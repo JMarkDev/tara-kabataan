@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import api from '../../api/api'
 import { FaCalendarAlt } from "react-icons/fa";
 import { IoIosTime } from "react-icons/io";
@@ -7,6 +7,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { useFormat } from "../../hooks/useFormatDate";
 import FeatureImageGallery from '../../components/FeaturedImageGallery'
 import JoinEvent from './JoinEvent'
+import Cookies from "js-cookie";
 
 const ViewEventDetails = () => {
   const { id }  = useParams();
@@ -26,6 +27,10 @@ const ViewEventDetails = () => {
   const [discount, setDiscount] = useState('');
   const [status, setStatus] = useState('');
   const { extractYear, dateFormat, formatTime} = useFormat()
+  const userId = Cookies.get('userId')
+  const token = Cookies.get('token')
+  const role = Cookies.get('role')
+  const navigate = useNavigate()
  
   useEffect(() => {
     const getEventDetails = async () => {
@@ -147,7 +152,13 @@ const ViewEventDetails = () => {
                     <p>Open</p>
                   </div>
                   <button
-                      onClick={() => setModal(true)}
+                      onClick={() => {
+                        if (!userId || !role || !token) {
+                            navigate('/register');
+                        } else {
+                            setModal(true);
+                        }
+                    }}          
                       className="p-2 w-full px-5 bg-blue-600 hover:bg-blue-700 text-white mt-5 rounded-full">
                     Join Now
                   </button>
