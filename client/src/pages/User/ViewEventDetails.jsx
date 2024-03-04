@@ -32,6 +32,7 @@ const ViewEventDetails = () => {
   const role = Cookies.get("role");
   const navigate = useNavigate();
   const total = price - discount;
+  const event_date = `${extractYear(startDate)} - ${dateFormat(endDate)}`;
 
   useEffect(() => {
     const getEventDetails = async () => {
@@ -182,6 +183,7 @@ const ViewEventDetails = () => {
                       eventType={eventType}
                       title={title}
                       total={total}
+                      event_date={event_date}
                     />
                   )}
                 </>
