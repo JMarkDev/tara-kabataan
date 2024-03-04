@@ -4,6 +4,7 @@ import "react-phone-input-2/lib/bootstrap.css";
 
 export default function App() {
   const [phone, setPhone] = useState("");
+  localStorage.setItem('phone', phone.toString());
 
   return (
     <PhoneInput

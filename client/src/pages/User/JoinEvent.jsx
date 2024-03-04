@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import api from '../../api/api';
 import Cookies from 'js-cookie';
 import LocationComponent from '../../components/LocationComponent';
 import PhoneInput from '../../components/PhoneInput';
-import GcashIcon from '../../assets/images/icons8-gcash.svg'
+import { ToastContainer, toast } from 'react-toastify';
 
-const JoinEvent = ({ handleClose, eventType }) => {
+const JoinEvent = ({ handleClose, eventType, title, total }) => {
+  const { id }  = useParams();
   const userId = Cookies.get('userId');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -14,6 +16,14 @@ const JoinEvent = ({ handleClose, eventType }) => {
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('');
+  // const [total, setTotal] = useState('0.00');
+  const region = localStorage.getItem('region');
+  const province = localStorage.getItem('province');
+  const city = localStorage.getItem('city');
+  const barangay = localStorage.getItem('barangay');
+  const phone = localStorage.getItem('phone');
+  const location = `${region}, ${province}, ${city}, ${barangay}`;
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -38,9 +48,63 @@ const JoinEvent = ({ handleClose, eventType }) => {
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setTimeout(() => {
+      handleClose()
+    }, 2000)
+
+    const data = {
+      event_id: id,
+      user_id: userId,
+      event_name: title,
+      event_type: eventType,
+      attendee_name: `${firstName} ${lastName}`,
+      gender: gender,
+      attendee_email: email,
+      birthdate: `${year}-${month}-${day}`,
+      phone_number: phone,
+      location: location,
+      payment_method: paymentMethod,
+      total_amount: total
+    }
+
+    try {
+      const response = await api.post('/attendees/add', data);
+      if(response.data.status === 'success') {
+        toast.success('Join event successfully!')
+        localStorage.removeItem('region');
+        localStorage.removeItem('province');
+        localStorage.removeItem('city');
+        localStorage.removeItem('barangay');
+        localStorage.removeItem('phone')
+      }
+    } catch (error) {
+      toast.error(error.response.data.Error)
+      console.log(error);
+    }
+  }
+
   
 
   return (
+    <>
+    <ToastContainer
+    position="top-right"
+    autoClose={5000}
+    hideProgressBar={false}
+    newestOnTop={false}
+    closeOnClick
+    rtl={false}
+    pauseOnFocusLoss
+    draggable
+    pauseOnHover
+    theme="light"
+    // transition: "Bounce"
+    />
+    {/* Same as */}
+    <ToastContainer />
+    
     <div className="fixed inset-0 z-50 flex justify-center items-center overflow-y-auto bg-black bg-opacity-50">
       <div className="relative p-4 w-full max-w-xl">
         <div className="relative bg-white rounded-lg shadow">
@@ -72,7 +136,7 @@ const JoinEvent = ({ handleClose, eventType }) => {
             </button>
           </div>
           <div className="p-4 space-y-4">
-            <form action="" method="POST" encType="multipart/form-data">
+            <form onSubmit={handleSubmit} action="" method="POST" encType="multipart/form-data">
               <div className="mb-4 flex md:flex-row flex-col justify-between">
                 <div>
                   <label
@@ -263,8 +327,12 @@ const JoinEvent = ({ handleClose, eventType }) => {
               <select
                 name="payment"
                 id="payment"
+                value={paymentMethod}
+                required
+                onChange={(e) => setPaymentMethod(e.target.value)}
                 className="block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   >
+                <option value="">Payment Method</option>
                 <option value="Cash">Cash</option>
                 <option value="Gcash">Gcash</option>
               </select>
@@ -305,6 +373,7 @@ const JoinEvent = ({ handleClose, eventType }) => {
         </div>
       </div>
     </div>
+  </>
   );
 };
 

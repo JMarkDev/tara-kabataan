@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 const LocationInput = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -21,76 +21,70 @@ const LocationInput = () => {
 
   const handleLocationSelect = async (location, event) => {
     event.preventDefault();
-    localStorage.setItem('region', location.name)
+    localStorage.setItem('region', location.name);
     setSelectedLocation(location.name);
-    try{
+    try {
       const response = await fetch(`https://psgc.gitlab.io/api/island-groups/${location.code}/provinces.json`);
       const data = await response.json();
       setProvince(data);
-      setData([])
-    } catch (error){
+      setData([]);
+    } catch (error) {
       console.error(error);
     }
   };
 
   const handleProvince = async (location, event) => {
     event.preventDefault();
-    localStorage.setItem('province', location.name)
-    try{
-      const response =  await fetch(`https://psgc.gitlab.io/api/provinces/${location.code}/cities-municipalities.json`);
+    localStorage.setItem('province', location.name);
+    setSelectedLocation((prev) => prev + ', ' + location.name);
+    try {
+      const response = await fetch(`https://psgc.gitlab.io/api/provinces/${location.code}/cities-municipalities.json`);
       const data = await response.json();
-      setSelectedLocation((prev) => prev + ', ' + location.name)
       const sort = data.sort((a, b) => a.name.localeCompare(b.name));
-      setCity(sort)
-      setProvince([])
+      setCity(sort);
+      setProvince([]);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const handleCity = async (location, event) => {
     event.preventDefault();
-    localStorage.setItem('city', location.name)
-    try{
+    localStorage.setItem('city', location.name);
+    setSelectedLocation((prev) => prev + ',' + location.name);
+    try {
       const response = await fetch(`https://psgc.gitlab.io/api/cities-municipalities/${location.code}/barangays.json`);
       const data = await response.json();
       const sort = data.sort((a, b) => a.name.localeCompare(b.name));
-      setSelectedLocation((prev) => prev + ',' + location.name)
-      setBarangay(sort)
-      setCity([])
+      setBarangay(sort);
+      setCity([]);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const handleBarangay = async (location, event) => {
     event.preventDefault();
-    localStorage.setItem('barangay', location.name)
-    try {
-      
-      setIsDropdownOpen(false);
-      setSelectedLocation((prev) => prev + ', ' + location.name)
-      setBarangay([])
-    } catch (error) {
-      console.error(error);
-    }
-  }
+    localStorage.setItem('barangay', location.name);
+    setIsDropdownOpen(false);
+    setSelectedLocation((prev) => prev + ', ' + location.name);
+    setBarangay([]);
+  };
 
   const handleClear = async (event) => {
     event.preventDefault();
-
     try {
       const response = await fetch('https://psgc.gitlab.io/api/island-groups.json');
       const data = await response.json();
       setData(data);
-      setBarangay([])
-      setCity([])
-      setProvince([])
-      setSelectedLocation('')
+      setBarangay([]);
+      setCity([]);
+      setProvince([]);
+      setSelectedLocation('');
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <div>
@@ -118,20 +112,20 @@ const LocationInput = () => {
         id="dropdown"
         className={`z-10 ${isDropdownOpen ? 'block' : 'hidden'} w-full  bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700`}
       >
-            <div className="flex justify-between lg:px-10 py-2">
-                <li className={`cursor-pointer text-md list-none ${data.length >= 1 ? 'border-2 border-b-[#f87a58] border-transparent ' : ''} font-semibold text-gray-700 dark:text-gray-200`}
-                  onClick={(event) => handleClear(event)}
-                >Region</li>
-                <li className={` text-md list-none ${province.length >= 1 ? 'border-2 border-b-[#f87a58] border-transparent ' : ''} cursor-not-allowed disabled font-semibold text-gray-700 dark:text-gray-200`}
-                >Province</li>
-                <li className={` text-md list-none ${city.length >= 1 ? 'border-2 border-b-[#f87a58] border-transparent ' : ''} cursor-not-allowed disabled font-semibold text-gray-700 dark:text-gray-200`}
-                >City</li>
-                <li className={` text-md list-none ${barangay.length >= 1 ? 'border-2 border-b-[#f87a58] border-transparent ' : ''} cursor-not-allowed disabled font-semibold text-gray-700 dark:text-gray-200`}
-                >Barangay</li>
-            </div>
+        <div className="flex justify-between lg:px-10 py-2">
+          <li className={`cursor-pointer text-md list-none ${data.length >= 1 ? 'border-2 border-b-[#f87a58] border-transparent ' : ''} font-semibold text-gray-700 dark:text-gray-200`}
+            onClick={(event) => handleClear(event)}
+          >Region</li>
+          <li className={` text-md list-none ${province.length >= 1 ? 'border-2 border-b-[#f87a58] border-transparent ' : ''} cursor-not-allowed disabled font-semibold text-gray-700 dark:text-gray-200`}
+          >Province</li>
+          <li className={` text-md list-none ${city.length >= 1 ? 'border-2 border-b-[#f87a58] border-transparent ' : ''} cursor-not-allowed disabled font-semibold text-gray-700 dark:text-gray-200`}
+          >City</li>
+          <li className={` text-md list-none ${barangay.length >= 1 ? 'border-2 border-b-[#f87a58] border-transparent ' : ''} cursor-not-allowed disabled font-semibold text-gray-700 dark:text-gray-200`}
+          >Barangay</li>
+        </div>
         <ul className="py-2 text-sm overflow-y-auto h-[200px] text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
 
-            {data.map((location, index) => (
+          {data.map((location, index) => (
             <li key={index}>
               <a
                 href="#"
@@ -142,7 +136,7 @@ const LocationInput = () => {
               </a>
             </li>
           ))}
-            {province.map((location, index) => (
+          {province.map((location, index) => (
             <li key={index}>
               <a
                 href="#"
