@@ -109,9 +109,7 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
         draggable
         pauseOnHover
         theme="light"
-        // transition: "Bounce"
       />
-      {/* Same as */}
       <ToastContainer />
 
       <div className="fixed inset-0 z-50 flex justify-center items-center overflow-y-auto bg-black bg-opacity-50">
@@ -198,10 +196,8 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
                     name="email"
                     disabled
                     defaultValue={email}
-                    //   onChange={handleInputChange}
                     className="block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
-                  {/* {errorMessage && <div className="text-red-600 text-sm">{errorMessage}</div>} */}
                 </div>
                 <div className="mt-2 mb-4">
                   <label

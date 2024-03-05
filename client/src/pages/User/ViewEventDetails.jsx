@@ -8,9 +8,17 @@ import { useFormat } from "../../hooks/useFormatDate";
 import FeatureImageGallery from "../../components/FeaturedImageGallery";
 import JoinEvent from "./JoinEvent";
 import Cookies from "js-cookie";
+import { ToastContainer, toast } from "react-toastify";
+import userIcon from "../../assets/images/user.png";
 
 const ViewEventDetails = () => {
   const { id } = useParams();
+  const userId = Cookies.get("userId");
+  const token = Cookies.get("token");
+  const role = Cookies.get("role");
+  const navigate = useNavigate();
+  const [fullName, setFullname] = useState("");
+  const [profileImage, setProfileImage] = useState("");
   const [modal, setModal] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -27,12 +35,30 @@ const ViewEventDetails = () => {
   const [discount, setDiscount] = useState("");
   const [status, setStatus] = useState("");
   const { extractYear, dateFormat, formatTime } = useFormat();
-  const userId = Cookies.get("userId");
-  const token = Cookies.get("token");
-  const role = Cookies.get("role");
-  const navigate = useNavigate();
   const total = price - discount;
   const event_date = `${extractYear(startDate)} - ${dateFormat(endDate)}`;
+  const [comment, setComment] = useState([]);
+  const [formData, setFormData] = useState({
+    event_id: id,
+    user_id: userId,
+    event_name: title,
+    attendees_name: fullName,
+    comment: "",
+    image: null,
+  });
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await api.get(`/user/id/${userId}`);
+        setFullname(`${response.data.firstname} ${response.data.lastname}`);
+        setProfileImage(response.data.image);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUser();
+  }, [userId]);
 
   useEffect(() => {
     const getEventDetails = async () => {
@@ -59,25 +85,73 @@ const ViewEventDetails = () => {
     getEventDetails();
   }, [id]);
 
-  const handleJoinAttendees = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await api.post("/attendees/add");
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleClose = () => {
     setModal(false);
   };
 
+  const handleInputChange = (e) => {
+    const { name, value, files } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: name === "image" ? files : value,
+    }));
+  };
+
+  const handleComment = async (e) => {
+    e.preventDefault();
+
+    const { comment, image } = formData;
+    const data = new FormData();
+
+    if (image !== null) {
+      for (let i = 0; i < image.length; i++) {
+        data.append("image", image[i]);
+      }
+    }
+
+    data.append("event_id", id);
+    data.append("user_id", userId);
+    data.append("event_name", title);
+    data.append("attendees_name", fullName);
+    data.append("comment", comment);
+
+    try {
+      await api.post("/comment/add", data);
+      toast.success("Feedback submitted successfully");
+    } catch (error) {
+      console.log(error.response);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await api.get(`/comment/id/${id}`);
+        setComment(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchComments();
+  }, [id]);
+
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      <ToastContainer />
       <div className="lg:px-20  py-10 flex flex-col-2 md:flex-row flex-col gap-5">
-        {/* <h1>Event Details</h1> */}
         <div className="w-full bg-gray-100 p-5">
           <img
             src={`${api.defaults.baseURL}${image}`}
@@ -91,7 +165,6 @@ const ViewEventDetails = () => {
             {title}
           </h1>
           <div className="">
-            {/* <div className='flex flex-col gap-4  justify-between'> */}
             <div className="flex flex-col p-2 rounded-md">
               <div className="mb-5">
                 <h1 className="text-xl font-bold mb-3">Date</h1>
@@ -129,7 +202,6 @@ const ViewEventDetails = () => {
         </div>
         <div className="md:w-[50%] w-full">
           <div className="bg-gray-100 sticky top-5 p-5 rounded-md">
-            {/* <h1 className="text-xl font-bold text-[#6415ff]">Event Details</h1> */}
             <div className="flex flex-col gap-4">
               <div className="flex justify-between">
                 <p>Organizer</p>
@@ -211,27 +283,90 @@ const ViewEventDetails = () => {
             <h1 className="font-bold text-lg md:text-2xl my-5">
               Event Feedback
             </h1>
-            <div className="flex md:flex-row flex-col">
-              <textarea
-                name=""
-                id=""
-                className="w-full p-5 border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
-                rows="5"
-                placeholder="Tell me about your experience"
-              ></textarea>
-              <div className="p-5">
-                <input
-                  type="file"
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                  accept="image/*"
-                  onchange="previewImage(event)"
-                />
-                <button className="p-2 mt-5 w-full rounded-full bg-blue-500 text-white">
-                  Submit
-                </button>
+            <form action="" onSubmit={handleComment}>
+              <div className="flex md:flex-row flex-col">
+                <textarea
+                  onChange={handleInputChange}
+                  value={formData.comment}
+                  name="comment"
+                  required
+                  className="w-full p-5 border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
+                  rows="5"
+                  placeholder="Tell me about your experience"
+                ></textarea>
+                <div className="p-5">
+                  <input
+                    type="file"
+                    name="image"
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    // accept="image/*"
+                    onChange={handleInputChange}
+                    multiple
+                  />
+                  <button
+                    className="p-2 mt-5 w-full rounded-full bg-blue-500 text-white"
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
-            </div>
-            <p className="my-5">There are no reviews for this event yet</p>
+            </form>
+            {comment.length > 0 ? (
+              <div className="bg-white p-2 mt-5 rounded-lg">
+                {comment.map(
+                  ({ id, attendees_name, created_at, image, comment }) => (
+                    <div
+                      key={attendees_name}
+                      className="flex gap-3 my-5 border-b-gray-300 border-b p-5 rounded-md"
+                    >
+                      <img
+                        src={`${
+                          profileImage
+                            ? `${api.defaults.baseURL}${profileImage}`
+                            : userIcon
+                        }`}
+                        alt=""
+                        className="w-10 h-10 rounded-full"
+                      />
+                      <div>
+                        <p className="font-bold">{attendees_name}</p>
+                        <p className="text-sm">{dateFormat(created_at)}</p>
+                        <p className="mt-5">{comment}</p>
+                        {/* Handle different image formats */}
+                        {image && (
+                          <div className="flex gap-2 mt-5">
+                            {typeof image === "string"
+                              ? image.split(",").map((imageUrl, index) => (
+                                  <img
+                                    key={`${index}-${imageUrl.trim()}`} // Combine index and trimmed URL
+                                    src={`${
+                                      api.defaults.baseURL
+                                    }/uploads/${imageUrl.trim()}`}
+                                    alt=""
+                                    className="w-20 h-20"
+                                  />
+                                ))
+                              : image instanceof Array && image.length > 0
+                              ? image.map((imageUrl, index) => (
+                                  <img
+                                    key={`${index}-${imageUrl}`} // Combine index and URL
+                                    src={`${api.defaults.baseURL}/uploads/${imageUrl}`}
+                                    alt=""
+                                    className="w-20 h-20"
+                                  />
+                                ))
+                              : null}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+            ) : (
+              <p className="my-5">There are no reviews for this event yet</p>
+            )}
           </div>
         </div>
       )}
