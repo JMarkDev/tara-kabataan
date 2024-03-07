@@ -8,10 +8,12 @@ import { useFormat } from "../../hooks/useFormatDate";
 import FeatureImageGallery from "../../components/FeaturedImageGallery";
 import JoinEvent from "./JoinEvent";
 import Cookies from "js-cookie";
-import { ToastContainer, toast } from "react-toastify";
+// import { ToastContainer, toast } from "react-toastify";
 import userIcon from "../../assets/images/user.png";
+import { useToast } from "../../hooks/useToast";
 
 const ViewEventDetails = () => {
+  const toast = useToast();
   const { id } = useParams();
   const userId = Cookies.get("userId");
   const token = Cookies.get("token");
@@ -64,20 +66,36 @@ const ViewEventDetails = () => {
     const getEventDetails = async () => {
       try {
         const response = await api.get(`/event/id/${id}`);
-        setImage(response.data.image);
-        setTitle(response.data.event_title);
-        setStartTime(response.data.start_time);
-        setEndTime(response.data.end_time);
-        setLocation(response.data.location);
-        setStartDate(response.data.start_date);
-        setEndDate(response.data.end_date);
-        setDescription(response.data.event_description);
-        setOrganizer(response.data.organizer_name);
-        setEventType(response.data.event_type);
-        setEventCategory(response.data.event_category);
-        setPrice(response.data.price);
-        setDiscount(response.data.discount);
-        setStatus(response.data.status);
+        const {
+          image,
+          event_title,
+          start_time,
+          end_time,
+          location,
+          start_date,
+          end_date,
+          event_description,
+          organizer_name,
+          event_type,
+          event_category,
+          price,
+          discount,
+          status,
+        } = response.data;
+        setImage(image);
+        setTitle(event_title);
+        setStartTime(start_time);
+        setEndTime(end_time);
+        setLocation(location);
+        setStartDate(start_date);
+        setEndDate(end_date);
+        setDescription(event_description);
+        setOrganizer(organizer_name);
+        setEventType(event_type);
+        setEventCategory(event_category);
+        setPrice(price);
+        setDiscount(discount);
+        setStatus(status);
       } catch (error) {
         console.error(error);
       }
@@ -96,6 +114,19 @@ const ViewEventDetails = () => {
       [name]: name === "image" ? files : value,
     }));
   };
+
+  const fetchComments = async () => {
+    try {
+      const response = await api.get(`/comment/id/${id}`);
+      setComment(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchComments();
+  }, [id]);
 
   const handleComment = async (e) => {
     e.preventDefault();
@@ -116,41 +147,18 @@ const ViewEventDetails = () => {
     data.append("comment", comment);
 
     try {
-      await api.post("/comment/add", data);
+      const response = await api.post("/comment/add", data);
+      setComment(response.data);
       toast.success("Feedback submitted successfully");
+      fetchComments();
     } catch (error) {
       console.log(error.response);
       toast.error(error.response.data.message);
     }
   };
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await api.get(`/comment/id/${id}`);
-        setComment(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchComments();
-  }, [id]);
-
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-      <ToastContainer />
       <div className="lg:px-20  py-10 flex flex-col-2 md:flex-row flex-col gap-5">
         <div className="w-full bg-gray-100 p-5">
           <img
@@ -335,7 +343,7 @@ const ViewEventDetails = () => {
                         <p className="mt-5">{comment}</p>
                         {/* Handle different image formats */}
                         {image && (
-                          <div className="flex gap-2 mt-5">
+                          <div className="flex gap-2 mt-5 overflow-x-auto">
                             {typeof image === "string"
                               ? image.split(",").map((imageUrl, index) => (
                                   <img

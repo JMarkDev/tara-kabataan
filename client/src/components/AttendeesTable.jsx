@@ -3,22 +3,22 @@ import { useParams } from "react-router-dom";
 import api from "../api/api";
 import { useFormat } from "../hooks/useFormatDate";
 
-const AttendeesTable = () => {
-  const { id } = useParams();
-  const [attendees, setAttendees] = useState([]);
+const AttendeesTable = ({ attendees }) => {
+  // const { id } = useParams();
+  // const [attendees, setAttendees] = useState([]);
   const { dateFormat } = useFormat();
 
-  useEffect(() => {
-    const fetchAttendees = async () => {
-      try {
-        const response = await api.get(`/attendees/event_id/${id}`);
-        setAttendees(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchAttendees();
-  }, [id]);
+  // useEffect(() => {
+  //   const fetchAttendees = async () => {
+  //     try {
+  //       const response = await api.get(`/attendees/event_id/${id}`);
+  //       setAttendees(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchAttendees();
+  // }, [id]);
 
   return (
     <div className="bg-white relative overflow-x-auto">
@@ -28,9 +28,6 @@ const AttendeesTable = () => {
           Download
         </button>
       </div>
-      {attendees.length === 0 && (
-        <p className="p-2 px-3 text-red-500">No attendees joined yet.</p>
-      )}
       <table className="w-full mt-3 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>

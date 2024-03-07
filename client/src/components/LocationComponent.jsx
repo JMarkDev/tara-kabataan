@@ -1,17 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const LocationInput = () => {
+const LocationInput = ({ attendeeLocation }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [data, setData] = useState([]);
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
   const [barangay, setBarangay] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState("");
+
+  useEffect(() => {
+    if (
+      // attendeeLocation !== undefined ||
+      attendeeLocation !== "null, null, null, null"
+    ) {
+      setSelectedLocation(attendeeLocation);
+    } else {
+      setSelectedLocation("");
+    }
+  }, [attendeeLocation]);
 
   const toggleDropdown = async () => {
     setIsDropdownOpen((prev) => !prev);
     try {
-      const response = await fetch('https://psgc.gitlab.io/api/island-groups.json');
+      const response = await fetch(
+        "https://psgc.gitlab.io/api/island-groups.json"
+      );
       const data = await response.json();
       setData(data);
     } catch (error) {
@@ -21,10 +34,12 @@ const LocationInput = () => {
 
   const handleLocationSelect = async (location, event) => {
     event.preventDefault();
-    localStorage.setItem('region', location.name);
+    localStorage.setItem("region", location.name);
     setSelectedLocation(location.name);
     try {
-      const response = await fetch(`https://psgc.gitlab.io/api/island-groups/${location.code}/provinces.json`);
+      const response = await fetch(
+        `https://psgc.gitlab.io/api/island-groups/${location.code}/provinces.json`
+      );
       const data = await response.json();
       setProvince(data);
       setData([]);
@@ -35,10 +50,12 @@ const LocationInput = () => {
 
   const handleProvince = async (location, event) => {
     event.preventDefault();
-    localStorage.setItem('province', location.name);
-    setSelectedLocation((prev) => prev + ', ' + location.name);
+    localStorage.setItem("province", location.name);
+    setSelectedLocation((prev) => prev + ", " + location.name);
     try {
-      const response = await fetch(`https://psgc.gitlab.io/api/provinces/${location.code}/cities-municipalities.json`);
+      const response = await fetch(
+        `https://psgc.gitlab.io/api/provinces/${location.code}/cities-municipalities.json`
+      );
       const data = await response.json();
       const sort = data.sort((a, b) => a.name.localeCompare(b.name));
       setCity(sort);
@@ -50,10 +67,12 @@ const LocationInput = () => {
 
   const handleCity = async (location, event) => {
     event.preventDefault();
-    localStorage.setItem('city', location.name);
-    setSelectedLocation((prev) => prev + ',' + location.name);
+    localStorage.setItem("city", location.name);
+    setSelectedLocation((prev) => prev + "," + location.name);
     try {
-      const response = await fetch(`https://psgc.gitlab.io/api/cities-municipalities/${location.code}/barangays.json`);
+      const response = await fetch(
+        `https://psgc.gitlab.io/api/cities-municipalities/${location.code}/barangays.json`
+      );
       const data = await response.json();
       const sort = data.sort((a, b) => a.name.localeCompare(b.name));
       setBarangay(sort);
@@ -65,22 +84,24 @@ const LocationInput = () => {
 
   const handleBarangay = async (location, event) => {
     event.preventDefault();
-    localStorage.setItem('barangay', location.name);
+    localStorage.setItem("barangay", location.name);
     setIsDropdownOpen(false);
-    setSelectedLocation((prev) => prev + ', ' + location.name);
+    setSelectedLocation((prev) => prev + ", " + location.name);
     setBarangay([]);
   };
 
   const handleClear = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('https://psgc.gitlab.io/api/island-groups.json');
+      const response = await fetch(
+        "https://psgc.gitlab.io/api/island-groups.json"
+      );
       const data = await response.json();
       setData(data);
       setBarangay([]);
       setCity([]);
       setProvince([]);
-      setSelectedLocation('');
+      setSelectedLocation("");
     } catch (error) {
       console.error(error);
     }
@@ -104,27 +125,65 @@ const LocationInput = () => {
           fill="none"
           viewBox="0 0 10 6"
         >
-          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="m1 1 4 4 4-4"
+          />
         </svg>
       </div>
 
       <div
         id="dropdown"
-        className={`z-10 ${isDropdownOpen ? 'block' : 'hidden'} w-full  bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700`}
+        className={`z-10 ${
+          isDropdownOpen ? "block" : "hidden"
+        } w-full  bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700`}
       >
         <div className="flex justify-between lg:px-10 py-2">
-          <li className={`cursor-pointer text-md list-none ${data.length >= 1 ? 'border-2 border-b-[#f87a58] border-transparent ' : ''} font-semibold text-gray-700 dark:text-gray-200`}
+          <li
+            className={`cursor-pointer text-md list-none ${
+              data.length >= 1
+                ? "border-2 border-b-[#f87a58] border-transparent "
+                : ""
+            } font-semibold text-gray-700 dark:text-gray-200`}
             onClick={(event) => handleClear(event)}
-          >Region</li>
-          <li className={` text-md list-none ${province.length >= 1 ? 'border-2 border-b-[#f87a58] border-transparent ' : ''} cursor-not-allowed disabled font-semibold text-gray-700 dark:text-gray-200`}
-          >Province</li>
-          <li className={` text-md list-none ${city.length >= 1 ? 'border-2 border-b-[#f87a58] border-transparent ' : ''} cursor-not-allowed disabled font-semibold text-gray-700 dark:text-gray-200`}
-          >City</li>
-          <li className={` text-md list-none ${barangay.length >= 1 ? 'border-2 border-b-[#f87a58] border-transparent ' : ''} cursor-not-allowed disabled font-semibold text-gray-700 dark:text-gray-200`}
-          >Barangay</li>
+          >
+            Region
+          </li>
+          <li
+            className={` text-md list-none ${
+              province.length >= 1
+                ? "border-2 border-b-[#f87a58] border-transparent "
+                : ""
+            } cursor-not-allowed disabled font-semibold text-gray-700 dark:text-gray-200`}
+          >
+            Province
+          </li>
+          <li
+            className={` text-md list-none ${
+              city.length >= 1
+                ? "border-2 border-b-[#f87a58] border-transparent "
+                : ""
+            } cursor-not-allowed disabled font-semibold text-gray-700 dark:text-gray-200`}
+          >
+            City
+          </li>
+          <li
+            className={` text-md list-none ${
+              barangay.length >= 1
+                ? "border-2 border-b-[#f87a58] border-transparent "
+                : ""
+            } cursor-not-allowed disabled font-semibold text-gray-700 dark:text-gray-200`}
+          >
+            Barangay
+          </li>
         </div>
-        <ul className="py-2 text-sm overflow-y-auto h-[200px] text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-
+        <ul
+          className="py-2 text-sm overflow-y-auto h-[200px] text-gray-700 dark:text-gray-200"
+          aria-labelledby="dropdownDefaultButton"
+        >
           {data.map((location, index) => (
             <li key={index}>
               <a

@@ -45,7 +45,7 @@ const Profile = () => {
       try {
         if (userId) {
           const response = await api.get(`/attendees/attendee_id/${userId}`);
-          if (response.data.length !== 0) {
+          if (response.data !== null) {
             const { birthdate, location, phone_number } = response.data;
             setAttendee(true);
             setBirthDate(birthdate);

@@ -4,9 +4,10 @@ import api from "../../api/api";
 import Cookies from "js-cookie";
 import LocationComponent from "../../components/LocationComponent";
 import PhoneInput from "../../components/PhoneInput";
-import { ToastContainer, toast } from "react-toastify";
+import { useToast } from "../../hooks/useToast";
 
 const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
+  const toast = useToast();
   const { id } = useParams();
   const userId = Cookies.get("userId");
   const [firstName, setFirstName] = useState("");
@@ -17,13 +18,21 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
-  // const [total, setTotal] = useState('0.00');
-  const region = localStorage.getItem("region");
-  const province = localStorage.getItem("province");
-  const city = localStorage.getItem("city");
-  const barangay = localStorage.getItem("barangay");
-  const phone = localStorage.getItem("phone");
-  const location = `${region}, ${province}, ${city}, ${barangay}`;
+  const [location, setLocation] = useState("");
+  const [phone, setPhone] = useState("");
+  console.log(location);
+
+  useEffect(() => {
+    const region = localStorage.getItem("region");
+    const province = localStorage.getItem("province");
+    const city = localStorage.getItem("city");
+    const barangay = localStorage.getItem("barangay");
+    const phone = localStorage.getItem("phone");
+    const location = `${region}, ${province}, ${city}, ${barangay}`;
+
+    setPhone(phone);
+    setLocation(location);
+  }, [paymentMethod]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -43,6 +52,35 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
     fetchUser();
   }, [userId]);
 
+  useEffect(() => {
+    const fetchAttendee = async () => {
+      try {
+        const response = await api.get(`/attendees/attendee_id/${userId}`);
+        if (response.data !== null) {
+          const attendeeBirthdate = response.data?.birthdate;
+
+          if (attendeeBirthdate) {
+            const dateObj = new Date(attendeeBirthdate);
+
+            const day = dateObj.getDate();
+            const month = dateObj.getMonth() + 1;
+            const year = dateObj.getFullYear();
+
+            setDay(day);
+            setMonth(month);
+            setYear(year);
+          }
+
+          setPhone(response.data?.phone_number);
+          setLocation(response.data?.location);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchAttendee();
+  }, [userId]);
+
   const months = [
     "January",
     "February",
@@ -60,9 +98,9 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setTimeout(() => {
-      handleClose();
-    }, 2000);
+    // setTimeout(() => {
+    //   handleClose();
+    // }, 2000);
 
     const data = {
       event_id: id,
@@ -80,8 +118,11 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
       event_date: event_date,
     };
 
+    console.log(data);
+
     try {
       const response = await api.post("/attendees/add", data);
+      console.log(data);
       if (response.data.status === "success") {
         toast.success("Join event successfully!");
         localStorage.removeItem("region");
@@ -98,20 +139,6 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-      <ToastContainer />
-
       <div className="fixed inset-0 z-50 flex justify-center items-center overflow-y-auto bg-black bg-opacity-50">
         <div className="relative p-4 w-full max-w-xl">
           <div className="relative bg-white rounded-lg shadow">
@@ -317,7 +344,7 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
                     Phone Number
                   </label>
                   <div className="">
-                    <PhoneInput />
+                    <PhoneInput attendeePhone={phone} />
                   </div>
                 </div>
                 <div className="mb-4">
@@ -327,7 +354,7 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
                   >
                     Location
                   </label>
-                  <LocationComponent />
+                  <LocationComponent attendeeLocation={location} />
                 </div>
                 <div className="mb-4 w-full">
                   {eventType !== "Free" && (
