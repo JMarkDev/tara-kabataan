@@ -8,7 +8,6 @@ import { useFormat } from "../../hooks/useFormatDate";
 import FeatureImageGallery from "../../components/FeaturedImageGallery";
 import JoinEvent from "./JoinEvent";
 import Cookies from "js-cookie";
-// import { ToastContainer, toast } from "react-toastify";
 import userIcon from "../../assets/images/user.png";
 import { useToast } from "../../hooks/useToast";
 
@@ -40,6 +39,7 @@ const ViewEventDetails = () => {
   const total = price - discount;
   const event_date = `${extractYear(startDate)} - ${dateFormat(endDate)}`;
   const [comment, setComment] = useState([]);
+  const [allowedComment, setAllowedComment] = useState(false);
   const [formData, setFormData] = useState({
     event_id: id,
     user_id: userId,
@@ -157,6 +157,24 @@ const ViewEventDetails = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchJoinedEvents = async () => {
+      try {
+        const response = await api.get(`/attendees/join-events/${userId}`);
+        const allowComment = response.data.map((event_id) => event_id.event_id);
+
+        if (allowComment.includes(parseInt(id))) {
+          setAllowedComment(true);
+        } else {
+          setAllowedComment(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchJoinedEvents();
+  }, [userId, id]);
+
   return (
     <>
       <div className="lg:px-20  py-10 flex flex-col-2 md:flex-row flex-col gap-5">
@@ -264,6 +282,7 @@ const ViewEventDetails = () => {
                       title={title}
                       total={total}
                       event_date={event_date}
+                      event_location={location}
                     />
                   )}
                 </>
@@ -291,35 +310,37 @@ const ViewEventDetails = () => {
             <h1 className="font-bold text-lg md:text-2xl my-5">
               Event Feedback
             </h1>
-            <form action="" onSubmit={handleComment}>
-              <div className="flex md:flex-row flex-col">
-                <textarea
-                  onChange={handleInputChange}
-                  value={formData.comment}
-                  name="comment"
-                  required
-                  className="w-full p-5 border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
-                  rows="5"
-                  placeholder="Tell me about your experience"
-                ></textarea>
-                <div className="p-5">
-                  <input
-                    type="file"
-                    name="image"
-                    className="w-full p-2 border border-gray-300 rounded-md"
-                    // accept="image/*"
+            {allowedComment && (
+              <form action="" onSubmit={handleComment}>
+                <div className="flex md:flex-row flex-col">
+                  <textarea
                     onChange={handleInputChange}
-                    multiple
-                  />
-                  <button
-                    className="p-2 mt-5 w-full rounded-full bg-blue-500 text-white"
-                    type="submit"
-                  >
-                    Submit
-                  </button>
+                    value={formData.comment}
+                    name="comment"
+                    required
+                    className="w-full p-5 border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
+                    rows="5"
+                    placeholder="Tell me about your experience"
+                  ></textarea>
+                  <div className="p-5">
+                    <input
+                      type="file"
+                      name="image"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                      // accept="image/*"
+                      onChange={handleInputChange}
+                      multiple
+                    />
+                    <button
+                      className="p-2 mt-5 w-full rounded-full bg-blue-500 text-white"
+                      type="submit"
+                    >
+                      Submit
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </form>
+              </form>
+            )}
             {comment.length > 0 ? (
               <div className="bg-white p-2 mt-5 rounded-lg">
                 {comment.map(

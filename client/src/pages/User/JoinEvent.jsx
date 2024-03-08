@@ -6,7 +6,14 @@ import LocationComponent from "../../components/LocationComponent";
 import PhoneInput from "../../components/PhoneInput";
 import { useToast } from "../../hooks/useToast";
 
-const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
+const JoinEvent = ({
+  handleClose,
+  eventType,
+  title,
+  event_location,
+  total,
+  event_date,
+}) => {
   const toast = useToast();
   const { id } = useParams();
   const userId = Cookies.get("userId");
@@ -20,19 +27,14 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [location, setLocation] = useState("");
   const [phone, setPhone] = useState("");
-  console.log(location);
 
-  useEffect(() => {
-    const region = localStorage.getItem("region");
-    const province = localStorage.getItem("province");
-    const city = localStorage.getItem("city");
-    const barangay = localStorage.getItem("barangay");
-    const phone = localStorage.getItem("phone");
-    const location = `${region}, ${province}, ${city}, ${barangay}`;
-
-    setPhone(phone);
+  const handleLocationChange = (location) => {
     setLocation(location);
-  }, [paymentMethod]);
+  };
+
+  const handlePhoneChange = (phone) => {
+    setPhone(phone);
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -44,25 +46,15 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
           setLastName(lastname);
           setEmail(email);
           setGender(gender);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchUser();
-  }, [userId]);
 
-  useEffect(() => {
-    const fetchAttendee = async () => {
-      try {
-        const response = await api.get(`/attendees/attendee_id/${userId}`);
-        if (response.data !== null) {
+          setPhone(response.data?.phone_number || "");
+          setLocation(response.data?.location || "");
+
           const attendeeBirthdate = response.data?.birthdate;
-
           if (attendeeBirthdate) {
             const dateObj = new Date(attendeeBirthdate);
 
-            const day = dateObj.getDate();
+            const day = dateObj.getDate() + 1;
             const month = dateObj.getMonth() + 1;
             const year = dateObj.getFullYear();
 
@@ -70,15 +62,12 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
             setMonth(month);
             setYear(year);
           }
-
-          setPhone(response.data?.phone_number);
-          setLocation(response.data?.location);
         }
       } catch (error) {
         console.log(error);
       }
     };
-    fetchAttendee();
+    fetchUser();
   }, [userId]);
 
   const months = [
@@ -98,14 +87,15 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // setTimeout(() => {
-    //   handleClose();
-    // }, 2000);
+    setTimeout(() => {
+      handleClose();
+    }, 2000);
 
     const data = {
       event_id: id,
       user_id: userId,
       event_name: title,
+      event_location: event_location,
       event_type: eventType,
       attendee_name: `${firstName} ${lastName}`,
       gender: gender,
@@ -293,7 +283,7 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
                       {/* Generate day options */}
                       {Array.from({ length: 31 }, (_, i) => i + 1).map(
                         (day) => (
-                          <option key={day} value={day}>
+                          <option key={day} value={day + 1}>
                             {day}
                           </option>
                         )
@@ -344,7 +334,10 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
                     Phone Number
                   </label>
                   <div className="">
-                    <PhoneInput attendeePhone={phone} />
+                    <PhoneInput
+                      attendeePhone={phone}
+                      onPhoneChange={handlePhoneChange}
+                    />
                   </div>
                 </div>
                 <div className="mb-4">
@@ -354,7 +347,10 @@ const JoinEvent = ({ handleClose, eventType, title, total, event_date }) => {
                   >
                     Location
                   </label>
-                  <LocationComponent attendeeLocation={location} />
+                  <LocationComponent
+                    attendeeLocation={location}
+                    onLocationChange={handleLocationChange}
+                  />
                 </div>
                 <div className="mb-4 w-full">
                   {eventType !== "Free" && (

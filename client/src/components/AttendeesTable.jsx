@@ -19,6 +19,9 @@ const AttendeesTable = ({ attendees }) => {
   //   };
   //   fetchAttendees();
   // }, [id]);
+  useEffect(() => {
+    console.log(attendees);
+  }, [attendees]);
 
   return (
     <div className="bg-white relative overflow-x-auto">
@@ -35,7 +38,7 @@ const AttendeesTable = ({ attendees }) => {
               USER ID
             </th>
             <th scope="col" className="px-6 py-3 text-nowrap">
-              DATE
+              REGISTRATION DATE
             </th>
             <th scope="col" className="px-6 py-3 text-nowrap">
               NAME
@@ -85,9 +88,9 @@ const AttendeesTable = ({ attendees }) => {
                 <td className="px-6 py-3 text-nowrap">{attendee_name}</td>
                 <td className="px-6 py-3">{gender}</td>
                 <td className="px-6 py-3 text-nowrap">
-                  {dateFormat(birthdate)}
+                  {/* {dateFormat(birthdate)} */}
                 </td>
-                <td className="px-6 py-3 text-nowrap">{`+ ${phone_number}`}</td>
+                <td className="px-6 py-3 text-nowrap">{phone_number}</td>
                 <td className="px-6 py-3 text-nowrap">{location}</td>
                 <td className="px-6 py-3">{payment_method}</td>
                 <td className="px-6 py-3">{total_amount}</td>

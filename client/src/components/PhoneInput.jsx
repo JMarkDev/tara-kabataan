@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
 
-export default function App({ attendeePhone }) {
+export default function App({ attendeePhone, onPhoneChange }) {
   const [phone, setPhone] = useState("");
-  localStorage.setItem("phone", phone.toString());
+  useEffect(() => {
+    onPhoneChange(phone);
+  }, [phone]);
 
   useEffect(() => {
     if (attendeePhone) {

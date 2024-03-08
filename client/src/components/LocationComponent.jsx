@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const LocationInput = ({ attendeeLocation }) => {
+const LocationInput = ({ attendeeLocation, onLocationChange }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [data, setData] = useState([]);
   const [province, setProvince] = useState([]);
@@ -9,14 +9,23 @@ const LocationInput = ({ attendeeLocation }) => {
   const [selectedLocation, setSelectedLocation] = useState("");
 
   useEffect(() => {
-    if (
-      // attendeeLocation !== undefined ||
-      attendeeLocation !== "null, null, null, null"
-    ) {
+    onLocationChange(selectedLocation);
+  }, [selectedLocation]);
+
+  useEffect(() => {
+    if (attendeeLocation) {
       setSelectedLocation(attendeeLocation);
     } else {
       setSelectedLocation("");
     }
+    // if (
+    //   // attendeeLocation !== undefined ||
+    //   attendeeLocation !== "null, null, null, null"
+    // ) {
+    //   setSelectedLocation(attendeeLocation);
+    // } else {
+    //   setSelectedLocation("");
+    // }
   }, [attendeeLocation]);
 
   const toggleDropdown = async () => {
