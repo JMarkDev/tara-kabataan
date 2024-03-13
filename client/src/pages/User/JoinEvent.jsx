@@ -108,11 +108,8 @@ const JoinEvent = ({
       event_date: event_date,
     };
 
-    console.log(data);
-
     try {
       const response = await api.post("/attendees/add", data);
-      console.log(data);
       if (response.data.status === "success") {
         toast.success("Join event successfully!");
         localStorage.removeItem("region");

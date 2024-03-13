@@ -5,9 +5,11 @@ import { AiOutlineUser } from "react-icons/ai";
 import Cookies from "js-cookie";
 import { useFormat } from "../../hooks/useFormatDate";
 import { useToast } from "../../hooks/useToast";
+import EditProfile from "./EditProfile";
 
 const Profile = () => {
   const toast = useToast();
+  // const [modal, setModal] = useState(false);
   const userId = Cookies.get("userId");
   const { dateFormat } = useFormat();
   const [name, setName] = useState("");
@@ -42,19 +44,19 @@ const Profile = () => {
     fetchUser();
   }, [userId, image]);
 
-  useEffect(() => {
-    const fetchAttendee = async () => {
-      try {
-        if (userId) {
-          const response = await api.get(`/attendees/attendee_id/${userId}`);
-          console.log(response.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchAttendee();
-  }, [userId]);
+  // useEffect(() => {
+  //   const fetchAttendee = async () => {
+  //     try {
+  //       if (userId) {
+  //         const response = await api.get(`/attendees/attendee_id/${userId}`);
+  //         console.log(response.data);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchAttendee();
+  // }, [userId]);
 
   useEffect(() => {
     const fetchJoinedEvents = async () => {
@@ -90,16 +92,34 @@ const Profile = () => {
     }
   };
 
+  // const handleEdit = () => {
+  //   setModal(!modal);
+  // };
+
+  // const handleClose = () => {
+  //   setModal(false);
+  // };
+
   return (
     <>
       <div className="md:p-20  flex flex-col md:flex-row gap-5 p-5">
         <div className="w-full p-5 bg-gray-100">
-          <h1 className="font-bold text-xl md:text-2xl text-[#243e63] mb-5">
+          <h1 className="font-bold text-xl md:text-2xl text-[#243e63] mb-10">
             Personal details
           </h1>
           <div className="p-5 max-w-lg md:m-auto text-gray-500 bg-gray-200 rounded-lg">
+            <div className="flex justify-end">
+              <Link
+                to={`/profile/${userId}`}
+                // onClick={handleEdit}
+                className="text-blue-500 hover:text-blue-700 font-bold"
+              >
+                Edit
+              </Link>
+              {/* {modal && <EditProfile modal={modal} handleClose={handleClose} />} */}
+            </div>
             <div className="flex flex-col items-center justify-center mb-5">
-              <div className="flex flex-col items-center justify-center mb-5">
+              <div className="flex flex-col items-center  justify-center mb-5">
                 <label htmlFor="image-upload" className="cursor-pointer">
                   {image ? (
                     <img
@@ -189,7 +209,7 @@ const Profile = () => {
           </div>
           {joinEvents.length > 0 && (
             <>
-              <h1 className="mt-5 font-bold text-xl md:text-2xl text-[#243e63] mb-5">
+              <h1 className="mt-10 font-bold text-xl md:text-2xl text-[#243e63] mb-5">
                 Joined Events
               </h1>
               <div className="max-w-full overflow-x-auto">
