@@ -1,14 +1,48 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormat } from "../hooks/useFormatDate";
 
 const AttendeesTable = ({ attendees }) => {
   const { dateFormat } = useFormat();
 
+  function downloadCSV() {
+    const headers = [
+      "Full Name",
+      "Birth Date",
+      "Gender",
+      "Email",
+      "Phone Number",
+    ];
+    const dataRows = attendees.map((response) => {
+      return [
+        response.attendee_name,
+        response.birthdate,
+        response.gender,
+        response.attendee_email,
+        response.phone_number,
+      ];
+    });
+
+    const csvContent = [headers, ...dataRows]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = "attendees.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   return (
     <div className="bg-white relative overflow-x-auto">
       <div className="flex justify-between items-center p-2">
         <h1 className="text-xl text-[#3d4465] font-semibold">Attendees List</h1>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white p-2 px-3 rounded-lg">
+        <button
+          onClick={downloadCSV}
+          className="bg-blue-500 hover:bg-blue-700 text-white p-2 px-3 rounded-lg"
+        >
           Download
         </button>
       </div>

@@ -148,9 +148,15 @@ const ViewEventDetails = () => {
 
     try {
       const response = await api.post("/comment/add", data);
-      setComment(response.data);
-      toast.success("Feedback submitted successfully");
-      fetchComments();
+      if (response.data.status === "success") {
+        setComment(response.data);
+        toast.success("Feedback submitted successfully");
+        fetchComments();
+        setFormData({
+          comment: "",
+          image: null,
+        });
+      }
     } catch (error) {
       console.log(error.response);
       toast.error(error.response.data.message);
@@ -187,9 +193,10 @@ const ViewEventDetails = () => {
           <span className=" bg-green-300 w-fit px-2 py-1 rounded-full text-green-800">
             {status}
           </span>
-          <h1 className="md:text-4xl text-xl py-3 text-[#6415ff] font-bold">
+          <h1 className="md:text-4xl text-wrap text-xl py-3 text-[#6415ff] font-bold">
             {title}
           </h1>
+
           <div className="">
             <div className="flex flex-col p-2 rounded-md">
               <div className="mb-5">

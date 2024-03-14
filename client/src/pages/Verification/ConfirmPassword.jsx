@@ -1,69 +1,65 @@
-import  { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
-import api from '../../api/api';
+import api from "../../api/api";
 import Loading from "../../components/loading/otpLoader/otpLoader";
 
 function ConfirmPassword() {
-    const [loader, setLoader] = useState(false);
-    const [successMessage, setSuccessMessage] = useState('')
-    const { state } = useLocation();
-    const navigate = useNavigate();
+  const [loader, setLoader] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const { state } = useLocation();
+  const navigate = useNavigate();
 
-    const email = state ? state.email : '';
+  const email = state ? state.email : "";
 
-    const [values, setValue] = useState({
-      email: email,
-      password: "",
-      confirmPassword: ""
-    })
+  const [values, setValue] = useState({
+    email: email,
+    password: "",
+    confirmPassword: "",
+  });
 
-    const [passwordError, setPasswordError] = useState('')
-    const [confirmPasswordError, setConfirmPasswordError] = useState('')
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
-    const handleConfirmPassword = async (e) => {
-        e.preventDefault();
-        setLoader(true);
-        setPasswordError('')
-        setConfirmPasswordError('')
-        
-        try {
-            const response = await api.put('/auth/reset-password', values );
-            if(response.data.status === 'success') {
-                setSuccessMessage(response.data.message)
-                setLoader(false);
+  const handleConfirmPassword = async (e) => {
+    e.preventDefault();
+    setLoader(true);
+    setPasswordError("");
+    setConfirmPasswordError("");
 
-                setTimeout(() => {
-                  navigate('/login')
-                }, 2000)
-            }
+    try {
+      const response = await api.put("/auth/reset-password", values);
+      if (response.data.status === "success") {
+        setSuccessMessage(response.data.message);
+        setLoader(false);
 
-        } catch (error) {
-          setLoader(false);
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      }
+    } catch (error) {
+      setLoader(false);
 
-         if(error.response && error.response.data.errors) {
-            error.response.data.errors.forEach((error) => {
-              switch (error.path) {
-                case 'password' :
-                  setPasswordError(error.msg)
-                  break;
-                case 'confirmPassword' :
-                  setConfirmPasswordError(error.msg)
-                  break;
-                default:
-                  break;
-              }
-            })
-
-         }
-
-        }
+      if (error.response && error.response.data.errors) {
+        error.response.data.errors.forEach((error) => {
+          switch (error.path) {
+            case "password":
+              setPasswordError(error.msg);
+              break;
+            case "confirmPassword":
+              setConfirmPasswordError(error.msg);
+              break;
+            default:
+              break;
+          }
+        });
+      }
     }
+  };
 
   return (
     <>
-    {
-        successMessage &&
+      {successMessage && (
         <div
           className="absolute flex w-full mx-auto rounded-lg bg-green-100 px-10 py-5 text-base text-green-500 justify-center items-center"
           role="alert"
@@ -83,62 +79,72 @@ function ConfirmPassword() {
             ></path>
           </svg>
         </div>
-      }
-      <div className='flex items-center justify-center h-screen'>
-      { loader && 
-        <div className="absolute flex items-center justify-center h-screen">
-          <Loading />
-        </div>
-      }
-        <div className="w-[350px] sm:mx-auto sm:w-full sm:max-w-md px-4 py-10 mt-6 overflow-hidden bg-white p-4 rounded-lg shadow-md">
-          <div className='flex'>
-          <Link to="/login" className="flex items-center gap-2 mb-4">
-            <MdOutlineKeyboardBackspace className='text-2xl'/>
-          </Link>
-          <h1 className="ml-5 text-2xl font-semibold mb-4">New Password</h1>
+      )}
+      <div className="flex items-center justify-center">
+        {loader && (
+          <div className="absolute flex items-center justify-center h-screen">
+            <Loading />
           </div>
-          <h3 className='text-gray-600 mb-6'>Please enter your new password below:</h3>
-  
-          <form onSubmit={handleConfirmPassword} >
+        )}
+        <div className="w-[350px] sm:mx-auto sm:w-full sm:max-w-md px-4 py-10 mt-6 overflow-hidden bg-white p-4 rounded-lg shadow-md">
+          <div className="flex">
+            <Link to="/login" className="flex items-center gap-2 mb-4">
+              <MdOutlineKeyboardBackspace className="text-2xl" />
+            </Link>
+            <h1 className="ml-5 text-2xl font-semibold mb-4">New Password</h1>
+          </div>
+          <h3 className="text-gray-600 mb-6">
+            Please enter your new password below:
+          </h3>
+
+          <form onSubmit={handleConfirmPassword}>
             <div>
-              <label className='block text-gray-700'>Password</label>
+              <label className="block text-gray-700">Password</label>
               <input
                 type="password"
                 value={values.password}
-                name='password'
+                name="password"
                 className={`block w-full rounded-md border py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
-                  passwordError  ? 'border-red-600' : '' 
+                  passwordError ? "border-red-600" : ""
                 }`}
-                onChange={(e) => setValue({...values, password: e.target.value})}
+                onChange={(e) =>
+                  setValue({ ...values, password: e.target.value })
+                }
               />
             </div>
             {/* error message */}
-            {passwordError && <div className="text-red-600 text-sm">{passwordError}</div>}
-            <div className='mt-4'>
-              <label className='block text-gray-700'>Confirm Password</label>
+            {passwordError && (
+              <div className="text-red-600 text-sm">{passwordError}</div>
+            )}
+            <div className="mt-4">
+              <label className="block text-gray-700">Confirm Password</label>
               <input
                 type="password"
-                name='confirmPassword'
+                name="confirmPassword"
                 value={values.confirmPassword}
                 className={`block w-full rounded-md border py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
-                  confirmPasswordError  ? 'border-red-600' : '' 
+                  confirmPasswordError ? "border-red-600" : ""
                 }`}
-                onChange={(e) => setValue({...values, confirmPassword: e.target.value})}
+                onChange={(e) =>
+                  setValue({ ...values, confirmPassword: e.target.value })
+                }
               />
             </div>
             {/* error message */}
-            {confirmPasswordError && <div className="text-red-600 text-sm">{confirmPasswordError}</div>}
+            {confirmPasswordError && (
+              <div className="text-red-600 text-sm">{confirmPasswordError}</div>
+            )}
             <button
               type="submit"
-              className='w-full bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58] text-white px-4 py-2 mt-8 rounded-md hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58]  focus:outline-none focus:bg-indigo-600'
+              className="w-full bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58] text-white px-4 py-2 mt-8 rounded-md hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58]  focus:outline-none focus:bg-indigo-600"
             >
               Submit
             </button>
           </form>
         </div>
       </div>
-      </>
-  )
+    </>
+  );
 }
 
-export default ConfirmPassword
+export default ConfirmPassword;
