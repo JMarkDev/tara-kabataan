@@ -6,6 +6,7 @@ export default function App({ attendeePhone, onPhoneChange }) {
   const [phone, setPhone] = useState("");
   useEffect(() => {
     onPhoneChange(phone);
+    console.log(phone);
   }, [phone]);
 
   useEffect(() => {

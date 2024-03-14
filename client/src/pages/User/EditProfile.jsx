@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from "react";
 import PhoneInput from "../../components/PhoneInput";
 import LocationComponent from "../../components/LocationComponent";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import api from "../../api/api";
+import { useToast } from "../../hooks/useToast";
 
-const EditProfile = ({ modal, handleClose }) => {
+const EditProfile = () => {
+  const toast = useToast();
+  const navigate = useNavigate();
   const userId = Cookies.get("userId");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [location, setLocation] = useState("");
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
-  const [values, setValues] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    gender: "",
-    phone_number: "",
-    location: "",
-  });
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const [firstnameError, setfirstnameError] = useState("");
@@ -35,15 +35,15 @@ const EditProfile = ({ modal, handleClose }) => {
     const fetchUser = async () => {
       try {
         const response = await api.get(`/user/id/${userId}`);
-        setValues((prevData) => ({
-          ...prevData,
-          firstname: response.data.firstname,
-          lastname: response.data.lastname,
-          email: response.data.email,
-          gender: response.data.gender,
-          phone_number: response.data?.phone_number,
-          location: response.data?.location,
-        }));
+        const { firstname, lastname, email, gender, phone_number, location } =
+          response.data;
+
+        setFirstName(firstname);
+        setLastname(lastname);
+        setEmail(email);
+        setGender(gender);
+        setPhone(phone_number);
+        setLocation(location);
 
         const attendeeBirthdate = response.data?.birthdate;
         if (attendeeBirthdate) {
@@ -57,7 +57,6 @@ const EditProfile = ({ modal, handleClose }) => {
           setMonth(month);
           setYear(year);
         }
-        console.log(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -88,41 +87,53 @@ const EditProfile = ({ modal, handleClose }) => {
     "December",
   ];
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = {
+      firstname: firstname,
+      lastname: lastname,
+      gender: gender,
+      password: password,
+      confirmPassword: confirmPassword,
+      birthdate: `${year}-${month}-${day}`,
+      phone_number: phone,
+      location: location,
+    };
+
+    try {
+      console.log(data);
+      const response = await api.put(
+        `/user/update-user-profile/${userId}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.status === "success") {
+        toast.success(response.data.message);
+        setTimeout(() => {
+          navigate("/profile");
+        }, 1000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-      {/* {modal && ( */}
-      {/* <div className="fixed inset-0 z-50 flex justify-center items-center overflow-y-auto  bg-black bg-opacity-50"> */}
       <div className=" m-auto p-4 w-full max-w-xl">
         <div className="relative bg-white rounded-lg shadow">
           <div className="flex items-center justify-between p-4 border-b rounded-t ">
             <h3 className="text-xl font-semibold text-gray-900">
               Update Profile
             </h3>
-            {/* <button
-              type="button"
-              onClick={handleClose}
-              className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-            >
-              <svg
-                className="w-3 h-3"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 14"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                />
-              </svg>
-              <span className="sr-only">Close modal</span>
-            </button> */}
           </div>
           <div className="p-4 space-y-4">
-            <form action="" method="PUT">
+            <form action="" onSubmit={handleSubmit} method="PUT">
               <div className="flex justify-between gap-5">
                 <div className="w-full">
                   <label
@@ -136,10 +147,8 @@ const EditProfile = ({ modal, handleClose }) => {
                     id="firstname"
                     name="firstname"
                     required
-                    value={values.firstname}
-                    onChange={(e) =>
-                      setValues({ ...values, firstname: e.target.value })
-                    }
+                    value={firstname}
+                    onChange={(e) => setFirstName(e.target.value)}
                     className={`block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
                       errorMessage ? "border-red-600" : ""
                     }`}
@@ -158,10 +167,8 @@ const EditProfile = ({ modal, handleClose }) => {
                     id="lastname"
                     name="lastname"
                     required
-                    value={values.lastname}
-                    onChange={(e) =>
-                      setValues({ ...values, lastname: e.target.value })
-                    }
+                    value={lastname}
+                    onChange={(e) => setLastname(e.target.value)}
                     className={`block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
                       errorMessage ? "border-red-600" : ""
                     }`}
@@ -191,9 +198,7 @@ const EditProfile = ({ modal, handleClose }) => {
                 </div>
 
                 <div className="flex flex-col items-start">
-                  <p className="text-gray-900 dark:text-white py-2">
-                    {values.email}
-                  </p>
+                  <p className="text-gray-900 dark:text-white py-2">{email}</p>
                 </div>
               </div>
 
@@ -210,10 +215,8 @@ const EditProfile = ({ modal, handleClose }) => {
                       type="radio"
                       name="gender"
                       value="Male"
-                      checked={values.gender === "Male"}
-                      onChange={(e) =>
-                        setValues({ ...values, gender: e.target.value })
-                      }
+                      checked={gender === "Male"}
+                      onChange={(e) => setGender(e.target.value)}
                       className="accent-blue-600 form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
                     />
                     <span className="ml-2">Male</span>
@@ -223,10 +226,8 @@ const EditProfile = ({ modal, handleClose }) => {
                       type="radio"
                       name="gender"
                       value="Female"
-                      checked={values.gender === "Female"}
-                      onChange={(e) =>
-                        setValues({ ...values, gender: e.target.value })
-                      }
+                      checked={gender === "Female"}
+                      onChange={(e) => setGender(e.target.value)}
                       className="accent-blue-600 form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
                     />
                     <span className="ml-2">Female</span>
@@ -236,10 +237,8 @@ const EditProfile = ({ modal, handleClose }) => {
                       type="radio"
                       name="gender"
                       value="Non-Binary"
-                      checked={values.gender === "Non-Binary"}
-                      onChange={(e) =>
-                        setValues({ ...values, gender: e.target.value })
-                      }
+                      checked={gender === "Non-Binary"}
+                      onChange={(e) => setGender(e.target.value)}
                       className="accent-blue-600 form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
                     />
                     <span className="ml-2">Non-binary</span>
@@ -258,7 +257,7 @@ const EditProfile = ({ modal, handleClose }) => {
                     Phone Number
                   </label>
                   <PhoneInput
-                    attendeePhone={values.phone_number}
+                    attendeePhone={phone}
                     onPhoneChange={handlePhoneChange}
                   />
                   {/* {errorMessage && <div className="text-red-600 text-sm">{errorMessage}</div>} */}
@@ -335,7 +334,7 @@ const EditProfile = ({ modal, handleClose }) => {
                   Location
                 </label>
                 <LocationComponent
-                  attendeeLocation={values.location}
+                  attendeeLocation={location}
                   onLocationChange={handleLocationChange}
                 />
               </div>
@@ -352,7 +351,7 @@ const EditProfile = ({ modal, handleClose }) => {
                   id="password"
                   name="passord"
                   required
-                  //   onChange={handleInputChange}
+                  onChange={(e) => setPassword(e.target.value)}
                   className={`block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
                     errorMessage ? "border-red-600" : ""
                   }`}
@@ -372,7 +371,7 @@ const EditProfile = ({ modal, handleClose }) => {
                   id="password"
                   name="confirm_password"
                   required
-                  //   onChange={handleInputChange}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   className={`block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
                     errorMessage ? "border-red-600" : ""
                   }`}
