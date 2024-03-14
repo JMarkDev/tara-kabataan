@@ -1,27 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import api from "../api/api";
+import React from "react";
 import { useFormat } from "../hooks/useFormatDate";
 
 const AttendeesTable = ({ attendees }) => {
-  // const { id } = useParams();
-  // const [attendees, setAttendees] = useState([]);
   const { dateFormat } = useFormat();
-
-  // useEffect(() => {
-  //   const fetchAttendees = async () => {
-  //     try {
-  //       const response = await api.get(`/attendees/event_id/${id}`);
-  //       setAttendees(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchAttendees();
-  // }, [id]);
-  useEffect(() => {
-    console.log(attendees);
-  }, [attendees]);
 
   return (
     <div className="bg-white relative overflow-x-auto">
@@ -88,7 +69,7 @@ const AttendeesTable = ({ attendees }) => {
                 <td className="px-6 py-3 text-nowrap">{attendee_name}</td>
                 <td className="px-6 py-3">{gender}</td>
                 <td className="px-6 py-3 text-nowrap">
-                  {/* {dateFormat(birthdate)} */}
+                  {dateFormat(birthdate)}
                 </td>
                 <td className="px-6 py-3 text-nowrap">{phone_number}</td>
                 <td className="px-6 py-3 text-nowrap">{location}</td>

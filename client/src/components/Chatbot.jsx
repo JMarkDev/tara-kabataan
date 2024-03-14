@@ -10,7 +10,7 @@ const Chatbot = ({ setOpenChat, openChat }) => {
   const [conversation, setConversation] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const chatContainer = useRef(null);
-  const option = ["registration", "payment", "join event", "contact us"];
+  const option = ["event registration", "payment", "contact us", "discount"];
 
   useEffect(() => {
     // Scroll to the bottom of the chat container
@@ -105,7 +105,7 @@ const Chatbot = ({ setOpenChat, openChat }) => {
           })}
         </div>
       </div>
-      <div className="flex px-3 gap-1">
+      <div className="flex px-1 gap-1 flex-wrap">
         {option.map((options, index) => (
           <div
             key={index}
