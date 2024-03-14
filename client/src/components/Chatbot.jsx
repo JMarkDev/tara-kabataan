@@ -39,7 +39,29 @@ const Chatbot = ({ setOpenChat, openChat }) => {
     }
   };
 
-  const currentYear = new Date().getFullYear();
+  const handleOptionClick = async (option) => {
+    setUserQuery(option);
+    try {
+      const response = await api.post("/chatbot/query", {
+        user_query: option,
+      });
+      const updatedConversation = [
+        ...conversation,
+        { user_query: option, bot_response: response.data.data },
+      ];
+      setIsLoading(!isLoading);
+      setConversation(updatedConversation);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const formatResponse = (response) => {
+    return response.replace(/\n/g, "<br>");
+  };
 
   return (
     <div className="bg-[#f2f2f2] h-[450px] transition-all shadow-2xl drop-shadow-xl w-[370px] fixed  bottom-[90px] rounded-lg right-5">
@@ -72,7 +94,7 @@ const Chatbot = ({ setOpenChat, openChat }) => {
               className="w-7 h-7 rounded-full"
             />
             <p className="text-sm rounded-lg p-2 mr-8 bg-gray-300 py-3 transition-all ">
-              Welcome to out Chatbot? How can I assist you today?
+              Welcome to our Chatbot! How can I assist you today?
             </p>
           </div>
           {conversation.map((convo, index) => {
@@ -94,9 +116,12 @@ const Chatbot = ({ setOpenChat, openChat }) => {
                     {lastItem && isLoading ? (
                       <Loading />
                     ) : (
-                      <p className="text-sm rounded-lg p-2 mr-8 bg-gray-300">
-                        {convo.bot_response}
-                      </p>
+                      <p
+                        className="text-sm rounded-lg p-2 mr-8 bg-gray-300"
+                        dangerouslySetInnerHTML={{
+                          __html: formatResponse(convo.bot_response),
+                        }}
+                      ></p>
                     )}
                   </div>
                 </div>
@@ -110,7 +135,7 @@ const Chatbot = ({ setOpenChat, openChat }) => {
           <div
             key={index}
             className="text-sm px-2 py-1 hover:bg-[#6415ff] hover:text-white border border-[#6415ff] rounded-full  text-[#6415ff] cursor-pointer transition-all"
-            onClick={() => setUserQuery(options)}
+            onClick={() => handleOptionClick(options)}
           >
             {options}
           </div>
@@ -127,13 +152,13 @@ const Chatbot = ({ setOpenChat, openChat }) => {
               type="text"
               className="relative w-full mb-2 p-2 rounded-full text-sm focus:outline-none border border-indigo-400 focus:border-[#6415ff]"
               placeholder="Type a message"
-              value={userQuery}
+              // value={userQuery}
               onChange={(e) => setUserQuery(e.target.value)}
             />
           </div>
         </form>
         <p className="text-sm p-1 flex justify-center text-gray-600">
-          @tarakabataan{currentYear}
+          @tarakabataan{new Date().getFullYear()}
         </p>
       </div>
     </div>
