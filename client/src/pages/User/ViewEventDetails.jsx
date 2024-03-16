@@ -52,9 +52,11 @@ const ViewEventDetails = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await api.get(`/user/id/${userId}`);
-        setFullname(`${response.data.firstname} ${response.data.lastname}`);
-        setProfileImage(response.data.image);
+        if (userId) {
+          const response = await api.get(`/user/id/${userId}`);
+          setFullname(`${response.data.firstname} ${response.data.lastname}`);
+          setProfileImage(response.data.image);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -280,7 +282,7 @@ const ViewEventDetails = () => {
                     }}
                     className="p-2 w-full px-5 bg-blue-600 hover:bg-blue-700 text-white mt-5 rounded-full"
                   >
-                    Join Now
+                    {allowedComment ? "Already Joined" : "Join Now"}
                   </button>
                   {modal && (
                     <JoinEvent
@@ -325,7 +327,7 @@ const ViewEventDetails = () => {
                     value={formData.comment}
                     name="comment"
                     required
-                    className="w-full p-5 border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
+                    className="w-full p-5 border py-2 px-2 rounded-md shallowedCommentadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
                     rows="5"
                     placeholder="Tell me about your experience"
                   ></textarea>

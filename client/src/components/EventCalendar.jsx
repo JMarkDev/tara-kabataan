@@ -5,11 +5,12 @@ import { MdArrowForwardIos } from "react-icons/md";
 import api from "../api/api";
 import useColorGenerator from "../hooks/useColorGenerator";
 import { useFormat } from "../hooks/useFormatDate";
+import Cookies from "js-cookie";
 
 const EventCalendar = () => {
   const { getNextColors, usedColors } = useColorGenerator();
   const formatTime = useFormat();
-
+  const role = Cookies.get("role");
   const monthList = [
     "January",
     "February",
@@ -87,7 +88,10 @@ const EventCalendar = () => {
     });
 
     return filteredEvents.map((event, index) => (
-      <Link to={`/event/${event.id}`} key={index}>
+      <Link
+        to={role === "admin" ? `/view-event/${event.id}` : `/event/${event.id}`}
+        key={index}
+      >
         <div style={{ color: getNextColor() }}>
           {truncateText(event.event_title, 30)}
           {/* {event.event_title} */}
@@ -119,7 +123,7 @@ const EventCalendar = () => {
 
   return (
     <div className="">
-      <div className=" lg:px-20 px-5 rounded-lg">
+      <div className="rounded-lg">
         <div className="px-5 flex justify-between items-center bg-blue-200">
           <h1 className="p-3 text-[#243e63] text-lg lg:text-2xl font-bold">
             {monthName} {year}
