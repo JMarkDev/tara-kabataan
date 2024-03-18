@@ -14,10 +14,14 @@ import useColorGenerator from "../../../hooks/useColorGenerator";
 import EventCalendar from "../../../components/EventCalendar";
 import api from "../../../api/api";
 import { useEffect, useState } from "react";
+import YearDropdown from "../../../components/YearDropdown";
 
 const Dashboard = () => {
+  const [genderData, setGenderData] = useState([]);
   const { getNextColors, usedColors } = useColorGenerator();
   const [total, setTotal] = useState([]);
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchTotals = async () => {
@@ -29,6 +33,30 @@ const Dashboard = () => {
       }
     };
     fetchTotals();
+  }, []);
+
+  useEffect(() => {
+    const fetchMonthlyData = async () => {
+      try {
+        const response = await api.get(`/analytics/events/${year}`);
+        setData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchMonthlyData();
+  }, [year]);
+
+  useEffect(() => {
+    const fetchGender = async () => {
+      try {
+        const response = await api.get("/analytics/gender");
+        setGenderData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchGender();
   }, []);
 
   const COLORS = [
@@ -48,21 +76,9 @@ const Dashboard = () => {
     return color;
   };
 
-  const data = [
-    { month: "Jan", event1: 30, event2: 45, event3: 100, event4: 10 },
-    { month: "Feb", event1: 40, event2: 55, event3: 40, event4: 20 },
-    { month: "Mar", event1: 25, event2: 30, event3: 50, event4: 30 },
-    { month: "Apr", event1: 30, event2: 45, event3: 50, event4: 40 },
-    { month: "May", event1: 40, event2: 55, event3: 40, event4: 50 },
-    { month: "Jun", event1: 25, event2: 30, event3: 50, event4: 60 },
-    { month: "Jul", event1: 30, event2: 45, event3: 50, event4: 70 },
-    { month: "Aug", event1: 40, event2: 55, event3: 40, event4: 80 },
-    { month: "Sep", event1: 25, event2: 30, event3: 50, event4: 90 },
-    { month: "Oct", event1: 30, event2: 45, event3: 50, event4: 100 },
-    { month: "Nov", event1: 40, event2: 55, event3: 40, event4: 110 },
-    { month: "Dec", event1: 25, event2: 30, event3: 50, event4: 120 },
-  ];
-
+  const handleYearChange = (year) => {
+    setYear(year);
+  };
   // const getGraphColor = () => getNextColor();
 
   return (
@@ -70,19 +86,19 @@ const Dashboard = () => {
       <div>
         <Cards cards={total} getNextColor={getNextColor} />
         <div className=" flex lg:flex-row flex-col md:flex-col md:gap-6 mt-10 w-full">
-          <div className=" basis-[60%] rounded dark:border-white bg-white shadow-md cursor-pointer  mb-4 md:mb-0 lg:mb-0 lg:mr-4">
+          <div className=" basis-[70%] rounded dark:border-white bg-white shadow-md cursor-pointer  mb-4 md:mb-0 lg:mb-0 lg:mr-4">
             <div className="bg-gray-500 flex items-center justify-between py-[15px] px-[20px] border-b-4 mb-[20px]">
               <h2 className="text-white text-[16px] leading-[19px] font-bold ">
                 Events Chart
               </h2>
-              {/* <YearDropdown 
-                            selectedYear={selectedYear} 
-                            onYearSelect={handleYearChange} 
-                        /> */}
+              <YearDropdown
+                selectedYear={year}
+                onYearSelect={handleYearChange}
+              />
             </div>
 
             <div className="lineChart">
-              <ResponsiveContainer width="100%" height={320}>
+              <ResponsiveContainer width="100%" height={350}>
                 <LineChart
                   data={data}
                   margin={{
@@ -120,7 +136,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div>
-            <PieChartComponent />
+            <PieChartComponent sampleData={genderData} />
           </div>
         </div>
       </div>
