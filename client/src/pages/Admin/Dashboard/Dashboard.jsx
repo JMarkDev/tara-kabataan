@@ -8,7 +8,8 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import PieChartComponent from "../../../components/PieChart";
+import PieChart from "../../../components/PieChart";
+
 import Cards from "../../../components/Cards";
 import useColorGenerator from "../../../hooks/useColorGenerator";
 import EventCalendar from "../../../components/EventCalendar";
@@ -136,7 +137,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div>
-            <PieChartComponent sampleData={genderData} />
+            <PieChart sampleData={genderData} />
           </div>
         </div>
       </div>

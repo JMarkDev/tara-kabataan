@@ -133,7 +133,7 @@ const NavbarUser = () => {
                   setOpenNotification(!openNotification);
                   setOpen(false);
                 }}
-                className="text-2xl cursor-pointer"
+                className="text-2xl cursor-pointer w-10 h-10 p-2 bg-white rounded-full hover:bg-gray-200"
               />
               {openNotification && <Notification />}
 

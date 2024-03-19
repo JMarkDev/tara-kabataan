@@ -4,7 +4,7 @@ const Notification = () => {
   return (
     <>
       <div className="absolute top-[60px] right-5 mr-[-10px]">
-        <div className="bg-white rounded-lg border h-[120px] w-[250px] absolute bottom-[-100px] z-20 right-2">
+        <div className="bg-white rounded-lg border h-[120px] w-[300px] absolute bottom-[-100px] z-20 right-2">
           <h1 className="text-md pl-3 font-semibold border-b border-gray-300 py-2">
             Notifications
           </h1>

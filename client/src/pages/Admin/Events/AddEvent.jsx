@@ -2,6 +2,7 @@ import api from "../../../api/api";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../../../hooks/useToast";
+import { IoIosAddCircle } from "react-icons/io";
 
 const AddEvent = () => {
   const toast = useToast();
@@ -20,18 +21,35 @@ const AddEvent = () => {
     start_time: "",
     end_time: "",
     location: "",
-    attendance_count: "",
     price: "00",
-    discount: "00",
+    discount: {
+      discount_date: "",
+      discount_price: "00",
+    },
     status: "Upcoming",
   });
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: name === "image" ? files : value,
-    }));
+    if (name === "image") {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: files,
+      }));
+    } else if (name === "discount_date" || name === "discount_price") {
+      setFormData((prevData) => ({
+        ...prevData,
+        discount: {
+          ...prevData.discount,
+          [name]: value,
+        },
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleCategory = (e) => {
@@ -54,7 +72,6 @@ const AddEvent = () => {
       start_time,
       end_time,
       location,
-      attendance_count,
       price,
       discount,
       status,
@@ -75,16 +92,18 @@ const AddEvent = () => {
     data.append("start_time", start_time);
     data.append("end_time", end_time);
     data.append("location", location);
-    data.append("attendance_count", attendance_count);
     data.append("price", price);
     data.append("discount", discount);
+    data.append("discount_date", discount.discount_date);
+    data.append("discount_price", discount.discount_price);
     data.append("status", status);
 
     try {
       const response = await api.post("/event/add", data);
+      console.log(response.data);
       if (response.data.status === "success") {
         toast.success(response.data.message);
-        navigate("/admin-events");
+        // navigate("/admin-events");
       }
     } catch (error) {
       console.log(error);
@@ -202,9 +221,10 @@ const AddEvent = () => {
                     setEventType(true);
                   } else {
                     setEventType(false);
-                    formData.attendance_count = "0";
+                    // formData.attendance_count = "0";
                     formData.price = "00";
-                    formData.discount = "00";
+                    formData.discount.discount_date = "";
+                    formData.discount.discount_price = "00";
                   }
                 }}
                 value={formData.event_type}
@@ -238,19 +258,23 @@ const AddEvent = () => {
           {eventType && (
             <div className="lg:flex justify-between gap-3">
               <div className="mb-4 w-full lg:w-[50%]">
-                <label
-                  htmlFor="title"
-                  className="block text-gray-700 font-bold dark:text-white"
-                >
-                  Discount Date
-                </label>
+                <div className="flex items-center gap-3">
+                  <label
+                    htmlFor="title"
+                    className="block text-gray-700 font-bold dark:text-white"
+                  >
+                    Discount Date
+                  </label>
+                  {/* <IoIosAddCircle className="text-2xl cursor-pointer bg-gray-300 hover:bg-blue-300 h-8 w-8 rounded-full p-1" /> */}
+                </div>
+
                 <input
                   type="date"
-                  id="price"
-                  name="price"
+                  id="date"
+                  name="discount_date"
                   className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                   required
-                  value={formData.price}
+                  value={formData.discount.discount_date}
                   onChange={handleInputChange}
                 />
               </div>
@@ -259,15 +283,15 @@ const AddEvent = () => {
                   htmlFor="title"
                   className="block text-gray-700 font-bold dark:text-white"
                 >
-                  Discounted Price
+                  Discounte Price
                 </label>
                 <input
                   type="number"
                   id="discount"
-                  name="discount"
+                  name="discount_price"
                   className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                   required
-                  value={formData.discount}
+                  value={formData.discount.discount_price}
                   onChange={handleInputChange}
                 />
               </div>

@@ -12,6 +12,7 @@ import BackBtn from "../../../components/BackBtn";
 
 const ViewEvent = () => {
   const { id } = useParams();
+  const [genderData, setGenderData] = useState([]);
   const [attendees, setAttendees] = useState([]);
   const [displayPrice, setDisplayPrice] = useState(false);
   const [title, setTitle] = useState("");
@@ -32,26 +33,54 @@ const ViewEvent = () => {
   const { extractYear, dateFormat, formatTime } = useFormat();
 
   useEffect(() => {
+    const fetchGender = async () => {
+      try {
+        const response = await api.get(`/analytics/gender/${id}`);
+        setGenderData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchGender();
+  }, []);
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await api.get(`/event/id/${id}`);
-        const data = response.data;
-        setTitle(data.event_title);
-        setDescription(data.event_description);
-        setImage(data.image);
-        setOrganizer(data.organizer_name);
-        setEventType(data.event_type);
-        setEventCategory(data.event_category);
-        setStartDate(data.start_date);
-        setEndDate(data.end_date);
-        setStartTime(data.start_time);
-        setEndTime(data.end_time);
-        setLocation(data.location);
-        setAttendanceCount(data.attendance_count);
-        setPrice(data.price);
-        setDiscount(data.discount);
-        setStatus(data.status);
-        if (data.event_type === "Registration Fee") {
+        const {
+          event_title,
+          event_description,
+          image,
+          organizer_name,
+          event_type,
+          event_category,
+          start_date,
+          end_date,
+          start_time,
+          end_time,
+          location,
+          attendance_count,
+          price,
+          discount,
+          status,
+        } = response.data;
+        setTitle(event_title);
+        setDescription(event_description);
+        setImage(image);
+        setOrganizer(organizer_name);
+        setEventType(event_type);
+        setEventCategory(event_category);
+        setStartDate(start_date);
+        setEndDate(end_date);
+        setStartTime(start_time);
+        setEndTime(end_time);
+        setLocation(location);
+        setAttendanceCount(attendance_count);
+        setPrice(price);
+        setDiscount(discount);
+        setStatus(status);
+        if (event_type === "Registration Fee") {
           setDisplayPrice(true);
         }
       } catch (error) {
@@ -73,6 +102,10 @@ const ViewEvent = () => {
     };
     fetchAttendees();
   }, [id]);
+
+  const totalAmount = attendees.reduce((total, attendee) => {
+    return total + parseFloat(attendee.total_amount);
+  }, 0);
 
   return (
     <div>
@@ -135,15 +168,17 @@ const ViewEvent = () => {
           <div className="flex justify-between gap-3">
             <div className="bg-gray-200 p-3 w-full rounded-md">
               <p className="text-md font-normal">Total Attendees</p>
-              <h1 className="text-lg font-semibold">100</h1>
+              <h1 className="text-lg font-semibold">{attendees.length}</h1>
             </div>
             <div className="bg-gray-200 p-3 w-full rounded-md">
               <p className="text-md font-normal">Total Revenue</p>
-              <h1 className="text-lg font-semibold">100</h1>
+              <h1 className="text-lg font-semibold">
+                {totalAmount.toFixed(2)}
+              </h1>
             </div>
           </div>
           <div className="mt-5">
-            <PieChart />
+            <PieChart sampleData={genderData} />
           </div>
           <div className="mt-10">
             <h1 className="mt-3 font-semibold">

@@ -7,14 +7,7 @@ const COLORS = [
   "#F3B95F",
 ];
 
-// const sampleData = [
-//   { gender: "Male", totalCount: 100 },
-//   { gender: "Female", totalCount: 50 },
-//   { gender: "Non-Binary", totalCount: 50 },
-// ];
-
 const PieChartComponent = ({ sampleData }) => {
-  console.log(sampleData);
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
     cx,
@@ -56,10 +49,9 @@ const PieChartComponent = ({ sampleData }) => {
               label={renderCustomizedLabel}
               outerRadius={150}
               fill="#8884d8"
-              //  recommededCount is the total data each strand
               dataKey="totalCount"
             >
-              {sampleData.map((entry, index) => (
+              {sampleData?.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
