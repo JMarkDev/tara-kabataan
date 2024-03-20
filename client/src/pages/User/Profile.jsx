@@ -44,20 +44,6 @@ const Profile = () => {
     fetchUser();
   }, [userId, image]);
 
-  // useEffect(() => {
-  //   const fetchAttendee = async () => {
-  //     try {
-  //       if (userId) {
-  //         const response = await api.get(`/attendees/attendee_id/${userId}`);
-  //         console.log(response.data);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchAttendee();
-  // }, [userId]);
-
   useEffect(() => {
     const fetchJoinedEvents = async () => {
       try {
@@ -221,6 +207,10 @@ const Profile = () => {
                     <p className="font-medium">Event Location</p>
                   </div>
                   <div className="w-full md:w-1/4 px-4">
+                    <p className="font-medium">Payment Method</p>
+                  </div>
+
+                  <div className="w-full md:w-1/4 px-4">
                     <p className="font-medium">Registration Fee</p>
                   </div>
                   <div className="w-full md:w-1/4 px-4">
@@ -236,6 +226,7 @@ const Profile = () => {
                     total_amount,
                     event_date,
                     event_type,
+                    payment_method,
                     event_id,
                   }) => (
                     <Link to={`/event/${event_id}`} key={event_id}>
@@ -246,8 +237,13 @@ const Profile = () => {
                           </p>
                         </div>
                         <div className="w-full md:w-1/4 px-4">
-                          <p className="text-gray-700 dark:text-gray-400">
+                          <p className="text-gray-700 text-no-wrap dark:text-gray-400">
                             {event_location}
+                          </p>
+                        </div>
+                        <div className="w-full md:w-1/4 px-4">
+                          <p className="text-gray-700 dark:text-gray-400">
+                            {payment_method}
                           </p>
                         </div>
                         <div className="w-full md:w-1/4 px-4">

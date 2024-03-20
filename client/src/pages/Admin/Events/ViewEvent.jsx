@@ -28,7 +28,9 @@ const ViewEvent = () => {
   const [location, setLocation] = useState("");
   const [attendanceCount, setAttendanceCount] = useState("");
   const [price, setPrice] = useState("");
-  const [discount, setDiscount] = useState("");
+  // const [discount, setDiscount] = useState("");
+  const [discountDate, setDiscountDate] = useState("");
+  const [discountPrice, setDiscountPrice] = useState("");
   const [status, setStatus] = useState("");
   const { extractYear, dateFormat, formatTime } = useFormat();
 
@@ -65,6 +67,7 @@ const ViewEvent = () => {
           discount,
           status,
         } = response.data;
+        // console.log(discount);
         setTitle(event_title);
         setDescription(event_description);
         setImage(image);
@@ -78,7 +81,8 @@ const ViewEvent = () => {
         setLocation(location);
         setAttendanceCount(attendance_count);
         setPrice(price);
-        setDiscount(discount);
+        setDiscountDate(discount.discount_date);
+        setDiscountPrice(discount.discount_price);
         setStatus(status);
         if (event_type === "Registration Fee") {
           setDisplayPrice(true);
@@ -104,7 +108,11 @@ const ViewEvent = () => {
   }, [id]);
 
   const totalAmount = attendees.reduce((total, attendee) => {
-    return total + parseFloat(attendee.total_amount);
+    if (attendee.total_amount !== null || undefined) {
+      return total + parseFloat(attendee.total_amount);
+    } else {
+      return 0;
+    }
   }, 0);
 
   return (
@@ -193,10 +201,15 @@ const ViewEvent = () => {
             </h1>
             {displayPrice && (
               <>
-                <h1 className="mt-3 font-semibold">
-                  Attendance Count:{" "}
-                  <span className="font-normal">{attendanceCount}</span>
-                </h1>
+                {discountDate && (
+                  <h1 className="mt-3 font-semibold">
+                    Discounted Date:{" "}
+                    <span className="font-normal">
+                      {dateFormat(discountDate)}
+                    </span>
+                  </h1>
+                )}
+
                 <div className="flex justify-between gap-5">
                   <div className="w-full mt-5 bg-gray-200 p-3 rounded-md">
                     <p>Total Price</p>
@@ -204,7 +217,9 @@ const ViewEvent = () => {
                   </div>
                   <div className="w-full mt-5 bg-gray-200 p-3 rounded-md">
                     <p>Total Discount</p>
-                    <h1 className="font-semibold text-xl pt-2">₱ {discount}</h1>
+                    <h1 className="font-semibold text-xl pt-2">
+                      ₱ {discountPrice}.00
+                    </h1>
                   </div>
                 </div>
               </>

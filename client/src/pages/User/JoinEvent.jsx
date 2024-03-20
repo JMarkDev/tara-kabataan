@@ -251,7 +251,7 @@ const JoinEvent = ({
                         name="gender"
                         value="Non-Binary"
                         // disabled
-                        checked={gender === "Non-binary"}
+                        checked={gender === "Non-Binary"}
                         onChange={() => setGender("Non-binary")}
                         className="accent-blue-600 form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
                       />

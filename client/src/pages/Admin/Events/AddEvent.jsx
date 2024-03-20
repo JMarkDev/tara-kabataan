@@ -78,9 +78,9 @@ const AddEvent = () => {
     } = formData;
     const data = new FormData();
 
-    for (let i = 0; i < image.length; i++) {
-      data.append("image", image[i]);
-    }
+    // for (let i = 0; i < image.length; i++) {
+    data.append("image", image[0]);
+    // }
 
     data.append("title", title);
     data.append("description", description);
@@ -100,10 +100,9 @@ const AddEvent = () => {
 
     try {
       const response = await api.post("/event/add", data);
-      console.log(response.data);
       if (response.data.status === "success") {
         toast.success(response.data.message);
-        // navigate("/admin-events");
+        navigate("/admin-events");
       }
     } catch (error) {
       console.log(error);
@@ -273,7 +272,7 @@ const AddEvent = () => {
                   id="date"
                   name="discount_date"
                   className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
-                  required
+                  // required
                   value={formData.discount.discount_date}
                   onChange={handleInputChange}
                 />
@@ -290,7 +289,7 @@ const AddEvent = () => {
                   id="discount"
                   name="discount_price"
                   className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
-                  required
+                  // required
                   value={formData.discount.discount_price}
                   onChange={handleInputChange}
                 />

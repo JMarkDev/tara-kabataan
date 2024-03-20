@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../api/api";
 import { Link, useParams } from "react-router-dom";
 import { useFormat } from "../hooks/useFormatDate";
@@ -13,6 +13,38 @@ const EventCard = ({ event }) => {
     }
     return text;
   };
+
+  const discountPrice = (discount_date, discount_price, price) => {
+    const date = new Date();
+    const discountDate = new Date(discount_date);
+
+    if (discountDate <= date) {
+      const discountedPrice = (
+        ((price - discount_price) / price) * 100 -
+        100
+      ).toFixed(2);
+      return `${discountedPrice} %`;
+    } else {
+      return null;
+    }
+  };
+
+  const eventPrice = (discount_date, discount_price, price) => {
+    const date = new Date();
+    const discountDate = new Date(discount_date);
+
+    if (discountDate <= date) {
+      return (
+        <>
+          <p className="line-through text-gray-600">₱ {price}</p>
+          <p className="text-black ">₱{price - discount_price}.00</p>
+        </>
+      );
+    } else {
+      return <p className="text-black ">₱{price}</p>;
+    }
+  };
+
   return (
     <div>
       {event.length === 0 ? (
@@ -21,7 +53,7 @@ const EventCard = ({ event }) => {
           <img src={imgNotify} alt="empty" className="h-[50vh] mt-5" />
         </div>
       ) : (
-        <div className="lg:px-10 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
+        <div className="lg:px-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
           {event.map(
             ({
               id,
@@ -43,10 +75,21 @@ const EventCard = ({ event }) => {
                 <div className="relative">
                   <p
                     className={`${
-                      discount !== "0.00" ? "block" : "hidden"
-                    } bg-[#ffe97a] rounded-bl-lg text-[#ec3814] py-2 px-2  shadow-md absolute right-0`}
+                      discount.discount_price !== "00" &&
+                      discountPrice(
+                        discount.discount_date,
+                        discount.discount_price,
+                        price
+                      )
+                        ? "bg-[#ffe97a]"
+                        : "hidden"
+                    } rounded-bl-lg text-[#ec3814] py-2 px-2 shadow-md absolute right-0`}
                   >
-                    {(((price - discount) / price) * 100 - 100).toFixed(2)}%
+                    {discountPrice(
+                      discount.discount_date,
+                      discount.discount_price,
+                      price
+                    )}
                   </p>
                 </div>
 
@@ -77,9 +120,14 @@ const EventCard = ({ event }) => {
                     ) : (
                       <div className="py-2 flex items-center justify-between gap-5 text-lg">
                         <div className="flex gap-5">
-                          <p
+                          {eventPrice(
+                            discount.discount_date,
+                            discount.discount_price,
+                            price
+                          )}
+                          {/* <p
                             className={`${
-                              discount !== "0.00"
+                              discount.discount_price !== "00"
                                 ? "line-through text-gray-600"
                                 : ""
                             }`}
@@ -91,8 +139,8 @@ const EventCard = ({ event }) => {
                               discount === "0.00" ? "hidden" : ""
                             }`}
                           >
-                            ₱{price - discount}
-                          </p>
+                            ₱{price - discount.discount_price}
+                          </p> */}
                         </div>
                       </div>
                     )}

@@ -33,10 +33,11 @@ const ViewEventDetails = () => {
   const [eventCategory, setEventCategory] = useState("");
   const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
+  const [discountDate, setDiscountDate] = useState("");
   const [discount, setDiscount] = useState("");
   const [status, setStatus] = useState("");
   const { extractYear, dateFormat, formatTime } = useFormat();
-  const total = price - discount;
+  // const total = price - discount;
   const event_date = `${extractYear(startDate)} - ${dateFormat(endDate)}`;
   const [comment, setComment] = useState([]);
   const [allowedComment, setAllowedComment] = useState(false);
@@ -81,6 +82,7 @@ const ViewEventDetails = () => {
           event_type,
           event_category,
           price,
+          discountDate,
           discount,
           status,
         } = response.data;
@@ -96,7 +98,8 @@ const ViewEventDetails = () => {
         setEventType(event_type);
         setEventCategory(event_category);
         setPrice(price);
-        setDiscount(discount);
+        setDiscountDate(new Date(discount.discount_date));
+        setDiscount(discount.discount_price);
         setStatus(status);
       } catch (error) {
         console.error(error);
@@ -183,6 +186,17 @@ const ViewEventDetails = () => {
     fetchJoinedEvents();
   }, [userId, id]);
 
+  const eventPrice = (discountDate, discount, price) => {
+    const date = new Date();
+    const discountDated = new Date(discountDate);
+
+    if (discountDated <= date) {
+      return price - discount;
+    } else {
+      return price;
+    }
+  };
+
   return (
     <>
       <div className="lg:px-20  py-10 flex flex-col-2 md:flex-row flex-col gap-5">
@@ -256,11 +270,11 @@ const ViewEventDetails = () => {
                     <p>Price</p>
                     <p>₱ {price}</p>
                   </div>
-                  {discount !== "0.00" && (
+                  {discountDate <= new Date() && (
                     <>
                       <div className="flex justify-between">
                         <p>Discount</p>
-                        <p>₱ {discount}</p>
+                        <p>₱ {discount}.00</p>
                       </div>
                     </>
                   )}
@@ -289,7 +303,7 @@ const ViewEventDetails = () => {
                       handleClose={handleClose}
                       eventType={eventType}
                       title={title}
-                      total={total}
+                      total={eventPrice(discountDate, discount, price)}
                       event_date={event_date}
                       event_location={location}
                     />
