@@ -13,6 +13,7 @@ import Notification from "./Notification";
 function NavbarDashboard({ setOpen }) {
   const [openNotification, setOpenNotification] = useState(false);
   const [name, setName] = useState("");
+  const [image, setImage] = useState("");
   const [openProfile, setOpenProfile] = useState(false);
   const userId = Cookies.get("userId");
   const [resize, setResize] = useState(false);
@@ -47,6 +48,7 @@ function NavbarDashboard({ setOpen }) {
         if (userId) {
           const response = await api.get(`/user/id/${userId}`);
           setName(response.data.firstname);
+          setImage(response.data.image);
         }
       } catch (error) {
         console.log(error);
@@ -113,7 +115,7 @@ function NavbarDashboard({ setOpen }) {
               onClick={showProfile}
               onMouseEnter={showProfile}
               className="w-8 h-8 rounded-full object-cover cursor-pointer"
-              src={userIcon}
+              src={`${image ? `${api.defaults.baseURL}${image}` : userIcon}`}
               alt=""
             />
             {openProfile && (

@@ -23,15 +23,33 @@ const EditEvent = () => {
     location: "",
     attendance_count: "",
     price: "00",
-    discount: "00",
+    discount: {
+      discount_date: "",
+      discount_price: "00",
+    },
   });
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: name === "image" ? files : value,
-    }));
+    if (name === "image") {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: files,
+      }));
+    } else if (name === "discount_date" || name === "discount_price") {
+      setFormData((prevData) => ({
+        ...prevData,
+        discount: {
+          ...prevData.discount,
+          [name]: value,
+        },
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleCategory = (e) => {
@@ -112,9 +130,9 @@ const EditEvent = () => {
     } = formData;
     const data = new FormData();
 
-    for (let i = 0; i < image.length; i++) {
-      data.append("image", image[i]);
-    }
+    // for (let i = 0; i < image.length; i++) {
+    data.append("image", image[0]);
+    // }
 
     data.append("event_title", event_title);
     data.append("event_description", event_description);
@@ -128,6 +146,8 @@ const EditEvent = () => {
     data.append("location", location);
     data.append("attendance_count", attendance_count);
     data.append("price", price);
+    data.append("discount_date", discount.discount_date);
+    data.append("discount_price", discount.discount_price);
     data.append("discount", discount);
 
     try {
@@ -201,9 +221,7 @@ const EditEvent = () => {
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
             required
             value={formData.organizer_name}
-            onChange={(e) =>
-              setFormData({ ...formData, organizer_name: e.target.value })
-            }
+            onChange={handleInputChange}
           />
         </div>
         <div className="mb-4 dark:text-white">
@@ -236,9 +254,7 @@ const EditEvent = () => {
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
             required
             value={formData.event_description}
-            onChange={(e) =>
-              setFormData({ ...formData, event_description: e.target.value })
-            }
+            onChange={handleInputChange}
           />
         </div>
         <div className="lg:flex justify-between gap-3">
@@ -278,18 +294,16 @@ const EditEvent = () => {
                 htmlFor="attendance"
                 className="block text-gray-700 dark:text-white font-bold "
               >
-                Attendance Count For Discount
+                Total Price
               </label>
               <input
                 type="number"
-                id="attendance_count"
-                name="attendance_count"
+                id="price"
+                name="price"
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                 required
-                value={formData.attendance_count}
-                onChange={(e) =>
-                  setFormData({ ...formData, attendance_count: e.target.value })
-                }
+                value={formData.price}
+                onChange={handleInputChange}
               />
             </div>
           )}
@@ -298,41 +312,40 @@ const EditEvent = () => {
         {eventType && (
           <div className="lg:flex justify-between gap-3">
             <div className="mb-4 w-full lg:w-[50%]">
-              <label
-                htmlFor="price"
-                className="block text-gray-700 font-bold dark:text-white"
-              >
-                Price
-              </label>
+              <div className="flex items-center gap-3">
+                <label
+                  htmlFor="title"
+                  className="block text-gray-700 font-bold dark:text-white"
+                >
+                  Discount Date
+                </label>
+              </div>
+
               <input
-                type="number"
-                id="price"
-                name="price"
+                type="date"
+                id="date"
+                name="discount_date"
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
-                required
-                value={eventType ? formData.price : "00"}
-                onChange={(e) =>
-                  setFormData({ ...formData, price: e.target.value })
-                }
+                // required
+                value={formData.discount.discount_date}
+                onChange={handleInputChange}
               />
             </div>
             <div className="mb-4 w-full lg:w-[50%]">
               <label
-                htmlFor="discount"
+                htmlFor="title"
                 className="block text-gray-700 font-bold dark:text-white"
               >
-                Discount
+                Discounte Price
               </label>
               <input
                 type="number"
                 id="discount"
-                name="discount"
+                name="discount_price"
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
-                required
-                value={eventType ? formData.discount : "00"}
-                onChange={(e) =>
-                  setFormData({ ...formData, discount: e.target.value })
-                }
+                // required
+                value={formData.discount.discount_price}
+                onChange={handleInputChange}
               />
             </div>
           </div>
@@ -363,17 +376,6 @@ const EditEvent = () => {
                 </option>
               );
             })}
-            {/* <option value="Conference">Conference</option>
-              <option value="Seminar">Seminar</option>
-              <option value="Workshop">Workshop</option>
-              <option value="Webinar">Webinar</option>
-              <option value="Training">Training</option>
-              <option value="Meeting">Meeting</option>
-              <option value="Exhibition">Exhibition</option>
-              <option value="Symposium">Symposium</option>
-              <option value="Networking-event">Networking Event</option>
-              <option value="Summit">Summit</option>
-              <option value="Online-event">Online Event</option> */}
           </select>
         </div>
 
@@ -392,9 +394,7 @@ const EditEvent = () => {
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
               required
               value={formData.start_date}
-              onChange={(e) =>
-                setFormData({ ...formData, start_date: e.target.value })
-              }
+              onChange={handleInputChange}
             />
           </div>
           <div className="mb-4 w-full lg:w-[50%]">
@@ -411,9 +411,7 @@ const EditEvent = () => {
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
               required
               value={formData.end_date}
-              onChange={(e) =>
-                setFormData({ ...formData, end_date: e.target.value })
-              }
+              onChange={handleInputChange}
             />
           </div>
         </div>
@@ -432,9 +430,7 @@ const EditEvent = () => {
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
               required
               value={formData.start_time}
-              onChange={(e) =>
-                setFormData({ ...formData, start_time: e.target.value })
-              }
+              onChange={handleInputChange}
             />
           </div>
           <div className="mb-4 w-full lg:w-[50%]">
@@ -451,9 +447,7 @@ const EditEvent = () => {
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
               required
               value={formData.end_time}
-              onChange={(e) =>
-                setFormData({ ...formData, end_time: e.target.value })
-              }
+              onChange={handleInputChange}
             />
           </div>
         </div>
@@ -471,17 +465,9 @@ const EditEvent = () => {
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
             required
             value={formData.location}
-            onChange={(e) =>
-              setFormData({ ...formData, location: e.target.value })
-            }
+            onChange={handleInputChange}
           />
         </div>
-        {/* <div className='mb-4'>
-          <label htmlFor="title" className="block text-gray-700 font-bold dark:text-white">
-            Location
-          </label>
-          <LocationComponent />
-        </div> */}
         <div className="flex justify-end">
           <Link
             to="/admin-events"

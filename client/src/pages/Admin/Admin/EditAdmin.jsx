@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import api from "../../../api/api";
+import { useToast } from "../../../hooks/useToast";
 
 const EditAdmin = () => {
+  const toast = useToast();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -53,7 +55,7 @@ const EditAdmin = () => {
       const response = await api.put(`/user/update/${id}`, values);
 
       if (response.data.status === "success") {
-        alert("Updated Successfully");
+        toast.success("Updated Successfully");
         navigate("/admin");
       } else {
         alert(response.data.message);

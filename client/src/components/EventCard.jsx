@@ -125,22 +125,6 @@ const EventCard = ({ event }) => {
                             discount.discount_price,
                             price
                           )}
-                          {/* <p
-                            className={`${
-                              discount.discount_price !== "00"
-                                ? "line-through text-gray-600"
-                                : ""
-                            }`}
-                          >
-                            ₱ {price}
-                          </p>
-                          <p
-                            className={`text-black ${
-                              discount === "0.00" ? "hidden" : ""
-                            }`}
-                          >
-                            ₱{price - discount.discount_price}
-                          </p> */}
                         </div>
                       </div>
                     )}

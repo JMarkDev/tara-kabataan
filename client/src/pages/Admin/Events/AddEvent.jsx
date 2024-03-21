@@ -411,9 +411,7 @@ const AddEvent = () => {
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
               required
               value={formData.location}
-              onChange={(e) =>
-                setFormData({ ...formData, location: e.target.value })
-              }
+              onChange={handleInputChange}
             />
           </div>
           <div className="flex justify-end">

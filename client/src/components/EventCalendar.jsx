@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { MdArrowBackIos } from "react-icons/md";
-import { MdArrowForwardIos } from "react-icons/md";
+import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import api from "../api/api";
-import useColorGenerator from "../hooks/useColorGenerator";
 import { useFormat } from "../hooks/useFormatDate";
 import Cookies from "js-cookie";
 
 const EventCalendar = () => {
-  const { getNextColors, usedColors } = useColorGenerator();
   const formatTime = useFormat();
   const role = Cookies.get("role");
   const monthList = [
@@ -77,7 +74,7 @@ const EventCalendar = () => {
     return text;
   };
 
-  const getEventsForDay = (day) => {
+  const eventsForDay = (day) => {
     const filteredEvents = events.filter((event) => {
       const eventDate = new Date(event.start_date);
       return (
@@ -92,19 +89,51 @@ const EventCalendar = () => {
         to={role === "admin" ? `/view-event/${event.id}` : `/event/${event.id}`}
         key={index}
       >
-        <div
-          className={`${event.status === "Completed" ? "bg-gray-300" : ""}`}
+        <button
+          className={`${
+            event.status === "Completed" ? "bg-gray-300" : ""
+          } p-1 rounded-lg hover:bg-gray-200 text-center text-sm  `}
           style={{ color: getNextColor() }}
         >
-          {truncateText(event.event_title, 30)}
-          {/* {event.event_title} */}
-          <br />
-          {formatTime.formatTime(event.start_time) +
-            " - " +
-            formatTime.formatTime(event.end_time)}
-        </div>
+          <span className=" hidden md:block">
+            {truncateText(event.event_title, 30)}
+            <br />
+            {formatTime.formatTime(event.start_time) +
+              " - " +
+              formatTime.formatTime(event.end_time)}
+          </span>
+        </button>
       </Link>
     ));
+  };
+  const getEventsForDay = (day) => {
+    const filteredEvents = events.filter((event) => {
+      const eventDate = new Date(event.start_date);
+      return (
+        eventDate.getDate() === day &&
+        eventDate.getMonth() + 1 === monthIndex &&
+        eventDate.getFullYear() === year
+      );
+    });
+
+    if (filteredEvents.length > 0) {
+      return (
+        <Link
+          to={`/event/${filteredEvents[0].id}`} // Assuming you want to navigate to the first event on that day
+          className="text-center block"
+        >
+          <button
+            className={`bg-[#6415ff] text-white p-1 w-[30px] h-[30px] rounded-full`}
+          >
+            {day}
+          </button>
+        </Link>
+      );
+    } else {
+      return (
+        <button className={`p-1 w-[30px] h-[30px] rounded-full`}>{day}</button>
+      );
+    }
   };
 
   const COLORS = [
@@ -126,7 +155,7 @@ const EventCalendar = () => {
 
   return (
     <div className="">
-      <div className="rounded-lg">
+      <div className=" rounded-lg">
         <div className="px-5 flex justify-between items-center bg-blue-200">
           <h1 className="p-3 text-[#243e63] text-lg lg:text-2xl font-bold">
             {monthName} {year}
@@ -145,7 +174,7 @@ const EventCalendar = () => {
           {week.map((day, index) => (
             <div
               key={index}
-              className="w-auto p-3 md:text-lg text-sm text-center border-gray-200 border"
+              className="w-auto p-3  md:text-lg text-sm text-center border-gray-200 border"
             >
               {day}
             </div>
@@ -153,18 +182,20 @@ const EventCalendar = () => {
           {Array.from({ length: firstDayOfWeek }, (_, index) => (
             <div
               key={`empty-${index}`}
-              className="hover:bg-gray-200 h-auto p-1 md:text-lg text-sm border border-gray-200"
+              className="min-h-20 hover:bg-gray-200  p-1 md:text-lg text-sm border border-gray-200"
             ></div>
           ))}
-          {daysArray.map((day, index) => (
-            <div
-              key={index}
-              className={`hover:bg-gray-200 p-2 min-h-20 text-sm border  border-gray-200`}
-            >
-              {day}
-              <span className="">{getEventsForDay(day)}</span>
-            </div>
-          ))}
+          {daysArray.map((day, index) => {
+            return (
+              <div
+                key={index}
+                className={`relative flex justify-center items-center md:justify-start md:items-start md:flex-col hover:bg-gray-200 p-2 min-h-20 text-sm border  border-gray-200`}
+              >
+                <span>{getEventsForDay(day)}</span>
+                <span className="mt-2 ">{eventsForDay(day)}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

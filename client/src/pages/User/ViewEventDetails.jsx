@@ -10,6 +10,7 @@ import JoinEvent from "./JoinEvent";
 import Cookies from "js-cookie";
 import userIcon from "../../assets/images/user.png";
 import { useToast } from "../../hooks/useToast";
+import BackBtn from "../../components/BackBtn";
 
 const ViewEventDetails = () => {
   const toast = useToast();
@@ -199,8 +200,12 @@ const ViewEventDetails = () => {
 
   return (
     <>
-      <div className="lg:px-20  py-10 flex flex-col-2 md:flex-row flex-col gap-5">
-        <div className="w-full bg-gray-100 p-5">
+      <div className=" lg:px-20  py-10 flex flex-col-2 md:flex-row flex-col gap-5">
+        <div className="relative w-full bg-gray-100 p-5">
+          <div className="absolute">
+            <BackBtn />
+          </div>
+
           <img
             src={`${api.defaults.baseURL}${image}`}
             alt=""

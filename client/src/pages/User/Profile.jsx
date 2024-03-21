@@ -5,7 +5,6 @@ import { AiOutlineUser } from "react-icons/ai";
 import Cookies from "js-cookie";
 import { useFormat } from "../../hooks/useFormatDate";
 import { useToast } from "../../hooks/useToast";
-import EditProfile from "./EditProfile";
 
 const Profile = () => {
   const toast = useToast();
@@ -61,7 +60,7 @@ const Profile = () => {
   const handleImageChange = async (e) => {
     const selectedImage = e.target.files[0];
     setImage(selectedImage);
-    setShowUpload(false); // Hide the input file after image selection
+    setShowUpload(false);
 
     try {
       const data = new FormData();
@@ -78,17 +77,9 @@ const Profile = () => {
     }
   };
 
-  // const handleEdit = () => {
-  //   setModal(!modal);
-  // };
-
-  // const handleClose = () => {
-  //   setModal(false);
-  // };
-
   return (
     <>
-      <div className="md:p-20  flex flex-col md:flex-row gap-5 p-5">
+      <div className="md:px-20  flex flex-col md:flex-row gap-5 p-5">
         <div className="w-full p-5 bg-gray-100">
           <h1 className="font-bold text-xl md:text-2xl text-[#243e63] mb-10">
             Personal details
