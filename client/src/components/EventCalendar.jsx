@@ -41,7 +41,7 @@ const EventCalendar = () => {
   useEffect(() => {
     const fetchUpcomingEvents = async () => {
       try {
-        const response = await api.get("/event/all/upcoming");
+        const response = await api.get("/event/all");
         setEvents(response.data);
       } catch (error) {
         console.log(error);
@@ -92,7 +92,10 @@ const EventCalendar = () => {
         to={role === "admin" ? `/view-event/${event.id}` : `/event/${event.id}`}
         key={index}
       >
-        <div style={{ color: getNextColor() }}>
+        <div
+          className={`${event.status === "Completed" ? "bg-gray-300" : ""}`}
+          style={{ color: getNextColor() }}
+        >
           {truncateText(event.event_title, 30)}
           {/* {event.event_title} */}
           <br />

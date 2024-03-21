@@ -71,107 +71,97 @@ const Login = () => {
 
   return (
     <>
-      {/* <NavbarUser /> */}
-      <div
-        className="flex bg-[#efeff5] flex-col items-center sm:justify-center sm:pt-0"
-        style={{
-          backgroundImage: `url('https://unsplash.com/photos/selective-focus-photography-of-people-sitting-on-chairs-while-writing-on-notebooks-Hb6uWq0i4MI')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="w-[350px] sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 mt-6 overflow-hidden bg-white p-4 rounded-lg shadow-md">
-          <h2 className="text-center mb-5 text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in your account
-          </h2>
-          <form className="space-y-6" onSubmit={handleLogin}>
-            <div>
+      <div className="w-[350px] sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 mt-6 overflow-hidden bg-white p-4 rounded-lg shadow-md">
+        <h2 className="text-center mb-5 text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          Sign in your account
+        </h2>
+        <form className="space-y-6" onSubmit={handleLogin}>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              Email address
+            </label>
+            <div className="mt-2">
+              <input
+                name="email"
+                type="text"
+                placeholder="Email"
+                autoComplete="off"
+                onChange={(e) =>
+                  setValues({ ...values, email: e.target.value })
+                }
+                className={`block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                  emailError || errorMessage ? "border-red-600" : "" // Apply border-red-600 class when there's an error
+                }`}
+              />
+            </div>
+            {/* <div className="h-4"> error message */}
+            {emailError && (
+              <div className="text-red-600 text-sm">{emailError}</div>
+            )}
+            {/* </div> */}
+          </div>
+
+          <div>
+            <div className="mt-[-10px] flex items-center justify-between">
               <label
-                htmlFor="email"
+                htmlFor="password"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Email address
+                Password
               </label>
-              <div className="mt-2">
-                <input
-                  name="email"
-                  type="text"
-                  placeholder="Email"
-                  autoComplete="off"
-                  onChange={(e) =>
-                    setValues({ ...values, email: e.target.value })
-                  }
-                  className={`block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-                    emailError || errorMessage ? "border-red-600" : "" // Apply border-red-600 class when there's an error
-                  }`}
-                />
-              </div>
-              {/* <div className="h-4"> error message */}
-              {emailError && (
-                <div className="text-red-600 text-sm">{emailError}</div>
+            </div>
+            <div className="mt-2">
+              <input
+                name="password"
+                type="password"
+                placeholder="Password"
+                autoComplete="current-password"
+                onChange={(e) =>
+                  setValues({ ...values, password: e.target.value })
+                }
+                className={`block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                  passwordError || errorMessage ? "border-red-600" : "" // Apply border-red-600 class when there's an error
+                }`}
+              />
+              {passwordError && (
+                <div className="text-red-600 text-sm">{passwordError}</div>
               )}
-              {/* </div> */}
-            </div>
-
-            <div>
-              <div className="mt-[-10px] flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+              {errorMessage && (
+                <div className="text-red-600 text-sm">{errorMessage}</div>
+              )}
+              <div className="text-sm text-right mt-2">
+                <Link
+                  to="/change-password"
+                  className="font-semibold text-indigo-600 hover:text-indigo-500"
                 >
-                  Password
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  autoComplete="current-password"
-                  onChange={(e) =>
-                    setValues({ ...values, password: e.target.value })
-                  }
-                  className={`block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-                    passwordError || errorMessage ? "border-red-600" : "" // Apply border-red-600 class when there's an error
-                  }`}
-                />
-                {passwordError && (
-                  <div className="text-red-600 text-sm">{passwordError}</div>
-                )}
-                {errorMessage && (
-                  <div className="text-red-600 text-sm">{errorMessage}</div>
-                )}
-                <div className="text-sm text-right mt-2">
-                  <Link
-                    to="/change-password"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </Link>
-                </div>
+                  Forgot password?
+                </Link>
               </div>
             </div>
+          </div>
 
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58]
+          <div>
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58]
              px-3 py-2 text-md font-semibold leading-6 text-white 
              hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58] "
-              >
-                Log in
-              </button>
-            </div>
-          </form>
-
-          <div className="mt-4 text-gray-600">
-            Don&apos;t have an account?{" "}
-            <span>
-              <Link to="/register" className="text-[#6415ff] hover:underline">
-                Register
-              </Link>
-            </span>
+            >
+              Log in
+            </button>
           </div>
+        </form>
+
+        <div className="mt-4 text-gray-600">
+          Don&apos;t have an account?{" "}
+          <span>
+            <Link to="/register" className="text-[#6415ff] hover:underline">
+              Register
+            </Link>
+          </span>
         </div>
       </div>
     </>
