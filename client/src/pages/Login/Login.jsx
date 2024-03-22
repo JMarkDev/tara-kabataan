@@ -71,7 +71,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="w-[350px] sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 mt-6 overflow-hidden bg-white p-4 rounded-lg shadow-md">
+      <div className="w-[350px] m-auto sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 mt-6 overflow-hidden bg-white p-4 rounded-lg shadow-md">
         <h2 className="text-center mb-5 text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in your account
         </h2>

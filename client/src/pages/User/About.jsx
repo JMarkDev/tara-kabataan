@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import mission from "../../assets/images/mission.jpg";
 import tarakabataan from "../../assets/images/tarakabataan.jpg";
-import img1 from "../../assets/images/Mark Kevin Cervas Nugas.jpg";
+import img1 from "../../assets/images/sir1.jpg";
 import img2 from "../../assets/images/AILISH O. PALA.jpg";
 import img3 from "../../assets/images/CIELO T. SARATAO.jpg";
 import { FaFacebookF } from "react-icons/fa";

@@ -61,18 +61,14 @@ const ContactUs = () => {
               <FaPhone className="text-[#6415ff] lg:text-xl text-lg" />
               <h1 className="md:text-xl text-lg font-bold p-2">Call Us</h1>
             </div>
-            <p className="text-md text-gray-600 p-2">
-              09123456789, 09123456789
-            </p>
+            <p className="text-md text-gray-600 p-2">09657719569</p>
           </div>
           <div className="lg:mt-5">
             <div className="flex items-center gap-3">
               <MdEmail className="text-[#6415ff] lg:text-2xl text-lg" />
               <h1 className="lg:text-xl text-lg font-bold p-2">Email</h1>
             </div>
-            <p className="text-md text-gray-600 p-2">
-              tarakabataan2024@gmail.com
-            </p>
+            <p className="text-md text-gray-600 p-2">kabataantara@gmail.com</p>
           </div>
           <div className="lg:mt-5">
             <div className="flex items-center gap-3">
@@ -80,7 +76,7 @@ const ContactUs = () => {
               <h1 className="lg:text-xl text-lg font-bold p-2">Location</h1>
             </div>
             <p className="text-md text-gray-600 p-2">
-              Brgy. Bulatok Pagadian City
+              SK Office, 2nd floor, Barangay Hall, Sta. Maria, Zamboanga City
             </p>
           </div>
         </div>

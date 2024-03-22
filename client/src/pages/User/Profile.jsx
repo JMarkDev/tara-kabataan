@@ -79,7 +79,7 @@ const Profile = () => {
 
   return (
     <>
-      <div className="md:px-20  flex flex-col md:flex-row gap-5 p-5">
+      <div className="md:px-20  flex flex-col md:flex-row gap-5 pt-5">
         <div className="w-full p-5 bg-gray-100">
           <h1 className="font-bold text-xl md:text-2xl text-[#243e63] mb-10">
             Personal details
