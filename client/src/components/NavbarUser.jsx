@@ -216,6 +216,50 @@ const NavbarUser = () => {
               />
             </>
           )}
+          {!userId && (
+            <div>
+              <ul className="flex">
+                <li>
+                  <Link
+                    onClick={handleMobileLinkClick}
+                    to="/login"
+                    className={`p-2 flex items-center text-base font-semibold cursor-pointer text-[#333333] hover:text-[#6415ff]`}
+                  >
+                    <span
+                      className={`
+                 ${
+                   location.pathname.includes("/login")
+                     ? "border-b-2 border-[#6415ff] text-[#6414ff]"
+                     : "border-b-2 border-transparent hover:border-b-2 hover:border-[#6415ff] transition ease-in-out duration-300"
+                 }
+               `}
+                    >
+                      Login
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={handleMobileLinkClick}
+                    to="/register"
+                    className={`p-2 flex items-center text-base font-semibold cursor-pointer text-[#333333] hover:text-[#6415ff] mr-10`}
+                  >
+                    <span
+                      className={`
+                 ${
+                   location.pathname.includes("/register")
+                     ? "border-b-2 border-[#6415ff] text-[#6414ff]"
+                     : "border-b-2 border-transparent hover:border-b-2 hover:border-[#6415ff] transition ease-in-out duration-300"
+                 }
+               `}
+                    >
+                      Register
+                    </span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          )}
 
           <HamburgerButton
             setMobileMenu={setMobileMenu}

@@ -10,7 +10,7 @@ const Chatbot = ({ setOpenChat, openChat }) => {
   const [conversation, setConversation] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const chatContainer = useRef(null);
-  const option = ["event registration", "payment", "contact us", "discount"];
+  const option = ["registration", "payment", "contact us", "discount"];
 
   useEffect(() => {
     // Scroll to the bottom of the chat container
@@ -64,7 +64,7 @@ const Chatbot = ({ setOpenChat, openChat }) => {
   };
 
   return (
-    <div className="bg-[#f2f2f2] h-[450px] transition-all shadow-2xl drop-shadow-xl w-[370px] fixed  bottom-[90px] rounded-lg right-5">
+    <div className="bg-[#f2f2f2] h-[450px] transition-all shadow-2xl drop-shadow-xl w-[370px] fixed  bottom-[90px] rounded-lg right-3">
       <div className="flex bg-[#5e35af] p-1 rounded-t-lg justify-between">
         <div className="flex">
           <img
