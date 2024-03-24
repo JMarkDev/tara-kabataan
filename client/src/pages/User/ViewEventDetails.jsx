@@ -94,7 +94,7 @@ const ViewEventDetails = () => {
         setLocation(location);
         setStartDate(start_date);
         setEndDate(end_date);
-        setDescription(event_description);
+        setDescription(event_description.replace(/\n/g, "<br>"));
         setOrganizer(organizer_name);
         setEventType(event_type);
         setEventCategory(event_category);
@@ -250,7 +250,10 @@ const ViewEventDetails = () => {
               <h1 className="font-bold text-xl text-[#6415ff]">
                 About this event
               </h1>
-              <p className="mt-5">{description}</p>
+              <p
+                className="mt-5"
+                dangerouslySetInnerHTML={{ __html: description }}
+              ></p>
             </div>
           </div>
         </div>

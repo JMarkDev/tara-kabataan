@@ -37,9 +37,9 @@ export default function FooterWithSocialLinks() {
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 justify-between gap-10">
             <div className="h-[150px] w-[150px] ">
               <img src={Logo} alt="logo" />
-              <div className="flex gap-4 pt-5 text-blue-gray-900 sm:justify-center">
+              <div className="flex relative gap-4 pt-5 text-blue-gray-900 sm:justify-center">
                 {openLink && (
-                  <div className="absolute bottom-0 left-0 bg-white p-1 px-2 rounded-full">
+                  <div className="absolute bottom-10 left-0 bg-white p-1 px-2 rounded-full">
                     <p className="text-sm text-red-500">No links available</p>
                   </div>
                 )}
@@ -65,6 +65,7 @@ export default function FooterWithSocialLinks() {
                   as="a"
                   // href="https://www.facebook.com/kabataantara/"
                   className=" transition-opacity hover:opacity-100 cursor-pointer"
+                  onClick={() => setOpenLink(true)}
                   onMouseEnter={() => setOpenLink(true)}
                   onMouseLeave={() => setOpenLink(false)}
                 >
@@ -82,6 +83,7 @@ export default function FooterWithSocialLinks() {
                   </svg>
                 </Typography>
                 <Typography
+                  onClick={() => setOpenLink(true)}
                   onMouseEnter={() => setOpenLink(true)}
                   onMouseLeave={() => setOpenLink(false)}
                   as="a"
@@ -99,6 +101,7 @@ export default function FooterWithSocialLinks() {
                 </Typography>
                 <Typography
                   as="a"
+                  onClick={() => setOpenLink(true)}
                   onMouseEnter={() => setOpenLink(true)}
                   onMouseLeave={() => setOpenLink(false)}
                   // href="https://www.facebook.com/kabataantara/"

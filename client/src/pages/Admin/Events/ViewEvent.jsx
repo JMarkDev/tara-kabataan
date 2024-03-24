@@ -69,7 +69,7 @@ const ViewEvent = () => {
         } = response.data;
         // console.log(discount);
         setTitle(event_title);
-        setDescription(event_description);
+        setDescription(event_description.replace(/\n/g, "<br>"));
         setImage(image);
         setOrganizer(organizer_name);
         setEventType(event_type);
@@ -133,7 +133,10 @@ const ViewEvent = () => {
             Organizer Name:<span className="font-bold">{organizer}</span>
           </h2>
 
-          <p className="text-md ">{description}</p>
+          <p
+            className="text-md "
+            dangerouslySetInnerHTML={{ __html: description }}
+          ></p>
           <div className="pt-5">
             <div className="flex flex-col gap-4  justify-between">
               <div className="flex bg-gray-200 p-2 rounded-md">
