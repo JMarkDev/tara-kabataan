@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import api from "../../api/api";
-
+import { motion } from "framer-motion";
 import img from "../../assets/images/undraw_contact_us_re_4qqt.svg";
 import { MdEmail } from "react-icons/md";
 import { FaPhone } from "react-icons/fa6";
@@ -52,7 +52,22 @@ const ContactUs = () => {
         Get In <span className="text-[#6415ff]">Touch</span>
       </h1>
       <div className="flex md:flex-row flex-col justify-center bg-white lg:p-10 p-5">
-        <div className="md:w-[50%] w-full m-auto md:p-10 flex-col">
+        <motion.div
+          className="md:w-[50%] w-full m-auto md:p-10 flex-col"
+          initial={{
+            opacity: 0,
+            x: -50,
+            // x: index % 2 === 0 ? 50 : -50,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 1,
+            },
+          }}
+          viewport={{ once: true }}
+        >
           <div className="flex justify-center">
             <img src={img} alt="contact us" className=" h-[200px]" />
           </div>
@@ -79,8 +94,23 @@ const ContactUs = () => {
               SK Office, 2nd floor, Barangay Hall, Sta. Maria, Zamboanga City
             </p>
           </div>
-        </div>
-        <div className="m-auto mt-5 md:mt-0 rounded-lg bg-gray-200 lg:p-10 p-5 w-full md:w-[50%] flex flex-col">
+        </motion.div>
+        <motion.div
+          className="m-auto mt-5 md:mt-0 rounded-lg bg-gray-200 lg:p-10 p-5 w-full md:w-[50%] flex flex-col"
+          initial={{
+            opacity: 0,
+            x: 50,
+            // x: index % 2 === 0 ? 50 : -50,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 1,
+            },
+          }}
+          viewport={{ once: true }}
+        >
           <h1 className="text-center text-xl font-bold">Contact Us</h1>
           <form action="" ref={form} onSubmit={sendEmail}>
             <div>
@@ -161,7 +191,7 @@ const ContactUs = () => {
               Send Message
             </button>
           </form>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

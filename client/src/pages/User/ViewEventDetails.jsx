@@ -11,6 +11,7 @@ import Cookies from "js-cookie";
 import userIcon from "../../assets/images/user.png";
 import { useToast } from "../../hooks/useToast";
 import BackBtn from "../../components/BackBtn";
+import { motion } from "framer-motion";
 
 const ViewEventDetails = () => {
   const toast = useToast();
@@ -200,7 +201,22 @@ const ViewEventDetails = () => {
 
   return (
     <>
-      <div className=" lg:px-20  py-10 flex flex-col-2 md:flex-row flex-col gap-5">
+      <motion.div
+        className=" lg:px-20  py-10 flex flex-col-2 md:flex-row flex-col gap-5"
+        initial={{
+          opacity: 0,
+          x: -50,
+          // x: index % 2 === 0 ? 50 : -50,
+        }}
+        whileInView={{
+          opacity: 1,
+          x: 0,
+          transition: {
+            duration: 1,
+          },
+        }}
+        viewport={{ once: true }}
+      >
         <div className="relative w-full bg-gray-100 p-5">
           <div className="absolute">
             <BackBtn />
@@ -333,7 +349,7 @@ const ViewEventDetails = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
       {status === "Completed" && (
         <div className="bg-white p-5 lg:px-[200px]">
           <FeatureImageGallery id={id} />

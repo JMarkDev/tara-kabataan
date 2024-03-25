@@ -4,6 +4,7 @@ import CrossIcon from ".././assets/images/cross.png";
 import { FiSend } from "react-icons/fi";
 import api from "../api/api";
 import Loading from "../components/loading/loadingBall";
+import { motion } from "framer-motion";
 
 const Chatbot = ({ setOpenChat, openChat }) => {
   const [userQuery, setUserQuery] = useState("");
@@ -11,6 +12,7 @@ const Chatbot = ({ setOpenChat, openChat }) => {
   const [isLoading, setIsLoading] = useState(false);
   const chatContainer = useRef(null);
   const option = ["registration", "payment", "contact us", "discount"];
+  const text = "Welcome to our Chatbot! How can I assist you today?".split(" ");
 
   useEffect(() => {
     // Scroll to the bottom of the chat container
@@ -94,7 +96,19 @@ const Chatbot = ({ setOpenChat, openChat }) => {
               className="w-7 h-7 rounded-full"
             />
             <p className="text-sm rounded-lg p-2 mr-8 bg-gray-300 py-3 transition-all ">
-              Welcome to our Chatbot! How can I assist you today?
+              {text.map((el, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{
+                    duration: 0.25,
+                    delay: i / 10,
+                  }}
+                >
+                  {el}{" "}
+                </motion.span>
+              ))}
             </p>
           </div>
           {conversation.map((convo, index) => {

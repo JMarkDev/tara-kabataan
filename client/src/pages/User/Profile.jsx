@@ -5,6 +5,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import Cookies from "js-cookie";
 import { useFormat } from "../../hooks/useFormatDate";
 import { useToast } from "../../hooks/useToast";
+import { motion } from "framer-motion";
 
 const Profile = () => {
   const toast = useToast();
@@ -84,7 +85,22 @@ const Profile = () => {
           <h1 className="font-bold text-xl md:text-2xl text-[#243e63] mb-10">
             Personal details
           </h1>
-          <div className="p-5 max-w-lg md:m-auto text-gray-500 bg-gray-200 rounded-lg">
+          <motion.div
+            className="p-5 max-w-lg md:m-auto text-gray-500 bg-gray-200 rounded-lg"
+            initial={{
+              opacity: 0,
+              x: -50,
+              // x: index % 2 === 0 ? 50 : -50,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+              transition: {
+                duration: 1,
+              },
+            }}
+            viewport={{ once: true }}
+          >
             <div className="flex justify-end">
               <Link
                 to={`/profile/${userId}`}
@@ -183,9 +199,23 @@ const Profile = () => {
             </div>
             {/* </>
             )} */}
-          </div>
+          </motion.div>
           {joinEvents.length > 0 && (
-            <>
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: 50,
+                // x: index % 2 === 0 ? 50 : -50,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+                transition: {
+                  duration: 1,
+                },
+              }}
+              viewport={{ once: true }}
+            >
               <h1 className="mt-10 font-bold text-xl md:text-2xl text-[#243e63] mb-5">
                 Joined Events
               </h1>
@@ -254,7 +284,7 @@ const Profile = () => {
                   )
                 )}
               </div>
-            </>
+            </motion.div>
           )}
         </div>
       </div>

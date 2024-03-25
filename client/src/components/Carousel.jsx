@@ -2,12 +2,11 @@ import { useState, useEffect, useCallback } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import tarakabataan1 from "../assets/images/tarakabataan.jpg";
-// import tarakabataan1 from "../assets/images/tarakabataan1.jpg";
 import tarakabataan2 from "../assets/images/mission.jpg";
 import tarakabataan3 from "../assets/images/tarakabataan3.jpg";
 import tarakabataan4 from "../assets/images/tarakabataan4.jpg";
-// import tarakabataan6 from "../assets/images/tarakabataan5.png";
 import tarakabataan5 from "../assets/images/tarakabataan6.jpg";
 
 function Carousel() {
@@ -70,6 +69,11 @@ function Carousel() {
     return <div>Loading...</div>; // Display a loading indicator
   }
 
+  const text =
+    "Break free from ordinary: Live, learn, and connect at groundbreaking events.".split(
+      " "
+    );
+
   return (
     <div className="mx-auto bg-white dark:bg-[#273242] relative">
       <div
@@ -113,16 +117,31 @@ function Carousel() {
       ></div>
 
       <div className="absolute top-[30%] text-center m-auto w-[100%]">
-        <h1
+        <motion.h1
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: 0.5,
+          }}
           className="px-5 tracking-wide lg:text-5xl font-serif text-2xl font-bold text-white"
           style={{
             textShadow: "100px 100px 100px rgba(0,0,0,0.1)",
           }}
         >
-          Break free from ordinary: Live, learn, and
-          <br />
-          <span className="">connect at groundbreaking events.</span>
-        </h1>
+          {text.map((el, i) => (
+            <motion.span
+              key={i}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                duration: 0.25,
+                delay: i / 10,
+              }}
+            >
+              {el}{" "}
+            </motion.span>
+          ))}
+        </motion.h1>
 
         <div className="mt-5">
           <Link to="/events" className=" justify-center mt-10">

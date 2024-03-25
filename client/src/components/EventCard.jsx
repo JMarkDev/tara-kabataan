@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import api from "../api/api";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useFormat } from "../hooks/useFormatDate";
 import imgNotify from "../assets/images/undraw_notify_re_65on.svg";
+import { motion } from "framer-motion";
 
 const EventCard = ({ event }) => {
   const { dateFormat, formatTime, extractYear } = useFormat();
@@ -55,22 +56,38 @@ const EventCard = ({ event }) => {
       ) : (
         <div className="lg:px-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
           {event.map(
-            ({
-              id,
-              event_title,
-              event_category,
-              image,
-              start_date,
-              end_date,
-              start_time,
-              end_time,
-              price,
-              discount,
-              event_type,
-            }) => (
-              <div
+            (
+              {
+                id,
+                event_title,
+                event_category,
+                image,
+                start_date,
+                end_date,
+                start_time,
+                end_time,
+                price,
+                discount,
+                event_type,
+              },
+              index
+            ) => (
+              <motion.div
                 key={id}
                 className="max-w-sm h-fit bg-white cursor-pointer rounded-md shadow-md hover:shadow-2xl"
+                initial={{
+                  opacity: 0,
+                  x: -50,
+                  // x: index % 2 === 0 ? 50 : -50,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                  transition: {
+                    duration: 1,
+                  },
+                }}
+                viewport={{ once: true }}
               >
                 <div className="relative">
                   <p
@@ -106,7 +123,7 @@ const EventCard = ({ event }) => {
                     {event_category}
                   </p>
                   <h1 className="text-[#243e63] text-xl font-bold mt-3">
-                    {truncateText(event_title, 39)}
+                    {truncateText(event_title, 28)}
                   </h1>
                   <p className="text-[15px]">
                     Date: {extractYear(start_date)} - {dateFormat(end_date)}
@@ -136,7 +153,7 @@ const EventCard = ({ event }) => {
                     </Link>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )
           )}
         </div>

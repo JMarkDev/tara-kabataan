@@ -8,6 +8,7 @@ import img3 from "../../assets/images/CIELO T. SARATAO.jpg";
 import { FaFacebookF } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
 import { FaLinkedin } from "react-icons/fa6";
+import { motion } from "framer-motion";
 
 const About = () => {
   const [openLink, setOpenLink] = useState(false);
@@ -18,10 +19,40 @@ const About = () => {
         About <span className="text-[#6415ff]">Us</span>
       </h1>
       <div className="lg:py-20 flex lg:flex-row flex-col justify-center">
-        <div className="p-5 flex justify-center">
+        <motion.div
+          className="p-5 flex justify-center"
+          initial={{
+            opacity: 0,
+            x: -50,
+            // x: index % 2 === 0 ? 50 : -50,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 1,
+            },
+          }}
+          viewport={{ once: true }}
+        >
           <img src={tarakabataan} alt="team" className="rounded-lg w-[450px]" />
-        </div>
-        <div className="lg:w-[50%] md:px-20 px-5">
+        </motion.div>
+        <motion.div
+          className="lg:w-[50%] md:px-20 px-5"
+          initial={{
+            opacity: 0,
+            x: 50,
+            // x: index % 2 === 0 ? 50 : -50,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 1,
+            },
+          }}
+          viewport={{ once: true }}
+        >
           <h1 className="text-xl lg:text-2xl text-[#6415ff] py-5 font-bold">
             Vision
           </h1>
@@ -34,10 +65,25 @@ const About = () => {
             Organization will continue assessing the partnering with other
             stakeholders.
           </p>
-        </div>
+        </motion.div>
       </div>
       <div className="px-5 md:px-20 lg:py-20 flex-col-reverse flex lg:flex-row justify-center">
-        <div className="lg:w-[50%] lg:pr-10">
+        <motion.div
+          className="lg:w-[50%] lg:pr-10"
+          initial={{
+            opacity: 0,
+            x: -50,
+            // x: index % 2 === 0 ? 50 : -50,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 1,
+            },
+          }}
+          viewport={{ once: true }}
+        >
           <h1 className="text-xl lg:text-2xl text-[#6415ff] py-5 font-bold">
             Mission
           </h1>
@@ -48,16 +94,46 @@ const About = () => {
             campaigns on cross-cultural exchange and leadership empowerment to
             young leaders towards a more engaging and empowering communities.
           </p>
-        </div>
-        <div className="p-5 flex justify-center">
+        </motion.div>
+        <motion.div
+          className="p-5 flex justify-center"
+          initial={{
+            opacity: 0,
+            x: 50,
+            // x: index % 2 === 0 ? 50 : -50,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 1,
+            },
+          }}
+          viewport={{ once: true }}
+        >
           <img src={mission} alt="team" className="rounded-lg w-[450px]" />
-        </div>
+        </motion.div>
       </div>
       <h1 className="text-center lg:text-4xl md:text-2xl text-xl font-bold mt-10">
         Our <span className="text-[#6415ff]">Team</span>
       </h1>
       <div className="mt-10 px-5 md:px-20 lg:px-20 grid justify-center items-center lg:grid-cols-3 md:grid-cols-2 gap-5">
-        <div className="hover:shadow-xl flex flex-col max-w-[350px]">
+        <motion.div
+          className="hover:shadow-xl flex flex-col max-w-[350px]"
+          initial={{
+            opacity: 0,
+            x: -50,
+            // x: index % 2 === 0 ? 50 : -50,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 1,
+            },
+          }}
+          viewport={{ once: true }}
+        >
           <img src={img1} alt="team" className="w-full h-[350px]" />
           <div className="flex w-full flex-col justify-center items-center bg-gray-300">
             <h1 className="text-xl p-3 font-bold text-[#243e63]">
@@ -91,8 +167,23 @@ const About = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="hover:shadow-xl flex flex-col max-w-[350px]">
+        </motion.div>
+        <motion.div
+          className="hover:shadow-xl flex flex-col max-w-[350px]"
+          initial={{
+            opacity: 0,
+            x: 50,
+            // x: index % 2 === 0 ? 50 : -50,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 1,
+            },
+          }}
+          viewport={{ once: true }}
+        >
           <img src={img2} alt="team" className="w-full h-[350px]" />
           <div className="flex w-full flex-col justify-center items-center bg-gray-300 ">
             <h1 className="text-xl p-3 font-bold text-[#243e63]">
@@ -117,8 +208,23 @@ const About = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="hover:shadow-xl flex flex-col max-w-[350px] relative">
+        </motion.div>
+        <motion.div
+          className="hover:shadow-xl flex flex-col max-w-[350px] relative"
+          initial={{
+            opacity: 0,
+            x: -50,
+            // x: index % 2 === 0 ? 50 : -50,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 1,
+            },
+          }}
+          viewport={{ once: true }}
+        >
           <img src={img3} alt="team" className="w-full h-[350px]" />
           <div className="flex w-full flex-col justify-center items-center bg-gray-300 ">
             <h1 className="text-xl p-3 font-bold text-[#243e63]">
@@ -153,7 +259,7 @@ const About = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

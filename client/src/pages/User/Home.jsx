@@ -1,6 +1,7 @@
 import Carousel from "../../components/Carousel";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import api from "../../api/api";
 import EventCard from "../../components/EventCard";
 import FeaturedImageGallery from "../../components/FeaturedImageGallery";
@@ -8,7 +9,6 @@ import Accordion from "../../components/Accordion";
 import FAQimage from "../../assets/images/FAQ.webp";
 import ChatIcon from "../../assets/images/chat-message-icon-design-in-blue-circle-png.webp";
 import Chatbot from "../../components/Chatbot";
-import logo from "../../assets/images/tarakabataanLogo.jpg";
 import EventCalendar from "../../components/EventCalendar";
 
 const Home = () => {
@@ -71,16 +71,45 @@ const Home = () => {
         />
       </div>
       <Carousel />
-      <div>
+      <motion.div
+        initial={{
+          opacity: 0,
+          x: -50,
+          // x: index % 2 === 0 ? 50 : -50,
+        }}
+        whileInView={{
+          opacity: 1,
+          x: 0,
+          transition: {
+            duration: 1,
+          },
+        }}
+        viewport={{ once: true }}
+      >
         <h1 className=" my-10 text-center text-[#243e63] lg:text-4xl text-2xl font-bold">
           Event<span className="text-[#6415ff]"> Calendar</span>
         </h1>
         <div className="lg:px-20 px-5 ">
           <EventCalendar />
         </div>
-      </div>
+      </motion.div>
       <div className="">
-        <div className="px-5 xl:px-20 pt-10 flex flex-col justify-center">
+        <motion.div
+          className="px-5 xl:px-20 pt-10 flex flex-col justify-center"
+          initial={{
+            opacity: 0,
+            x: -50,
+            // x: index % 2 === 0 ? 50 : -50,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+            transition: {
+              duration: 1,
+            },
+          }}
+          viewport={{ once: true }}
+        >
           <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold">
             Discover Our Exciting{" "}
             <span className="text-[#6415ff]">Categories</span>
@@ -91,28 +120,60 @@ const Home = () => {
           </p>
 
           <div className="mx-auto lg:px-10 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7 mt-10">
-            {category.map(({ id, category_name, image }) => (
+            {category.map(({ id, category_name, image }, index) => (
               <Link key={id} to={`/event/filter/${category_name}`}>
-                <div className="max-w-sm relative hover:scale-110 transition-all bg-white cursor-pointer rounded-md shadow-md">
-                  <img
-                    src={`${api.defaults.baseURL}${image}`}
-                    alt={category_name}
-                    className="w-full h-[250px] object-cover rounded-md"
-                  />
-                  <div className=" absolute inset-0 flex items-end p-5">
-                    <div className="absolute inset-0 bg-black opacity-40 rounded-md"></div>
-                    <h1 className="text-[#fff] text-xl font-bold z-10">
-                      {category_name}
-                    </h1>
+                <motion.div
+                  key={id}
+                  initial={{
+                    opacity: 0,
+                    x: 50,
+                    // x: index % 2 === 0 ? 50 : -50,
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    x: 0,
+                    transition: {
+                      duration: 1,
+                    },
+                  }}
+                  viewport={{ once: true }}
+                >
+                  <div className="max-w-sm relative hover:scale-110 transition-all bg-white cursor-pointer rounded-md shadow-md">
+                    <img
+                      src={`${api.defaults.baseURL}${image}`}
+                      alt={category_name}
+                      className="w-full h-[250px] object-cover rounded-md"
+                    />
+                    <div className=" absolute inset-0 flex items-end p-5">
+                      <div className="absolute inset-0 bg-black opacity-40 rounded-md"></div>
+                      <h1 className="text-[#fff] text-xl font-bold z-10">
+                        {category_name}
+                      </h1>
+                    </div>
                   </div>
-                </div>
+                </motion.div>
               </Link>
             ))}
           </div>
-        </div>
+        </motion.div>
         <div></div>
         <div>
-          <div className="px-5 xl:px-20">
+          <motion.div
+            className="px-5 xl:px-20"
+            initial={{
+              opacity: 0,
+              x: 50,
+              // x: index % 2 === 0 ? 50 : -50,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+              transition: {
+                duration: 1,
+              },
+            }}
+            viewport={{ once: true }}
+          >
             <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold mt-10">
               Upcoming <span className="text-[#6415ff]">Events</span>
             </h1>
@@ -128,8 +189,23 @@ const Home = () => {
                 </button>
               </Link>
             </div>
-          </div>
-          <div className="lg:px-[200px] px-5">
+          </motion.div>
+          <motion.div
+            className="lg:px-20 px-5"
+            initial={{
+              opacity: 0,
+              x: 50,
+              // x: index % 2 === 0 ? 50 : -50,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+              transition: {
+                duration: 1,
+              },
+            }}
+            viewport={{ once: true }}
+          >
             <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold mt-10">
               Recent Completed <span className="text-[#6415ff]">Event</span>
             </h1>
@@ -140,8 +216,23 @@ const Home = () => {
             <div className="mt-10">
               <FeaturedImageGallery id={completedEventID} />
             </div>
-          </div>
-          <div className="lg:px-20 pt-10 px-5">
+          </motion.div>
+          <motion.div
+            className="lg:px-20 pt-10 px-5"
+            initial={{
+              opacity: 0,
+              x: 50,
+              // x: index % 2 === 0 ? 50 : -50,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+              transition: {
+                duration: 2,
+              },
+            }}
+            viewport={{ once: true }}
+          >
             <h1 className="text-center text-[#243e63] lg:text-4xl text-2xl font-bold mt-10">
               Frequently Asked <span className="text-[#6415ff]">Questions</span>
             </h1>
@@ -155,9 +246,26 @@ const Home = () => {
                 alt="FAQ"
                 className="lg:w-1/2 md:m-auto md:w-1/2 lg:object-cover lg:rounded-md"
               />
-              <Accordion className="lg:w-1/2 lg:mt-10" />
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  x: -50,
+                  // x: index % 2 === 0 ? 50 : -50,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                  transition: {
+                    duration: 2,
+                  },
+                }}
+                viewport={{ once: true }}
+              >
+                {" "}
+                <Accordion className="lg:w-1/2 lg:mt-10" />
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </>
