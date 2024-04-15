@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import Loading from "../../components/loading/otpLoader/otpLoader";
 import Cookies from "js-cookie";
-import { motion } from "framer-motion";
 
 const Register = () => {
   const [loader, setLoader] = useState(false);
@@ -118,22 +117,7 @@ const Register = () => {
             </div>
           )}
 
-          <motion.div
-            className="w-[350px] sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 m-5 overflow-hidden bg-white p-4 rounded-lg shadow-md"
-            initial={{
-              opacity: 0,
-              x: -50,
-              // x: index % 2 === 0 ? 50 : -50,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-              transition: {
-                duration: 1,
-              },
-            }}
-            viewport={{ once: true }}
-          >
+          <div className="w-[350px] sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 m-5 overflow-hidden bg-white p-4 rounded-lg shadow-md">
             <div className="p-5 m-auto flex justify-center items-center">
               <h1 className="text-center mb-5 text-2xl font-bold leading-9 tracking-tight text-gray-900">
                 Sign up your account
@@ -347,7 +331,7 @@ const Register = () => {
                 </Link>
               </span>
             </div>
-          </motion.div>
+          </div>
           {/* 
           )
         } */}

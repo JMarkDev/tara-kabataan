@@ -71,7 +71,10 @@ const NavbarUser = () => {
     <header className="z-20 border-b border-gray-300 w-full h-[70px] m-auto px-5 py-1 bg-[#efeff5] shadow-lg">
       <div className="hidden md:block">
         <div className="flex justify-between items-center">
-          <img src={logo} alt="logo" className="w-auto h-[60px]" />
+          <Link to={"/home"}>
+            <img src={logo} alt="logo" className="w-auto h-[60px]" />
+          </Link>
+
           <ul className="flex gap-10">
             <li>
               <Link

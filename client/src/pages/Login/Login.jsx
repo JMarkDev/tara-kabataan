@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import Cookies from "js-cookie";
 import { useToast } from "../../hooks/useToast";
-import { motion } from "framer-motion";
 
 const Login = () => {
   const toast = useToast();
@@ -72,22 +71,7 @@ const Login = () => {
 
   return (
     <>
-      <motion.div
-        className="w-[350px] m-auto sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 mt-6 overflow-hidden bg-white p-4 rounded-lg shadow-md"
-        initial={{
-          opacity: 0,
-          x: -50,
-          // x: index % 2 === 0 ? 50 : -50,
-        }}
-        whileInView={{
-          opacity: 1,
-          x: 0,
-          transition: {
-            duration: 1,
-          },
-        }}
-        viewport={{ once: true }}
-      >
+      <div className="w-[350px] m-auto sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 mt-6 overflow-hidden bg-white p-4 rounded-lg shadow-md">
         <h2 className="text-center mb-5 text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in your account
         </h2>
@@ -179,7 +163,7 @@ const Login = () => {
             </Link>
           </span>
         </div>
-      </motion.div>
+      </div>
     </>
   );
 };

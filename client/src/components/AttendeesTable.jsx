@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { useFormat } from "../hooks/useFormatDate";
 
-const AttendeesTable = ({ attendees }) => {
+const AttendeesTable = ({ attendees, eventType }) => {
   const { dateFormat } = useFormat();
-
   function downloadCSV() {
     const headers = [
       "Full Name",
@@ -70,12 +69,16 @@ const AttendeesTable = ({ attendees }) => {
             <th scope="col" className="px-6 py-3 text-nowrap">
               LOCATION
             </th>
-            <th scope="col" className="px-6 py-3 text-nowrap">
-              PAYMENT METHOD
-            </th>
-            <th scope="col" className="px-6 py-3 text-nowrap">
-              REGISTRATION FEE
-            </th>
+            {eventType !== "Free" && (
+              <>
+                <th scope="col" className="px-6 py-3 text-nowrap">
+                  PAYMENT METHOD
+                </th>
+                <th scope="col" className="px-6 py-3 text-nowrap">
+                  REGISTRATION FEE
+                </th>
+              </>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -107,8 +110,12 @@ const AttendeesTable = ({ attendees }) => {
                 </td>
                 <td className="px-6 py-3 text-nowrap">{phone_number}</td>
                 <td className="px-6 py-3 text-nowrap">{location}</td>
-                <td className="px-6 py-3">{payment_method}</td>
-                <td className="px-6 py-3">{total_amount}</td>
+                {eventType !== "Free" && (
+                  <>
+                    <td className="px-6 py-3">{payment_method}</td>
+                    <td className="px-6 py-3">{total_amount}</td>
+                  </>
+                )}
               </tr>
             )
           )}

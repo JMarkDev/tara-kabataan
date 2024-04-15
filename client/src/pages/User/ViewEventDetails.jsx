@@ -189,13 +189,14 @@ const ViewEventDetails = () => {
   }, [userId, id]);
 
   const eventPrice = (discountDate, discount, price) => {
-    const date = new Date();
+    const currentDate = new Date();
     const discountDated = new Date(discountDate);
 
-    if (discountDated <= date) {
-      return price - discount;
-    } else {
+    if (discountDated <= currentDate) {
       return price;
+    } else {
+      const discountedPrice = price - discount;
+      return discountedPrice;
     }
   };
 
@@ -294,7 +295,7 @@ const ViewEventDetails = () => {
                     <p>Price</p>
                     <p>₱ {price}</p>
                   </div>
-                  {discountDate <= new Date() && (
+                  {new Date(discountDate) >= new Date() && (
                     <>
                       <div className="flex justify-between">
                         <p>Discount</p>
@@ -351,7 +352,7 @@ const ViewEventDetails = () => {
         </div>
       </motion.div>
       {status === "Completed" && (
-        <div className="bg-white p-5 lg:px-[200px]">
+        <div className="bg-white p-5 lg:px-20">
           <FeatureImageGallery id={id} />
           <div className="bg-gray-100 p-5">
             <h1 className="font-bold text-lg md:text-2xl my-5">

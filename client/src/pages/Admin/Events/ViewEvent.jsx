@@ -234,7 +234,7 @@ const ViewEvent = () => {
         <p className="p-2 px-3 text-red-500">No attendees joined yet.</p>
       ) : (
         <div className="mt-7">
-          <AttendeesTable attendees={attendees} />
+          <AttendeesTable attendees={attendees} eventType={eventType} />
         </div>
       )}
       <div className="mt-7">

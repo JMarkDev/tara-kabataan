@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 import LocationComponent from "../../components/LocationComponent";
 import PhoneInput from "../../components/PhoneInput";
 import { useToast } from "../../hooks/useToast";
+import Paypal from "../../components/Paypal";
+import { FaPesoSign } from "react-icons/fa6";
 
 const JoinEvent = ({
   handleClose,
@@ -14,6 +16,7 @@ const JoinEvent = ({
   total,
   event_date,
 }) => {
+  const [checkout, setCheckout] = useState(false);
   const toast = useToast();
   const { id } = useParams();
   const userId = Cookies.get("userId");
@@ -34,6 +37,10 @@ const JoinEvent = ({
 
   const handlePhoneChange = (phone) => {
     setPhone(phone);
+  };
+
+  const handlePaymentMethod = (payment) => {
+    setPaymentMethod(payment);
   };
 
   useEffect(() => {
@@ -86,6 +93,7 @@ const JoinEvent = ({
   ];
 
   const handleSubmit = async (e) => {
+    // setCheckout(true);
     e.preventDefault();
     setTimeout(() => {
       handleClose();
@@ -126,8 +134,8 @@ const JoinEvent = ({
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex justify-center items-center overflow-y-auto bg-black bg-opacity-50">
-        <div className="relative p-4 w-full max-w-xl">
+      <div className="fixed inset-0 z-50 flex justify-center  overflow-y-auto items-center bg-black bg-opacity-50">
+        <div className="relative w-full max-w-xl m-auto">
           <div className="relative bg-white rounded-lg shadow">
             <div className="flex items-center justify-between p-4 border-b rounded-t">
               <h3 className="text-xl font-semibold text-gray-900">
@@ -358,8 +366,27 @@ const JoinEvent = ({
                       >
                         Payment Method
                       </label>
-                      <div className="relative">
-                        <select
+                      <div className="">
+                        <div className="">
+                          <button
+                            name="payment"
+                            type="button"
+                            onClick={() => setPaymentMethod("Cash")}
+                            className="flex justify-center items-center gap-2 lg:text-xl font-bold my-4 p-4 w-full bg-gray-200 hover:bg-gray-300 border-gray-200 border rounded-lg text-center "
+                          >
+                            <span className="text-green-600">
+                              <FaPesoSign />
+                            </span>
+                            Cash
+                          </button>
+                        </div>
+                        <Paypal
+                          handlePaymentMethod={handlePaymentMethod}
+                          total={total}
+                          title={title}
+                        />
+
+                        {/* <select
                           name="payment"
                           id="payment"
                           value={paymentMethod}
@@ -369,7 +396,7 @@ const JoinEvent = ({
                         >
                           <option value="">Payment Method</option>
                           <option value="Cash">Cash</option>
-                          <option value="Gcash">Gcash</option>
+                          <option value="PayPal">Paypal</option>
                         </select>
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                           <svg
@@ -379,7 +406,7 @@ const JoinEvent = ({
                           >
                             <path fillRule="evenodd" d="M10 12L3 6h14l-7 6z" />
                           </svg>
-                        </div>
+                        </div> */}
                       </div>
                     </>
                   )}

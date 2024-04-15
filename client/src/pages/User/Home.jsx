@@ -228,7 +228,7 @@ const Home = () => {
               opacity: 1,
               x: 0,
               transition: {
-                duration: 2,
+                duration: 1,
               },
             }}
             viewport={{ once: true }}
@@ -256,7 +256,7 @@ const Home = () => {
                   opacity: 1,
                   x: 0,
                   transition: {
-                    duration: 2,
+                    duration: 1,
                   },
                 }}
                 viewport={{ once: true }}

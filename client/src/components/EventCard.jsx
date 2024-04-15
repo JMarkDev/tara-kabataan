@@ -16,33 +16,33 @@ const EventCard = ({ event }) => {
   };
 
   const discountPrice = (discount_date, discount_price, price) => {
-    const date = new Date();
+    const currentDate = new Date();
     const discountDate = new Date(discount_date);
 
-    if (discountDate <= date) {
+    if (discountDate <= currentDate) {
+      return null;
+    } else {
       const discountedPrice = (
         ((price - discount_price) / price) * 100 -
         100
       ).toFixed(2);
       return `${discountedPrice} %`;
-    } else {
-      return null;
     }
   };
 
   const eventPrice = (discount_date, discount_price, price) => {
-    const date = new Date();
+    const currentDate = new Date();
     const discountDate = new Date(discount_date);
 
-    if (discountDate <= date) {
+    if (discountDate <= currentDate) {
+      return <p className="text-black ">₱{price}</p>;
+    } else {
       return (
         <>
           <p className="line-through text-gray-600">₱ {price}</p>
           <p className="text-black ">₱{price - discount_price}.00</p>
         </>
       );
-    } else {
-      return <p className="text-black ">₱{price}</p>;
     }
   };
 

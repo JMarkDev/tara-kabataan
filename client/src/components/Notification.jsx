@@ -33,7 +33,6 @@ const Notification = () => {
         const sortByDate = response.data.sort((a, b) => {
           return new Date(b.created_at) - new Date(a.created_at);
         });
-        console.log(sortByDate);
         setAttendees(sortByDate);
       } catch (error) {
         console.log(error);
@@ -41,6 +40,13 @@ const Notification = () => {
     };
     fetchAttendees();
   }, []);
+
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.slice(0, maxLength) + "...";
+    }
+    return text;
+  };
 
   return (
     <>
@@ -68,7 +74,7 @@ const Notification = () => {
                       >
                         <img
                           src={`${
-                            user.image
+                            user && user.image
                               ? `${api.defaults.baseURL}${user.image}`
                               : `${userIcon}`
                           }  `}
@@ -77,7 +83,7 @@ const Notification = () => {
                         />
                         <div>
                           <p className="font-bold">{attendee_name}</p>
-                          <p>{event_name}</p>
+                          <p>{truncateText(event_name, 28)}</p>
                           <p className="text-xs ">
                             {dateFormat(created_at)}
                             {/* Jan 01, 2021 - <span>02:25 PM</span> */}
@@ -102,7 +108,9 @@ hover:bg-gray-200 border-b border-gray-300 dark:hover:bg-gray-20 "
                         className="w-[50px] h-[50px] rounded-lg"
                       />
                       <div>
-                        <p className="font-bold">{event_title}</p>
+                        <p className="font-bold">
+                          {truncateText(event_title, 28)}
+                        </p>
                         <p className="text-xs ">{dateFormat(created_at)}</p>
                         <Link to={`/event/${id}`} className="text-blue-600">
                           {status === "Upcoming"
