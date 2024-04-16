@@ -261,7 +261,7 @@ const Events = () => {
             </div>
           </div>
         </div>
-        <div className="px-5 sm:px-10 lg:px-0 flex justify-center w-full">
+        <div className="sm:px-10 lg:px-0 flex justify-center w-full">
           <EventCard event={event} />
         </div>
       </div>

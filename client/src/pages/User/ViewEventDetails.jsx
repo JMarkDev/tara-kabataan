@@ -38,8 +38,7 @@ const ViewEventDetails = () => {
   const [discountDate, setDiscountDate] = useState("");
   const [discount, setDiscount] = useState("");
   const [status, setStatus] = useState("");
-  const { extractYear, dateFormat, formatTime } = useFormat();
-  // const total = price - discount;
+  const { extractYear, dateFormat, formatTime, discountedPrice } = useFormat();
   const event_date = `${extractYear(startDate)} - ${dateFormat(endDate)}`;
   const [comment, setComment] = useState([]);
   const [allowedComment, setAllowedComment] = useState(false);
@@ -189,14 +188,13 @@ const ViewEventDetails = () => {
   }, [userId, id]);
 
   const eventPrice = (discountDate, discount, price) => {
-    const currentDate = new Date();
-    const discountDated = new Date(discountDate);
+    const discounted = discountedPrice(discountDate);
 
-    if (discountDated <= currentDate) {
-      return price;
-    } else {
+    if (discounted) {
       const discountedPrice = price - discount;
       return discountedPrice;
+    } else {
+      return price;
     }
   };
 
@@ -293,16 +291,8 @@ const ViewEventDetails = () => {
                 <>
                   <div className="flex justify-between">
                     <p>Price</p>
-                    <p>₱ {price}</p>
+                    <p>₱ {eventPrice(discountDate, discount, price)}</p>
                   </div>
-                  {new Date(discountDate) >= new Date() && (
-                    <>
-                      <div className="flex justify-between">
-                        <p>Discount</p>
-                        <p>₱ {discount}.00</p>
-                      </div>
-                    </>
-                  )}
                 </>
               )}
               {status === "Upcoming" ? (

@@ -6,7 +6,7 @@ import imgNotify from "../assets/images/undraw_notify_re_65on.svg";
 import { motion } from "framer-motion";
 
 const EventCard = ({ event }) => {
-  const { dateFormat, formatTime, extractYear } = useFormat();
+  const { dateFormat, formatTime, extractYear, discountedPrice } = useFormat();
 
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -16,25 +16,23 @@ const EventCard = ({ event }) => {
   };
 
   const discountPrice = (discount_date, discount_price, price) => {
-    const currentDate = new Date();
-    const discountDate = new Date(discount_date);
+    const discounted = discountedPrice(discount_date);
 
-    if (discountDate <= currentDate) {
-      return null;
-    } else {
+    if (discounted) {
       const discountedPrice = (
         ((price - discount_price) / price) * 100 -
         100
       ).toFixed(2);
       return `${discountedPrice} %`;
+    } else {
+      return null;
     }
   };
 
   const eventPrice = (discount_date, discount_price, price) => {
-    const currentDate = new Date();
-    const discountDate = new Date(discount_date);
+    const discounted = discountedPrice(discount_date);
 
-    if (discountDate <= currentDate) {
+    if (!discounted) {
       return <p className="text-black ">₱{price}</p>;
     } else {
       return (
@@ -74,7 +72,7 @@ const EventCard = ({ event }) => {
             ) => (
               <motion.div
                 key={id}
-                className="max-w-sm h-fit bg-white cursor-pointer rounded-md shadow-md hover:shadow-2xl"
+                className="max-w-sm h-[428px]  bg-white cursor-pointer rounded-md shadow-md hover:shadow-2xl"
                 initial={{
                   opacity: 0,
                   x: -50,
@@ -122,8 +120,8 @@ const EventCard = ({ event }) => {
                   <p className="bg-[#f6f6f6] text-[#6415ff] text-md px-5 w-fit rounded-full">
                     {event_category}
                   </p>
-                  <h1 className="text-[#243e63] text-xl font-bold mt-3">
-                    {truncateText(event_title, 28)}
+                  <h1 className="text-[#243e63] text-xl font-bold mt-3 whitespace-nowrap">
+                    {truncateText(event_title, 25)}
                   </h1>
                   <p className="text-[15px]">
                     Date: {extractYear(start_date)} - {dateFormat(end_date)}

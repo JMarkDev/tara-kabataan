@@ -119,19 +119,22 @@ const EventsTable = ({ data }) => {
             </thead>
             <tbody>
               {eventData.map(
-                ({
-                  id,
-                  event_title,
-                  event_category,
-                  start_date,
-                  end_date,
-                  start_time,
-                  end_time,
-                  event_type,
-                  location,
-                  max_attendees,
-                  status,
-                }) => {
+                (
+                  {
+                    id,
+                    event_title,
+                    event_category,
+                    start_date,
+                    end_date,
+                    start_time,
+                    end_time,
+                    event_type,
+                    location,
+                    max_attendees,
+                    status,
+                  },
+                  index
+                ) => {
                   return (
                     <tr
                       key={id}
@@ -141,7 +144,7 @@ const EventsTable = ({ data }) => {
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                       >
-                        {id}
+                        {index + 1}
                       </th>
                       <td className="px-6 py-4 whitespace-nowrap ">
                         {event_title}
