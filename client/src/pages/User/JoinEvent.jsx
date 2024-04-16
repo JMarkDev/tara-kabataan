@@ -7,6 +7,7 @@ import PhoneInput from "../../components/PhoneInput";
 import { useToast } from "../../hooks/useToast";
 import Paypal from "../../components/Paypal";
 import { FaPesoSign } from "react-icons/fa6";
+import { FaRegCircleCheck } from "react-icons/fa6";
 
 const JoinEvent = ({
   handleClose,
@@ -371,6 +372,11 @@ const JoinEvent = ({
                         Payment Method
                       </label>
                       <div className="">
+                        {/* <i className="text-green-400 text-2xl">
+                          {" "}
+                          <FaRegCircleCheck />
+                        </i> */}
+
                         <div className="">
                           <button
                             name="payment"
@@ -388,6 +394,7 @@ const JoinEvent = ({
                           handlePaymentMethod={handlePaymentMethod}
                           total={total}
                           title={title}
+                          event_id={id}
                         />
 
                         {/* <select

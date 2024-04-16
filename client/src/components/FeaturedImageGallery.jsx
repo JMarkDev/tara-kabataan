@@ -39,10 +39,10 @@ export default function FeaturedImageGallery({ id }) {
     <>
       {data && (
         <>
-          <h1 className="py-2 font-bold text-xl text-[#243e63]">
-            Event Gallery {title}
-          </h1>
-          <div className="grid gap-4 bg-[#f6f6f6] p-5">
+          <div className="grid gap-4 bg-[#f6f6f6] md:p-5">
+            <h1 className="py-2 font-bold text-xl text-[#243e63]">
+              Event Gallery {title}
+            </h1>
             <div>
               <img
                 className="h-auto w-full max-w-full rounded-lg object-cover object-center md:h-[480px]"

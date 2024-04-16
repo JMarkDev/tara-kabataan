@@ -342,7 +342,7 @@ const ViewEventDetails = () => {
         </div>
       </motion.div>
       {status === "Completed" && (
-        <div className="bg-white p-5 lg:px-20">
+        <div className="bg-white lg:px-20 p-5">
           <FeatureImageGallery id={id} />
           <div className="bg-gray-100 p-5">
             <h1 className="font-bold text-lg md:text-2xl my-5">
