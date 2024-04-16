@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import Cookies from "js-cookie";
 import LocationComponent from "../../components/LocationComponent";
@@ -16,7 +16,7 @@ const JoinEvent = ({
   total,
   event_date,
 }) => {
-  const [checkout, setCheckout] = useState(false);
+  const navigate = useNavigate();
   const toast = useToast();
   const { id } = useParams();
   const userId = Cookies.get("userId");
@@ -119,6 +119,10 @@ const JoinEvent = ({
     try {
       const response = await api.post("/attendees/add", data);
       if (response.data.status === "success") {
+        setTimeout(() => {
+          navigate("/success");
+        }, 2000);
+
         toast.success("Join event successfully!");
         localStorage.removeItem("region");
         localStorage.removeItem("province");

@@ -16,6 +16,7 @@ import About from "./pages/User/About";
 import ContactUs from "./pages/User/ContactUs";
 import ViewEventDetails from "./pages/User/ViewEventDetails";
 import EditProfile from "./pages/User/EditProfile";
+import SuccessJoined from "./pages/User/SuccessJoined";
 
 import LayoutAdmin from "./components/LayoutAdmin";
 import Dashboard from "./pages/Admin/Dashboard/Dashboard";
@@ -267,6 +268,22 @@ function App() {
               element={
                 <LayoutUser>
                   <EditProfile />
+                </LayoutUser>
+              }
+              allowedRoles={["user"]}
+              isLoggedIn={isLoggedIn}
+              userRole={userRole}
+            />
+          }
+        />
+
+        <Route
+          path="/success"
+          element={
+            <ProtectedRoute
+              element={
+                <LayoutUser>
+                  <SuccessJoined />
                 </LayoutUser>
               }
               allowedRoles={["user"]}
