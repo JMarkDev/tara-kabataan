@@ -96,9 +96,9 @@ const JoinEvent = ({
   const handleSubmit = async (e) => {
     // setCheckout(true);
     e.preventDefault();
-    setTimeout(() => {
-      handleClose();
-    }, 2000);
+    // setTimeout(() => {
+    //   handleClose();
+    // }, 2000);
 
     const data = {
       event_id: id,
@@ -121,6 +121,7 @@ const JoinEvent = ({
       const response = await api.post("/attendees/add", data);
       if (response.data.status === "success") {
         setTimeout(() => {
+          handleClose();
           navigate("/success");
         }, 2000);
 
@@ -133,6 +134,7 @@ const JoinEvent = ({
       }
     } catch (error) {
       toast.error(error.response.data.Error);
+      toast.error(error.response.data.message);
       console.log(error);
     }
   };
@@ -382,42 +384,27 @@ const JoinEvent = ({
                             name="payment"
                             type="button"
                             onClick={() => setPaymentMethod("Cash")}
-                            className="flex justify-center items-center gap-2 lg:text-xl font-bold my-4 p-4 w-full bg-gray-200 hover:bg-gray-300 border-gray-200 border rounded-lg text-center "
+                            className="flex relative justify-center items-center gap-2 lg:text-xl font-bold my-4 p-4 w-full bg-gray-200 hover:bg-gray-300 border-gray-200 border rounded-lg text-center "
                           >
                             <span className="text-green-600">
                               <FaPesoSign />
                             </span>
+                            {paymentMethod === "Cash" && (
+                              <i className="text-green-500 text-2xl absolute right-4">
+                                {" "}
+                                <FaRegCircleCheck />
+                              </i>
+                            )}
                             Cash
                           </button>
-                        </div>
-                        <Paypal
-                          handlePaymentMethod={handlePaymentMethod}
-                          total={total}
-                          title={title}
-                          event_id={id}
-                        />
 
-                        {/* <select
-                          name="payment"
-                          id="payment"
-                          value={paymentMethod}
-                          required
-                          onChange={(e) => setPaymentMethod(e.target.value)}
-                          className="block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        >
-                          <option value="">Payment Method</option>
-                          <option value="Cash">Cash</option>
-                          <option value="PayPal">Paypal</option>
-                        </select>
-                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                          <svg
-                            className="fill-current h-4 w-4"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                          >
-                            <path fillRule="evenodd" d="M10 12L3 6h14l-7 6z" />
-                          </svg>
-                        </div> */}
+                          <Paypal
+                            handlePaymentMethod={handlePaymentMethod}
+                            total={total}
+                            title={title}
+                            event_id={id}
+                          />
+                        </div>
                       </div>
                     </>
                   )}

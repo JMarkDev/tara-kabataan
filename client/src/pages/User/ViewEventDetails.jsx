@@ -305,7 +305,7 @@ const ViewEventDetails = () => {
                     onClick={() => {
                       if (!userId || !role || !token) {
                         navigate("/register");
-                      } else {
+                      } else if (!allowedComment) {
                         setModal(true);
                       }
                     }}

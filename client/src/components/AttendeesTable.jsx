@@ -77,6 +77,9 @@ const AttendeesTable = ({ attendees, eventType }) => {
                 <th scope="col" className="px-6 py-3 text-nowrap">
                   REGISTRATION FEE
                 </th>
+                <th scope="col" className="px-6 py-3 text-nowrap">
+                  Action
+                </th>
               </>
             )}
           </tr>
@@ -114,6 +117,11 @@ const AttendeesTable = ({ attendees, eventType }) => {
                   <>
                     <td className="px-6 py-3">{payment_method}</td>
                     <td className="px-6 py-3">{total_amount}</td>
+                    <td className="px-6 py-3">
+                      <button className="bg-green-500 text-white hover:bg-green-700 px-8 py-2 rounded-lg font-bold">
+                        View
+                      </button>
+                    </td>
                   </>
                 )}
               </tr>

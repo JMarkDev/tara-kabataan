@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import api from "../api/api";
 import Cookies from "js-cookie";
+import { useToast } from "../hooks/useToast";
 
 const Paypal = ({ handlePaymentMethod, total, title, event_id }) => {
+  const toast = useToast();
   const userID = Cookies.get("userId");
   const [formData, setFormData] = useState({
     transaction_id: "",
@@ -14,21 +16,6 @@ const Paypal = ({ handlePaymentMethod, total, title, event_id }) => {
     created_at: "",
   });
   const paypal = useRef();
-  const [paymentMethod, setPaymentMethod] = useState("");
-  useEffect(() => {
-    handlePaymentMethod("PayPal");
-  }, [paymentMethod]);
-
-  const handleSubmit = async () => {
-    try {
-      const response = await api.post("/payment/add", formData);
-      console.log(response.data);
-      console.log(formData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  console.log(formData);
 
   useEffect(() => {
     window.paypal
@@ -49,20 +36,20 @@ const Paypal = ({ handlePaymentMethod, total, title, event_id }) => {
         },
         onApprove: async (data, actions) => {
           const order = await actions.order.capture();
-          console.log(order);
-          setPaymentMethod("PayPal");
-          setFormData({
+
+          const updatedFormData = {
             ...formData,
             transaction_id: order.id,
             created_at: order.create_time,
             email_address: order.payer.email_address,
             amount: order.purchase_units[0].amount.value,
             status: order.status,
-          });
-
-          setTimeout(() => {
-            handleSubmit();
-          }, 3000);
+          };
+          setFormData(updatedFormData);
+          if (order.status === "COMPLETED") {
+            handleSubmit(updatedFormData);
+            handlePaymentMethod("PayPal");
+          }
         },
         onError: (err) => {
           console.log(err);
@@ -70,6 +57,19 @@ const Paypal = ({ handlePaymentMethod, total, title, event_id }) => {
       })
       .render(paypal.current);
   }, []);
+
+  const handleSubmit = async (formData) => {
+    try {
+      const response = await api.post("/payment/add", formData);
+      if (response.data.status === "success") {
+        console.log(response.data);
+        toast.success("Payment successful.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     // <div>
     <div ref={paypal}></div>
