@@ -99,8 +99,9 @@ const ViewEventDetails = () => {
         setEventType(event_type);
         setEventCategory(event_category);
         setPrice(price);
-        setDiscountDate(new Date(discount.discount_date));
-        setDiscount(discount.discount_price);
+        const parseDiscount = JSON.parse(discount);
+        setDiscountDate(new Date(parseDiscount.discount_date));
+        setDiscount(parseDiscount.discount_price);
         setStatus(status);
       } catch (error) {
         console.error(error);

@@ -39,45 +39,50 @@ const UserTable = ({ data, handleDelete }) => {
               </tr>
             </thead>
             <tbody>
-              {data.map(({ id, firstname, lastname, email, role, gender }) => {
-                return (
-                  <tr key={id} className="bg-white hover:bg-gray-100 border-b ">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+              {data.map(
+                ({ id, firstname, lastname, email, role, gender }, index) => {
+                  return (
+                    <tr
+                      key={id}
+                      className="bg-white hover:bg-gray-100 border-b "
                     >
-                      {id}
-                    </th>
-                    <td className="px-6 py-4 whitespace-nowrap ">
-                      {firstname} {lastname}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap ">{email}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{role}</td>
-                    <td className="px-6 py-4">{gender}</td>
-                    <td className=" flex justify-center items-center align-middle m-auto text-md gap-5 relative">
-                      {/* <div > */}
-                      {role === "admin" ? (
-                        <Link
-                          to={`/edit-admin/${id}`}
-                          className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-blue-600 text-center flex items-center"
-                        >
-                          <FaRegEdit />
-                        </Link>
-                      ) : (
-                        <Link
-                          to={`/view-user/${id}`}
-                          className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-blue-600 text-center flex items-center"
-                        >
-                          <MdRemoveRedEye />
-                        </Link>
-                      )}
-                      <button className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-red-500">
-                        <RiDeleteBin6Line onClick={() => handleDelete(id)} />
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                      >
+                        {index + 1}
+                      </th>
+                      <td className="px-6 py-4 whitespace-nowrap ">
+                        {firstname} {lastname}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap ">{email}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{role}</td>
+                      <td className="px-6 py-4">{gender}</td>
+                      <td className=" flex justify-center items-center align-middle m-auto text-md gap-5 relative">
+                        {/* <div > */}
+                        {role === "admin" ? (
+                          <Link
+                            to={`/edit-admin/${id}`}
+                            className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-blue-600 text-center flex items-center"
+                          >
+                            <FaRegEdit />
+                          </Link>
+                        ) : (
+                          <Link
+                            to={`/view-user/${id}`}
+                            className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-blue-600 text-center flex items-center"
+                          >
+                            <MdRemoveRedEye />
+                          </Link>
+                        )}
+                        <button className="font-bold text-xl p-2 mt-3 bg-gray-200 rounded-md text-red-500">
+                          <RiDeleteBin6Line onClick={() => handleDelete(id)} />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                }
+              )}
             </tbody>
           </table>
         </div>

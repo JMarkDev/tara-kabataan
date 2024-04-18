@@ -50,6 +50,7 @@ const ViewEvent = () => {
     const fetchData = async () => {
       try {
         const response = await api.get(`/event/id/${id}`);
+        console.log(response.data.status);
         const {
           event_title,
           event_description,
@@ -67,7 +68,6 @@ const ViewEvent = () => {
           discount,
           status,
         } = response.data;
-        // console.log(discount);
         setTitle(event_title);
         setDescription(event_description.replace(/\n/g, "<br>"));
         setImage(image);
@@ -81,9 +81,12 @@ const ViewEvent = () => {
         setLocation(location);
         setAttendanceCount(attendance_count);
         setPrice(price);
-        setDiscountDate(discount.discount_date);
-        setDiscountPrice(discount.discount_price);
+
+        const parseDiscount = JSON.parse(discount);
+        setDiscountDate(parseDiscount.discount_date);
+        setDiscountPrice(parseDiscount.discount_price);
         setStatus(status);
+        console.log(status);
         if (event_type === "Registration Fee") {
           setDisplayPrice(true);
         }
@@ -99,6 +102,7 @@ const ViewEvent = () => {
     const fetchAttendees = async () => {
       try {
         const response = await api.get(`/attendees/event_id/${id}`);
+        console.log(response.data);
         setAttendees(response.data);
       } catch (error) {
         console.log(error);

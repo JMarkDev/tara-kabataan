@@ -69,90 +69,91 @@ const EventCard = ({ event }) => {
                 event_type,
               },
               index
-            ) => (
-              <motion.div
-                key={id}
-                className="max-w-sm h-[428px]  bg-white cursor-pointer rounded-md shadow-md hover:shadow-2xl"
-                initial={{
-                  opacity: 0,
-                  x: -50,
-                  // x: index % 2 === 0 ? 50 : -50,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  x: 0,
-                  transition: {
-                    duration: 1,
-                  },
-                }}
-                viewport={{ once: true }}
-              >
-                <div className="relative">
-                  <p
-                    className={`${
-                      discount.discount_price !== "00" &&
-                      discountPrice(
-                        discount.discount_date,
-                        discount.discount_price,
-                        price
-                      )
-                        ? "bg-[#ffe97a]"
-                        : "hidden"
-                    } rounded-bl-lg text-[#ec3814] py-2 px-2 shadow-md absolute right-0`}
-                  >
-                    {discountPrice(
-                      discount.discount_date,
-                      discount.discount_price,
-                      price
-                    )}
-                  </p>
-                </div>
-
-                <Link to={`/event/${id}`} className="text-decoration-none">
-                  <img
-                    src={`${api.defaults.baseURL}${image}`}
-                    alt={event_title}
-                    className="w-full h-[250px] object-cover"
-                  />
-                </Link>
-
-                <div className="p-3">
-                  <p className="bg-[#f6f6f6] text-[#6415ff] text-md px-5 w-fit rounded-full">
-                    {event_category}
-                  </p>
-                  <h1 className="text-[#243e63] text-xl font-bold mt-3 whitespace-nowrap">
-                    {truncateText(event_title, 25)}
-                  </h1>
-                  <p className="text-[15px]">
-                    Date: {extractYear(start_date)} - {dateFormat(end_date)}
-                  </p>
-                  <p className="text-[15px]">
-                    Time: {formatTime(start_time)} - {formatTime(end_time)}
-                  </p>
-                  <div className="flex justify-between items-center">
-                    {event_type === "Free" ? (
-                      <p className="text-lg py-2">Free</p>
-                    ) : (
-                      <div className="py-2 flex items-center justify-between gap-5 text-lg">
-                        <div className="flex gap-5">
-                          {eventPrice(
-                            discount.discount_date,
-                            discount.discount_price,
-                            price
-                          )}
-                        </div>
-                      </div>
-                    )}
-                    <Link
-                      to={`/event/${id}`}
-                      className="bg-[#854ef3] rounded-lg px-5 py-3 text-sm text-white"
+            ) => {
+              const parseDiscount = JSON.parse(discount);
+              return (
+                <motion.div
+                  key={id}
+                  className="max-w-sm h-[428px]  bg-white cursor-pointer rounded-md shadow-md hover:shadow-2xl"
+                  initial={{
+                    opacity: 0,
+                    x: -50,
+                    // x: index % 2 === 0 ? 50 : -50,
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    x: 0,
+                    transition: {
+                      duration: 1,
+                    },
+                  }}
+                  viewport={{ once: true }}
+                >
+                  <div className="relative">
+                    <p
+                      className={`${
+                        parseDiscount.discount_price !== "00" &&
+                        discountPrice(
+                          parseDiscount.discount_date,
+                          parseDiscount.discount_price,
+                          price
+                        )
+                          ? "bg-[#ffe97a]"
+                          : "hidden"
+                      } rounded-bl-lg text-[#ec3814] py-2 px-2 shadow-md absolute right-0`}
                     >
-                      View Details
-                    </Link>
+                      {discountPrice(
+                        parseDiscount.discount_date,
+                        parseDiscount.discount_price,
+                        price
+                      )}
+                    </p>
                   </div>
-                </div>
-              </motion.div>
-            )
+                  <Link to={`/event/${id}`} className="text-decoration-none">
+                    <img
+                      src={`${api.defaults.baseURL}${image}`}
+                      alt={event_title}
+                      className="w-full h-[250px] object-cover"
+                    />
+                  </Link>
+                  <div className="p-3">
+                    <p className="bg-[#f6f6f6] text-[#6415ff] text-md px-5 w-fit rounded-full">
+                      {event_category}
+                    </p>
+                    <h1 className="text-[#243e63] text-xl font-bold mt-3 whitespace-nowrap">
+                      {truncateText(event_title, 25)}
+                    </h1>
+                    <p className="text-[15px]">
+                      Date: {extractYear(start_date)} - {dateFormat(end_date)}
+                    </p>
+                    <p className="text-[15px]">
+                      Time: {formatTime(start_time)} - {formatTime(end_time)}
+                    </p>
+                    <div className="flex justify-between items-center">
+                      {event_type === "Free" ? (
+                        <p className="text-lg py-2">Free</p>
+                      ) : (
+                        <div className="py-2 flex items-center justify-between gap-5 text-lg">
+                          <div className="flex gap-5">
+                            {eventPrice(
+                              parseDiscount.discount_date,
+                              parseDiscount.discount_price,
+                              price
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      <Link
+                        to={`/event/${id}`}
+                        className="bg-[#854ef3] rounded-lg px-5 py-3 text-sm text-white"
+                      >
+                        View Details
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            }
           )}
         </div>
       )}
