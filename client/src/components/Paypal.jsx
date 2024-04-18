@@ -28,7 +28,7 @@ const Paypal = ({ handlePaymentMethod, total, title, event_id }) => {
                 description: `${title} Registration Fee`,
                 amount: {
                   currency_code: "PHP",
-                  value: total,
+                  value: 100.0,
                 },
               },
             ],
