@@ -3,7 +3,6 @@ import api from "../api/api";
 
 const Transaction = ({ handleClose, user_id, event_id }) => {
   const [transactionID, setTransactionID] = useState("");
-  const [userID, setUserID] = useState(user_id);
   const [email, setEmail] = useState("");
   const [amount, setAmount] = useState("");
   const [status, setStatus] = useState("");
@@ -36,6 +35,7 @@ const Transaction = ({ handleClose, user_id, event_id }) => {
 
     fetchTransaction();
   }, [user_id, event_id]);
+
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center overflow-y-auto  bg-black bg-opacity-50">
       <div className="relative p-4 w-full max-w-xl">

@@ -8,6 +8,7 @@ const AttendeesTable = ({ attendees, eventType }) => {
   const event_id = id.id;
 
   const [modal, setModal] = useState(false);
+  const [userID, setUserID] = useState("");
   const { dateFormat } = useFormat();
   function downloadCSV() {
     const headers = [
@@ -40,12 +41,24 @@ const AttendeesTable = ({ attendees, eventType }) => {
     document.body.removeChild(link);
   }
 
+  const handleOpen = (user_id) => {
+    setUserID(user_id);
+    setModal(true);
+  };
+
   const handleClose = (modal) => {
     setModal(modal);
   };
 
   return (
     <>
+      {modal && (
+        <Transaction
+          user_id={userID}
+          handleClose={handleClose}
+          event_id={event_id}
+        />
+      )}
       <div className="bg-white relative overflow-x-auto">
         <div className="flex justify-between items-center p-2">
           <h1 className="text-xl text-[#3d4465] font-semibold">
@@ -115,13 +128,6 @@ const AttendeesTable = ({ attendees, eventType }) => {
                   key={id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                 >
-                  {modal && (
-                    <Transaction
-                      user_id={user_id}
-                      handleClose={handleClose}
-                      event_id={event_id}
-                    />
-                  )}
                   {/* <td className="px-6 py-3 text-nowrap">{user_id}</td> */}
                   <td className="px-6 py-3 text-nowrap">
                     {dateFormat(registration_time)}
@@ -137,15 +143,17 @@ const AttendeesTable = ({ attendees, eventType }) => {
                     <>
                       <td className="px-6 py-3">{payment_method}</td>
                       <td className="px-6 py-3">{total_amount}</td>
-                      <td className="px-6 py-3">
-                        <button
-                          onClick={() => setModal(true)}
-                          className="bg-green-500 text-white hover:bg-green-700 px-8 py-2 rounded-lg font-bold"
-                        >
-                          View
-                        </button>
-                      </td>
                     </>
+                  )}
+                  {payment_method === "PayPal" && (
+                    <td className="px-6 py-3">
+                      <button
+                        onClick={() => handleOpen(user_id)}
+                        className="bg-green-500 text-white hover:bg-green-700 px-8 py-2 rounded-lg font-bold"
+                      >
+                        View
+                      </button>
+                    </td>
                   )}
                 </tr>
               )

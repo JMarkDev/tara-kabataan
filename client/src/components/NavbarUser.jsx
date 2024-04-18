@@ -17,6 +17,7 @@ const NavbarUser = () => {
   const [open, setOpen] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
   const [image, setImage] = useState("");
+  const [created_at, setCreatedAt] = useState("");
 
   const userId = Cookies.get("userId");
 
@@ -31,6 +32,7 @@ const NavbarUser = () => {
       try {
         if (userId) {
           const response = await api.get(`/user/id/${userId}`);
+          setCreatedAt(response.data.createdAt);
           setName(response.data.firstname);
           setImage(response.data.image);
         } else {
@@ -138,7 +140,7 @@ const NavbarUser = () => {
                 }}
                 className="text-2xl cursor-pointer w-10 h-10 p-2 bg-white rounded-full hover:bg-gray-200"
               />
-              {openNotification && <Notification />}
+              {openNotification && <Notification created_at={created_at} />}
 
               <h1 className="text-lg font-semibold text-center m-auto">
                 {name}

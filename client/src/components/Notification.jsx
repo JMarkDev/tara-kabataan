@@ -5,7 +5,7 @@ import api from "../api/api";
 import { useFormat } from "../hooks/useFormatDate";
 import { Link } from "react-router-dom";
 
-const Notification = () => {
+const Notification = ({ created_at }) => {
   const { dateFormat } = useFormat();
   const role = Cookies.get("role");
   const [data, setData] = useState([]);
@@ -15,9 +15,15 @@ const Notification = () => {
     const fetchEvents = async () => {
       try {
         const response = await api.get("/event/all");
-        const sortByDate = response.data.sort((a, b) => {
+
+        const filteredEvents = response.data.filter((event) => {
+          return new Date(event.created_at) > new Date(created_at);
+        });
+
+        const sortByDate = filteredEvents.sort((a, b) => {
           return new Date(b.created_at) - new Date(a.created_at);
         });
+
         setData(sortByDate);
       } catch (error) {
         console.log(error);

@@ -6,11 +6,13 @@ import Cookies from "js-cookie";
 import { useFormat } from "../../hooks/useFormatDate";
 import { useToast } from "../../hooks/useToast";
 import { motion } from "framer-motion";
+import Transaction from "../../components/Transaction";
 
 const Profile = () => {
   const toast = useToast();
-  // const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(false);
   const userId = Cookies.get("userId");
+  const [event_id, setEventID] = useState("");
   const { dateFormat } = useFormat();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -21,7 +23,8 @@ const Profile = () => {
   const [location, setLocation] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [joinEvents, setJoinEvents] = useState([]);
-  const [showUpload, setShowUpload] = useState(false); // State to toggle visibility of input file
+  // const [showUpload, setShowUpload] = useState(false); // State to toggle visibility of input file
+  // const [modal, setModal] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -61,7 +64,6 @@ const Profile = () => {
   const handleImageChange = async (e) => {
     const selectedImage = e.target.files[0];
     setImage(selectedImage);
-    setShowUpload(false);
 
     try {
       const data = new FormData();
@@ -78,8 +80,25 @@ const Profile = () => {
     }
   };
 
+  const handleOpen = (event_id, e) => {
+    e.preventDefault();
+    setEventID(event_id);
+    setModal(true);
+  };
+
+  const handleClose = (modal) => {
+    setModal(modal);
+  };
+
   return (
     <>
+      {modal && (
+        <Transaction
+          user_id={userId}
+          handleClose={handleClose}
+          event_id={event_id}
+        />
+      )}
       <div className="md:px-20  flex flex-col md:flex-row gap-5 pt-5">
         <div className="w-full p-5 bg-gray-100">
           <h1 className="font-bold text-xl md:text-2xl text-[#243e63] mb-10">
@@ -109,7 +128,6 @@ const Profile = () => {
               >
                 Edit
               </Link>
-              {/* {modal && <EditProfile modal={modal} handleClose={handleClose} />} */}
             </div>
             <div className="flex flex-col items-center justify-center mb-5">
               <div className="flex flex-col items-center  justify-center mb-5">
@@ -237,6 +255,9 @@ const Profile = () => {
                   <div className="w-full md:w-1/4 px-4">
                     <p className="font-medium">Date</p>
                   </div>
+                  <div className="w-full md:w-1/4 px-4">
+                    <p className="font-medium">Action</p>
+                  </div>
                 </div>
                 {joinEvents.map(
                   ({
@@ -250,7 +271,11 @@ const Profile = () => {
                     payment_method,
                     event_id,
                   }) => (
-                    <Link to={`/event/${event_id}`} key={event_id}>
+                    <Link
+                      to={`/event/${event_id}`}
+                      key={event_id}
+                      className="z-10"
+                    >
                       <div className="flex flex-col md:flex-row border-b border-gray-300 dark:border-gray-700 py-4">
                         <div className="w-full md:w-1/4 px-4">
                           <p className="font-medium text-gray-900 dark:text-white">
@@ -278,6 +303,17 @@ const Profile = () => {
                           <p className="text-gray-700 dark:text-gray-400">
                             {event_date}
                           </p>
+                        </div>
+
+                        <div className="relative w-full md:w-1/4 px-4 text-end z-20">
+                          {payment_method === "PayPal" && (
+                            <button
+                              onClick={(e) => handleOpen(event_id, e)}
+                              className="bg-green-500 text-white hover:bg-green-700 px-8 py-2 rounded-lg font-bold"
+                            >
+                              View
+                            </button>
+                          )}
                         </div>
                       </div>
                     </Link>
