@@ -50,7 +50,6 @@ const ViewEvent = () => {
     const fetchData = async () => {
       try {
         const response = await api.get(`/event/id/${id}`);
-        console.log(response.data.status);
         const {
           event_title,
           event_description,
@@ -86,7 +85,6 @@ const ViewEvent = () => {
         setDiscountDate(parseDiscount.discount_date);
         setDiscountPrice(parseDiscount.discount_price);
         setStatus(status);
-        console.log(status);
         if (event_type === "Registration Fee") {
           setDisplayPrice(true);
         }

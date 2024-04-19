@@ -3,8 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import Loading from "../../components/loading/otpLoader/otpLoader";
 import Cookies from "js-cookie";
+import { LuEye } from "react-icons/lu";
+import { LuEyeOff } from "react-icons/lu";
 
 const Register = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
   const role = Cookies.get("role");
@@ -97,6 +100,10 @@ const Register = () => {
       navigate(userRole);
     }
   });
+
+  const handleTogglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
 
   return (
     <>
@@ -265,18 +272,26 @@ const Register = () => {
                   Password
                 </label>
                 <div className="flex flex-col items-start">
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    value={values.password}
-                    onChange={(e) =>
-                      setValues({ ...values, password: e.target.value })
-                    }
-                    className={`mt-2 block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-                      passwordError ? "border-red-600" : "" // Apply border-red-600 class when there's an error
-                    }`}
-                  />
+                  <div className="mt-2 relative flex w-full items-center ">
+                    <input
+                      type={`${showPassword ? "text" : "password"}`}
+                      name="password"
+                      placeholder="Password"
+                      value={values.password}
+                      onChange={(e) =>
+                        setValues({ ...values, password: e.target.value })
+                      }
+                      className={` block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                        passwordError ? "border-red-600" : "" // Apply border-red-600 class when there's an error
+                      }`}
+                    />
+                    <div
+                      onClick={handleTogglePassword}
+                      className="cursor-pointer absolute right-3 text-[#243e63] text-xl"
+                    >
+                      {showPassword ? <LuEye /> : <LuEyeOff />}
+                    </div>
+                  </div>
                 </div>
                 {/* <div className="h-4">  */}
                 {passwordError && (
@@ -292,18 +307,29 @@ const Register = () => {
                   Confirm Password
                 </label>
                 <div className="flex flex-col items-start">
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Confirm Password"
-                    value={values.confirmPassword}
-                    onChange={(e) =>
-                      setValues({ ...values, confirmPassword: e.target.value })
-                    }
-                    className={`mt-2 block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-                      confirmPasswordError ? "border-red-600" : "" // Apply border-red-600 class when there's an error
-                    }`}
-                  />
+                  <div className="mt-2 relative flex w-full items-center ">
+                    <input
+                      type={`${showPassword ? "text" : "password"}`}
+                      name="confirmPassword"
+                      placeholder="Confirm Password"
+                      value={values.confirmPassword}
+                      onChange={(e) =>
+                        setValues({
+                          ...values,
+                          confirmPassword: e.target.value,
+                        })
+                      }
+                      className={` block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                        confirmPasswordError ? "border-red-600" : "" // Apply border-red-600 class when there's an error
+                      }`}
+                    />
+                    <div
+                      onClick={handleTogglePassword}
+                      className="cursor-pointer absolute right-3 text-[#243e63] text-xl"
+                    >
+                      {showPassword ? <LuEye /> : <LuEyeOff />}
+                    </div>
+                  </div>
                 </div>
                 {/* <div className="h-4">  */}
                 {confirmPasswordError && (

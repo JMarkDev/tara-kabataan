@@ -52,7 +52,7 @@ const EventCard = ({ event }) => {
           <img src={imgNotify} alt="empty" className="h-[50vh] mt-5" />
         </div>
       ) : (
-        <div className="lg:px-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
           {event.map(
             (
               {
@@ -74,7 +74,7 @@ const EventCard = ({ event }) => {
               return (
                 <motion.div
                   key={id}
-                  className="max-w-sm h-[428px]  bg-white cursor-pointer rounded-md shadow-md hover:shadow-2xl"
+                  className={`w-[350px] h-[428px]  bg-white cursor-pointer rounded-md shadow-md hover:shadow-2xl `}
                   initial={{
                     opacity: 0,
                     x: -50,

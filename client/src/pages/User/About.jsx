@@ -96,7 +96,7 @@ const About = () => {
           </p>
         </motion.div>
         <motion.div
-          className="p-5 flex justify-center"
+          className="py-5 flex justify-center"
           initial={{
             opacity: 0,
             x: 50,
@@ -111,7 +111,11 @@ const About = () => {
           }}
           viewport={{ once: true }}
         >
-          <img src={mission} alt="team" className="rounded-lg w-[450px]" />
+          <img
+            src={mission}
+            alt="team"
+            className="rounded-lg  w-full md:w-[450px]"
+          />
         </motion.div>
       </div>
       <h1 className="text-center lg:text-4xl md:text-2xl text-xl font-bold mt-10">
@@ -172,7 +176,7 @@ const About = () => {
           className="hover:shadow-xl flex flex-col max-w-[350px]"
           initial={{
             opacity: 0,
-            x: 50,
+            x: -50,
             // x: index % 2 === 0 ? 50 : -50,
           }}
           whileInView={{

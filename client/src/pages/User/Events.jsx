@@ -155,7 +155,7 @@ const Events = () => {
           </button>
         </div>
       </div>
-      <div className="flex lg:flex-row flex-col">
+      <div className="flex px-5 md:px-0 lg:flex-row flex-col">
         <div className="lg:hidden flex justify-evenly py-5 items-center">
           <h1 className="text-md font-bold text-[#243e63]">Filters By:</h1>
           <DropdownCategory

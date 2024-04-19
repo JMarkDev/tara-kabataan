@@ -3,8 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import Cookies from "js-cookie";
 import { useToast } from "../../hooks/useToast";
+import { LuEye } from "react-icons/lu";
+import { LuEyeOff } from "react-icons/lu";
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const toast = useToast();
   const [values, setValues] = useState({
     email: "",
@@ -69,6 +72,10 @@ const Login = () => {
     }
   });
 
+  const handleTogglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
   return (
     <>
       <div className="w-[350px] m-auto sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 mt-6 overflow-hidden bg-white p-4 rounded-lg shadow-md">
@@ -114,18 +121,28 @@ const Login = () => {
               </label>
             </div>
             <div className="mt-2">
-              <input
-                name="password"
-                type="password"
-                placeholder="Password"
-                autoComplete="current-password"
-                onChange={(e) =>
-                  setValues({ ...values, password: e.target.value })
-                }
-                className={`block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-                  passwordError || errorMessage ? "border-red-600" : "" // Apply border-red-600 class when there's an error
-                }`}
-              />
+              <div className="relative flex items-center">
+                {" "}
+                <input
+                  name="password"
+                  type={`${showPassword ? "text" : "password"}`}
+                  placeholder="Password"
+                  autoComplete="current-password"
+                  onChange={(e) =>
+                    setValues({ ...values, password: e.target.value })
+                  }
+                  className={`block w-full border py-2 px-2 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                    passwordError || errorMessage ? "border-red-600" : "" // Apply border-red-600 class when there's an error
+                  }`}
+                />
+                <div
+                  onClick={handleTogglePassword}
+                  className="cursor-pointer absolute right-3 text-[#243e63] text-xl"
+                >
+                  {showPassword ? <LuEye /> : <LuEyeOff />}
+                </div>
+              </div>
+
               {passwordError && (
                 <div className="text-red-600 text-sm">{passwordError}</div>
               )}
