@@ -5,26 +5,9 @@ import api from "../api/api";
 import { useFormat } from "../hooks/useFormatDate";
 import { Link } from "react-router-dom";
 
-const Notification = ({ data }) => {
+const Notification = ({ data, attendees }) => {
   const { dateFormat } = useFormat();
   const role = Cookies.get("role");
-
-  const [attendees, setAttendees] = useState([]);
-
-  useEffect(() => {
-    const fetchAttendees = async () => {
-      try {
-        const response = await api.get("/attendees/all");
-        const sortByDate = response.data.sort((a, b) => {
-          return new Date(b.created_at) - new Date(a.created_at);
-        });
-        setAttendees(sortByDate);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchAttendees();
-  }, []);
 
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {

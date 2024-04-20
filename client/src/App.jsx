@@ -104,18 +104,6 @@ function App() {
       <ToastContainer />
 
       <Routes>
-        {/* <Route path="/" element={
-        <LayoutUser>
-          <Home />
-        </LayoutUser>
-      } />
-
-      <Route path='/' element={
-        <LayoutAdmin>
-          <Dashboard />
-        </LayoutAdmin>
-      } /> */}
-
         {userRole === "admin" ? (
           <Route
             path="/"
