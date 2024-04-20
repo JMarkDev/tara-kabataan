@@ -18,6 +18,8 @@ const NavbarUser = () => {
   const [openNotification, setOpenNotification] = useState(false);
   const [image, setImage] = useState("");
   const [created_at, setCreatedAt] = useState("");
+  const [allNotification, setAllNotification] = useState("");
+  const [data, setData] = useState([]);
 
   const userId = Cookies.get("userId");
 
@@ -45,6 +47,29 @@ const NavbarUser = () => {
 
     getUserData();
   }, [userId]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await api.get("/event/all");
+        const filteredEvents = response.data?.filter((event) => {
+          return new Date(event.created_at) > new Date(created_at);
+        });
+
+        if (filteredEvents) {
+          const sortByDate = filteredEvents?.sort((a, b) => {
+            return new Date(b.created_at) - new Date(a.created_at);
+          });
+          setAllNotification(sortByDate?.length);
+          setData(sortByDate);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchEvents();
+  }, [created_at]);
 
   const closeMobileMenu = () => {
     setMobileMenu(false);
@@ -128,19 +153,25 @@ const NavbarUser = () => {
             </li>
           </ul>
           {userData ? (
-            <div className="flex items-center gap-10">
-              <IoNotificationsOutline
-                onClick={() => {
-                  setOpenNotification(!openNotification);
-                  setOpen(false);
-                }}
-                onMouseEnter={() => {
-                  setOpenNotification(!openNotification);
-                  setOpen(false);
-                }}
-                className="text-2xl cursor-pointer w-10 h-10 p-2 bg-white rounded-full hover:bg-gray-200"
-              />
-              {openNotification && <Notification created_at={created_at} />}
+            <div className="relative flex items-center gap-10  h-12">
+              <div className="">
+                <IoNotificationsOutline
+                  onClick={() => {
+                    setOpenNotification(!openNotification);
+                    setOpen(false);
+                  }}
+                  onMouseEnter={() => {
+                    setOpenNotification(!openNotification);
+                    setOpen(false);
+                  }}
+                  className="text-2xl cursor-pointer w-10 h-10 p-2 bg-white rounded-full hover:bg-gray-200"
+                />
+                <span className="absolute ml-6 text-[14px] top-0 bg-[#E72929] text-white w-5 h-5 text-center font-semibold rounded-full">
+                  {allNotification}
+                </span>
+              </div>
+
+              {openNotification && <Notification data={data} />}
 
               <h1 className="text-lg font-semibold text-center m-auto">
                 {name}
@@ -191,18 +222,24 @@ const NavbarUser = () => {
         <div className="flex items-center">
           {userData && (
             <div className="flex gap-5 flex-row items-center">
-              <IoNotificationsOutline
-                onClick={() => {
-                  setOpenNotification(!openNotification);
-                  setOpen(false);
-                }}
-                onMouseEnter={() => {
-                  setOpenNotification(!openNotification);
-                  setOpen(false);
-                }}
-                className="text-2xl cursor-pointer"
-              />
-              {openNotification && <Notification />}
+              <div>
+                <IoNotificationsOutline
+                  onClick={() => {
+                    setOpenNotification(!openNotification);
+                    setOpen(false);
+                  }}
+                  onMouseEnter={() => {
+                    setOpenNotification(!openNotification);
+                    setOpen(false);
+                  }}
+                  className="text-2xl cursor-pointer w-10 h-10 p-2 bg-white rounded-full hover:bg-gray-200"
+                />
+                <span className="absolute ml-6 text-[14px] top-2 bg-[#E72929] text-white w-5 h-5 text-center font-semibold rounded-full">
+                  {allNotification}
+                </span>
+              </div>
+
+              {openNotification && <Notification data={data} />}
               <img
                 onClick={showProfile}
                 onMouseEnter={showProfile}

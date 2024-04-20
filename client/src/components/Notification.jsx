@@ -5,32 +5,11 @@ import api from "../api/api";
 import { useFormat } from "../hooks/useFormatDate";
 import { Link } from "react-router-dom";
 
-const Notification = ({ created_at }) => {
+const Notification = ({ data }) => {
   const { dateFormat } = useFormat();
   const role = Cookies.get("role");
-  const [data, setData] = useState([]);
+
   const [attendees, setAttendees] = useState([]);
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await api.get("/event/all");
-
-        const filteredEvents = response.data.filter((event) => {
-          return new Date(event.created_at) > new Date(created_at);
-        });
-
-        const sortByDate = filteredEvents.sort((a, b) => {
-          return new Date(b.created_at) - new Date(a.created_at);
-        });
-
-        setData(sortByDate);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchEvents();
-  }, []);
 
   useEffect(() => {
     const fetchAttendees = async () => {
@@ -57,7 +36,7 @@ const Notification = ({ created_at }) => {
   return (
     <>
       <div className="absolute top-[60px] right-5 mr-[-10px] ">
-        <div className="bg-white rounded-lg border h-[400px] w-[320px] absolute  z-20 right-2 overflow-y-auto">
+        <div className="bg-white rounded-lg border h-[400px] w-[320px] absolute  z-20 right-2 overflow-y-auto ">
           <h1 className="text-md pl-3 font-semibold border-b border-gray-300 py-2">
             Notifications
           </h1>
@@ -102,7 +81,7 @@ const Notification = ({ created_at }) => {
               </>
             ) : (
               <>
-                {data.map(({ event_title, image, created_at, status, id }) => (
+                {data?.map(({ event_title, image, created_at, status, id }) => (
                   <li key={id}>
                     <div
                       className="gap-2 text-sm text-gray-600 flex pl-3 items-center  p-2   cursor-pointer

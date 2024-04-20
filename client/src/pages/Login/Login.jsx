@@ -5,8 +5,10 @@ import Cookies from "js-cookie";
 import { useToast } from "../../hooks/useToast";
 import { LuEye } from "react-icons/lu";
 import { LuEyeOff } from "react-icons/lu";
+import Loading from "../../components/loading/otpLoader/otpLoader";
 
 const Login = () => {
+  const [loader, setLoader] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const toast = useToast();
   const [values, setValues] = useState({
@@ -23,6 +25,7 @@ const Login = () => {
   const role = Cookies.get("role");
 
   const handleLogin = async (event) => {
+    setLoader(true);
     event.preventDefault();
 
     // Clear error messages when the user submits the form
@@ -50,6 +53,7 @@ const Login = () => {
         setErrorMessage(response.data.message);
       }
     } catch (err) {
+      setLoader(false);
       console.log(err.response);
 
       if (err.response.data.errors) {
@@ -78,7 +82,12 @@ const Login = () => {
 
   return (
     <>
-      <div className="w-[350px] m-auto sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 mt-6 overflow-hidden bg-white p-4 rounded-lg shadow-md">
+      <div className="w-[350px] relative m-auto sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 mt-6 overflow-hidden bg-white p-4 rounded-lg shadow-md">
+        {loader && (
+          <div className="absolute left-[50%] top-[50%] z-20 flex items-center justify-center ">
+            <Loading />
+          </div>
+        )}
         <h2 className="text-center mb-5 text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in your account
         </h2>
@@ -163,9 +172,12 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58]
+              disabled={loader ? true : false}
+              className={` ${
+                loader ? "cursor-not-allowed" : "cursor-pointer"
+              } flex w-full justify-center rounded-md bg-gradient-to-r from-[#f87a58] via-[#f7426f] to-[#f87a58]
              px-3 py-2 text-md font-semibold leading-6 text-white 
-             hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58] "
+             hover:from-[#f7426f] hover:to-[#f7426f] hover:via-[#f87a58] `}
             >
               Log in
             </button>
