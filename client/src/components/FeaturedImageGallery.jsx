@@ -13,15 +13,17 @@ export default function FeaturedImageGallery({ id }) {
           const response = await api.get(`/archive/id/${id}`);
           setTitle(response.data?.event_name);
           const imageData = response.data?.images.split(",");
-          if (location.pathname.includes("/home")) {
-            setData(imageData.splice(0, 5));
-          } else {
-            setData(imageData);
-          }
-
           if (typeof imageData !== "undefined") {
             imageData !== "undefined" &&
               setActive(`${api.defaults.baseURL}/uploads/${imageData[0]}`);
+          }
+          if (
+            location.pathname === "/" ||
+            location.pathname.includes("/home")
+          ) {
+            setData(imageData.splice(0, 5));
+          } else {
+            setData(imageData);
           }
         }
       } catch (error) {
@@ -59,8 +61,9 @@ export default function FeaturedImageGallery({ id }) {
                     className="h-20 w-full cursor-pointer rounded-lg object-cover object-center"
                     alt="gallery-image"
                   />
-                  {index === data.length - 1 &&
-                  location.pathname.includes("/home") ? (
+                  {(index === data.length - 1 && location.pathname === "/") ||
+                  (index === data.length - 1 &&
+                    location.pathname.includes("/home")) ? (
                     <div className="absolute top-0  hover: w-full text-center flex justify-center items-center h-full">
                       <div
                         className="absolute top-0 left-0 w-full h-full bg-black/40"
