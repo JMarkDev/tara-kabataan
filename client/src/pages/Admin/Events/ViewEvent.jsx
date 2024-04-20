@@ -100,7 +100,6 @@ const ViewEvent = () => {
     const fetchAttendees = async () => {
       try {
         const response = await api.get(`/attendees/event_id/${id}`);
-        console.log(response.data);
         setAttendees(response.data);
       } catch (error) {
         console.log(error);

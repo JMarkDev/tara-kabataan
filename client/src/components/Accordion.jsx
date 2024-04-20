@@ -67,8 +67,8 @@ export default function AccordionCustomIcon() {
             What payment methods are accepted?
           </AccordionHeader>
           <AccordionBody className="">
-            We accept payments via GCash e-wallets. Cash payments may also be
-            accepted for certain events.
+            We accept payments via Paypal. Cash payments may also be accepted
+            for certain events.
           </AccordionBody>
         </Accordion>
         <Accordion open={open === 4} icon={<Icon id={4} open={open} />}>

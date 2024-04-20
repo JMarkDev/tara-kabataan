@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../../../hooks/useToast";
 import { IoIosAddCircle } from "react-icons/io";
+import Loader from "../../../components/loading/otpLoader/otpLoader";
 
 const AddEvent = () => {
+  const [loader, setLoader] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
   const [category, setCategory] = useState([]);
@@ -58,6 +60,7 @@ const AddEvent = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoader(true);
     e.preventDefault();
 
     const {
@@ -105,6 +108,7 @@ const AddEvent = () => {
         navigate("/admin-events");
       }
     } catch (error) {
+      setLoader(false);
       console.log(error);
     }
   };
@@ -124,7 +128,13 @@ const AddEvent = () => {
   return (
     <div className="">
       {/* <BackBtn /> */}
-      <div className="max-w-xl mx-auto p-4 border rounded-lg shadow-lg bg-white">
+      <div className="relative max-w-xl mx-auto p-4 border rounded-lg shadow-lg bg-white">
+        {loader && (
+          <div className="absolute right-[50%] top-[50%]">
+            <Loader />
+          </div>
+        )}
+
         <h2 className="text-2xl font-semibold text-center mt-4 dark:text-white  ">
           Event Information{" "}
         </h2>
@@ -423,7 +433,10 @@ const AddEvent = () => {
             </Link>
             <button
               type="submit"
-              className="w-full py-2 h-10 bg-indigo-600 text-white px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200"
+              disabled={loader ? true : false}
+              className={`${
+                loader ? "cursor-not-allowed" : "cursor-pointer"
+              } w-full py-2 h-10 bg-indigo-600 text-white px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200`}
             >
               Save
             </button>

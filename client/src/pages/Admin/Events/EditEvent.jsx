@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import api from "../../../api/api";
 import { useToast } from "../../../hooks/useToast";
+import otpLoader from "../../../components/loading/otpLoader/otpLoader";
 
 const EditEvent = () => {
   const toast = useToast();
