@@ -121,9 +121,9 @@ const About = () => {
       <h1 className="text-center lg:text-4xl md:text-2xl text-xl font-bold mt-10">
         Our <span className="text-[#6415ff]">Team</span>
       </h1>
-      <div className="mt-10 px-5 md:px-20 lg:px-20 grid justify-center items-center lg:grid-cols-3 md:grid-cols-2 gap-5">
+      <div className=" mt-10 px-5 md:px-20 lg:px-20 grid justify-center items-center lg:grid-cols-3 md:grid-cols-2 gap-10">
         <motion.div
-          className="hover:shadow-xl flex flex-col max-w-[350px]"
+          className="hover:shadow-xl flex flex-col "
           initial={{
             opacity: 0,
             x: -50,
@@ -173,7 +173,7 @@ const About = () => {
           </div>
         </motion.div>
         <motion.div
-          className="hover:shadow-xl flex flex-col max-w-[350px]"
+          className="hover:shadow-xl flex flex-col"
           initial={{
             opacity: 0,
             x: -50,
@@ -214,7 +214,7 @@ const About = () => {
           </div>
         </motion.div>
         <motion.div
-          className="hover:shadow-xl flex flex-col max-w-[350px] relative"
+          className="hover:shadow-xl flex flex-col relative"
           initial={{
             opacity: 0,
             x: -50,

@@ -29,6 +29,17 @@ const EventCalendar = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [firstDayOfWeek, setFirstDayOfWeek] = useState(0);
   const [events, setEvents] = useState([]);
+  const [disabledBack, setDisabledBack] = useState(false);
+
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1;
+  useEffect(() => {
+    if (monthIndex > currentMonth && year >= currentYear) {
+      setDisabledBack(true);
+    } else {
+      setDisabledBack(false);
+    }
+  }, [monthIndex, year]);
 
   useEffect(() => {
     const firstDay = new Date(year, monthIndex - 1, 1).getDay();
@@ -77,6 +88,7 @@ const EventCalendar = () => {
   const eventsForDay = (day) => {
     const filteredEvents = events.filter((event) => {
       const eventDate = new Date(event.start_date);
+
       return (
         eventDate.getDate() === day &&
         eventDate.getMonth() + 1 === monthIndex &&
@@ -160,12 +172,23 @@ const EventCalendar = () => {
           <h1 className="p-3 text-[#243e63] text-lg lg:text-2xl font-bold">
             {monthName} {year}
           </h1>
-          <div className="flex items-center bg-[#6415ff] hover:bg-indigo-600 text-white px-3 rounded-lg">
-            <button className="text-lg lg:text-xl p-2" onClick={handleBack}>
-              <MdArrowBackIos />
-            </button>
+          <div className="flex items-center bg-[#6415ff]  text-white p-2 rounded-lg">
+            {disabledBack && (
+              <button
+                className="gap-2 bg-gray-500 hover:bg-gray-600 flex items-center text-sm lg:text-xl p-2 rounded-lg"
+                onClick={handleBack}
+              >
+                <MdArrowBackIos />
+                Back
+              </button>
+            )}
+
             <span className="font-bold text-xl text-[#9E9E9E] mx-2">|</span>
-            <button className="text-lg lg:text-xl p-2" onClick={handleNext}>
+            <button
+              className="gap-2 bg-gray-500 hover:bg-gray-600 flex items-center text-sm lg:text-xl p-2 rounded-lg"
+              onClick={handleNext}
+            >
+              Next
               <MdArrowForwardIos />
             </button>
           </div>

@@ -8,19 +8,16 @@ const LINKS = [
     items: ["Home", "Events", "About Us", "Contact"],
     links: ["/home", "/events", "/about", "/contact-us"],
   },
-  {
-    title: "CONTACT US",
-    items: [
-      "SK Office, 2nd floor, Barangay Hall,",
-      "Sta. Maria, Zamboanga City",
-      "09657719569",
-      "kabataantara@gmail.com",
-    ],
-  },
-  {
-    title: "Resource",
-    items: ["FAQ", "Help Center", "Community", "Support"],
-  },
+  // ,
+  // {
+  //   title: "CONTACT US",
+  //   items: [
+  //     "SK Office, 2nd floor, Barangay Hall,",
+  //     "Sta. Maria, Zamboanga City",
+  //     "09657719569",
+  //     "kabataantara@gmail.com",
+  //   ],
+  // },
 ];
 
 const currentYear = new Date().getFullYear();
@@ -37,7 +34,88 @@ export default function FooterWithSocialLinks() {
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 justify-between gap-10">
             <div className="h-[150px] w-[150px] ">
               <img src={Logo} alt="logo" />
-              <div className="flex relative gap-4 pt-5 text-blue-gray-900 sm:justify-center">
+              <h1 className="p-2 font-bold text-sm md:text-lg whitespace-nowrap">
+                TARA <span className="text-[#6414ff]">Kabataan</span>
+              </h1>
+            </div>
+            {LINKS.map(({ title, items }) => (
+              <ul key={title}>
+                <Typography
+                  variant="small"
+                  color="blue-gray"
+                  className="mb-3 font-medium  gray-500"
+                >
+                  {title}
+                </Typography>
+                {items.map((link, links) => (
+                  <li key={link}>
+                    <Typography
+                      as="a"
+                      href={LINKS[0].links[links]}
+                      color="gray"
+                      className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
+                    >
+                      {link}
+                    </Typography>
+                  </li>
+                ))}
+              </ul>
+            ))}
+
+            <div>
+              <Typography
+                variant="small"
+                color="blue-gray"
+                className="mb-3 font-medium"
+              >
+                CONTACT US
+              </Typography>
+              <ul>
+                <li>
+                  <Typography
+                    color="gray"
+                    className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
+                  >
+                    SK Office, 2nd floor, Barangay Hall,
+                  </Typography>
+                </li>
+                <li>
+                  <Typography
+                    color="gray"
+                    className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
+                  >
+                    Sta. Maria, Zamboanga City
+                  </Typography>
+                </li>
+                <li>
+                  <Typography
+                    color="gray"
+                    className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
+                  >
+                    09657719569
+                  </Typography>
+                </li>
+                <li>
+                  <Typography
+                    color="gray"
+                    className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
+                  >
+                    kabataantara@gmail.com
+                  </Typography>
+                </li>
+              </ul>
+            </div>
+
+            <div className="flex flex-col">
+              <Typography
+                variant="small"
+                color="blue-gray"
+                className="mb-3 font-medium"
+              >
+                FOLLOW US
+              </Typography>
+
+              <div className="flex relative gap-4 pt-5 text-blue-gray-900 ">
                 {openLink && (
                   <div className="absolute bottom-10 left-0 bg-white p-1 px-2 rounded-full">
                     <p className="text-sm text-red-500">No links available</p>
@@ -46,7 +124,7 @@ export default function FooterWithSocialLinks() {
                 <Typography
                   as="a"
                   href="https://www.facebook.com/kabataantara/"
-                  className=" transition-opacity hover:opacity-100"
+                  className=" transition-opacity hover:opacity-100 "
                 >
                   <svg
                     className="h-7 w-7"
@@ -122,29 +200,6 @@ export default function FooterWithSocialLinks() {
                 </Typography>
               </div>
             </div>
-            {LINKS.map(({ title, items }) => (
-              <ul key={title}>
-                <Typography
-                  variant="small"
-                  color="blue-gray"
-                  className="mb-3 font-medium  gray-500"
-                >
-                  {title}
-                </Typography>
-                {items.map((link, links) => (
-                  <li key={link}>
-                    <Typography
-                      as="a"
-                      href={LINKS[0].links[links]}
-                      color="gray"
-                      className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
-                    >
-                      {link}
-                    </Typography>
-                  </li>
-                ))}
-              </ul>
-            ))}
           </div>
         </div>
         <div className="mt-12 flex w-full items-center justify-center border-t border-blue-gray-50 py-4">

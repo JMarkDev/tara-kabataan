@@ -112,13 +112,9 @@ const Dashboard = () => {
                   <CartesianGrid strokeDasharray="6 6" />
                   <XAxis dataKey="month" />
                   <YAxis domain={[0, "dataMax"]} />
-                  {/*
-                            <YAxis domain={[0, 500]} /> 
-                            
-                            <YAxis domain={[0, 500]} ticks={[0, 100, 200, 300, 400, 500]} />
-                            */}
                   <Tooltip />
-                  <Legend />
+                  {/** Legend title of the event */}
+                  {/* <Legend /> */}
                   {data &&
                     data.length > 0 &&
                     Object.keys(data[0])

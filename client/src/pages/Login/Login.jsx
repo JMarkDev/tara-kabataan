@@ -82,7 +82,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="w-[350px] relative m-auto sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 mt-6 overflow-hidden bg-white p-4 rounded-lg shadow-md">
+      <div className="w-[350px] relative m-auto sm:mx-auto sm:w-full sm:max-w-lg px-8 py-10 mt-20 overflow-hidden bg-white p-4 rounded-lg shadow-md">
         {loader && (
           <div className="absolute left-[50%] top-[50%] z-20 flex items-center justify-center ">
             <Loading />

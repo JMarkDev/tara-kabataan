@@ -125,6 +125,9 @@ const AddEvent = () => {
     fetchCategories();
   }, []);
 
+  // Calculate the current date in YYYY-MM-DD format
+  const currentDate = new Date().getFullYear().toString();
+
   return (
     <div className="">
       {/* <BackBtn /> */}
@@ -285,6 +288,8 @@ const AddEvent = () => {
                   // required
                   value={formData.discount.discount_date}
                   onChange={handleInputChange}
+                  min={`${currentDate}-01-01`}
+                  max={`${currentDate}-12-31`}
                 />
               </div>
               <div className="mb-4 w-full lg:w-[50%]">
@@ -351,6 +356,8 @@ const AddEvent = () => {
                 required
                 value={formData.start_date}
                 onChange={handleInputChange}
+                min={`${currentDate}-01-01`}
+                max={`${currentDate}-12-31`}
               />
             </div>
             <div className="mb-4 w-full lg:w-[50%]">
@@ -368,6 +375,8 @@ const AddEvent = () => {
                 required
                 value={formData.end_date}
                 onChange={handleInputChange}
+                min={`${currentDate}-01-01`}
+                max={`${currentDate}-12-31`}
               />
             </div>
           </div>
