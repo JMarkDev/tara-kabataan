@@ -28,7 +28,6 @@ const ViewEvent = () => {
   const [location, setLocation] = useState("");
   const [attendanceCount, setAttendanceCount] = useState("");
   const [price, setPrice] = useState("");
-  // const [discount, setDiscount] = useState("");
   const [discountDate, setDiscountDate] = useState("");
   const [discountPrice, setDiscountPrice] = useState("");
   const [status, setStatus] = useState("");
@@ -94,7 +93,7 @@ const ViewEvent = () => {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     const fetchAttendees = async () => {

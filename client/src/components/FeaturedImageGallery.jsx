@@ -63,6 +63,9 @@ export default function FeaturedImageGallery({ id }) {
                   />
                   {(index === data.length - 1 && location.pathname === "/") ||
                   (index === data.length - 1 &&
+
+
+                    
                     location.pathname.includes("/home")) ? (
                     <div className="absolute top-0  hover: w-full text-center flex justify-center items-center h-full">
                       <div

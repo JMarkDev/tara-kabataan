@@ -403,6 +403,7 @@ const JoinEvent = ({
                             total={total}
                             title={title}
                             event_id={id}
+                            handleSubmitAttendee={handleSubmit}
                           />
                         </div>
                       </div>

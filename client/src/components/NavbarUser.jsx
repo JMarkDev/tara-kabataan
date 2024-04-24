@@ -18,7 +18,7 @@ const NavbarUser = () => {
   const [openNotification, setOpenNotification] = useState(false);
   const [image, setImage] = useState("");
   const [created_at, setCreatedAt] = useState("");
-  const [allNotification, setAllNotification] = useState("");
+  const [allNotification, setAllNotification] = useState(0);
   const [data, setData] = useState([]);
 
   const userId = Cookies.get("userId");
@@ -48,29 +48,6 @@ const NavbarUser = () => {
     getUserData();
   }, [userId]);
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await api.get("/event/all");
-        const filteredEvents = response.data?.filter((event) => {
-          return new Date(event.created_at) > new Date(created_at);
-        });
-
-        if (filteredEvents) {
-          const sortByDate = filteredEvents?.sort((a, b) => {
-            return new Date(b.created_at) - new Date(a.created_at);
-          });
-          setAllNotification(sortByDate?.length);
-          setData(sortByDate);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchEvents();
-  }, [created_at]);
-
   const closeMobileMenu = () => {
     setMobileMenu(false);
   };
@@ -92,6 +69,40 @@ const NavbarUser = () => {
     // Prevent closing the dropdown when clicking inside it
     event.stopPropagation();
     setOpen(false);
+  };
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await api.get(`/notifications/user/all/${userId}`);
+      setData(response.data);
+      const filterNotification = response.data.filter(
+        (notif) => notif.is_read === false
+      );
+      setAllNotification(filterNotification.length);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchNotifications();
+  }, [userId]);
+
+  const handleCloseNotification = (notification, event_id) => {
+    setOpenNotification(notification);
+    const handleIsRead = async () => {
+      try {
+        const response = await api.put(
+          `/notifications/update/id/${userId}/event/${event_id}/role/user`
+        );
+        console.log(response.data);
+        fetchNotifications();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    handleIsRead();
   };
 
   return (
@@ -171,7 +182,12 @@ const NavbarUser = () => {
                 </span>
               </div>
 
-              {openNotification && <Notification data={data} />}
+              {openNotification && (
+                <Notification
+                  data={data}
+                  handleCloseNotification={handleCloseNotification}
+                />
+              )}
 
               <h1 className="text-lg font-semibold text-center m-auto">
                 {name}
@@ -239,7 +255,12 @@ const NavbarUser = () => {
                 </span>
               </div>
 
-              {openNotification && <Notification data={data} />}
+              {openNotification && (
+                <Notification
+                  data={data}
+                  handleCloseNotification={handleCloseNotification}
+                />
+              )}
               <img
                 onClick={showProfile}
                 onMouseEnter={showProfile}

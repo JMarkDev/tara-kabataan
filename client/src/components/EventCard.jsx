@@ -70,7 +70,9 @@ const EventCard = ({ event }) => {
               },
               index
             ) => {
-              const parseDiscount = JSON.parse(discount);
+              const parseDiscount =
+                discount === JSON ? JSON.parse(discount) : discount;
+              //const parseDiscount = JSON.parse(discount);
               return (
                 <motion.div
                   key={id}

@@ -5,7 +5,8 @@ import api from "../api/api";
 import { useFormat } from "../hooks/useFormatDate";
 import { Link } from "react-router-dom";
 
-const Notification = ({ data, attendees }) => {
+const Notification = ({ data, attendees, handleCloseNotification }) => {
+  // const [openNotification, setOpenNotification] = useState(false);
   const { dateFormat } = useFormat();
   const role = Cookies.get("role");
 
@@ -34,61 +35,83 @@ const Notification = ({ data, attendees }) => {
                     event_name,
                     created_at,
                     id,
+                    event_id,
                   }) => (
                     <li key={id}>
-                      <div
-                        className="gap-2 text-sm text-gray-600 flex pl-3 items-center  p-2   cursor-pointer
+                      <Link to={`/view-event/${event_id}`}>
+                        <div
+                          className="gap-2 text-sm text-gray-600 flex pl-3 items-center  p-2   cursor-pointer
               hover:bg-gray-200 border-b border-gray-300 dark:hover:bg-gray-20 "
-                      >
-                        <img
-                          src={`${
-                            user && user.image
-                              ? `${api.defaults.baseURL}${user.image}`
-                              : `${userIcon}`
-                          }  `}
-                          alt=""
-                          className="w-[50px] h-[50px] rounded-full"
-                        />
-                        <div>
-                          <p className="font-bold">{attendee_name}</p>
-                          <p>{truncateText(event_name, 28)}</p>
-                          <p className="text-xs ">
-                            {dateFormat(created_at)}
-                            {/* Jan 01, 2021 - <span>02:25 PM</span> */}
-                          </p>
+                        >
+                          <img
+                            src={`${
+                              user && user.image
+                                ? `${api.defaults.baseURL}${user.image}`
+                                : `${userIcon}`
+                            }  `}
+                            alt=""
+                            className="w-[50px] h-[50px] rounded-full"
+                          />
+                          <div>
+                            <p className="font-bold">{attendee_name}</p>
+                            <p>{truncateText(event_name, 28)}</p>
+                            <p className="text-xs ">
+                              {dateFormat(created_at)}
+                              {/* Jan 01, 2021 - <span>02:25 PM</span> */}
+                            </p>
+                          </div>
                         </div>
-                      </div>
+                      </Link>
                     </li>
                   )
                 )}
               </>
             ) : (
               <>
-                {data?.map(({ event_title, image, created_at, status, id }) => (
-                  <li key={id}>
-                    <div
-                      className="gap-2 text-sm text-gray-600 flex pl-3 items-center  p-2   cursor-pointer
-hover:bg-gray-200 border-b border-gray-300 dark:hover:bg-gray-20 "
+                {data?.map(
+                  ({
+                    message,
+                    image,
+                    created_at,
+                    event_status,
+                    event_id,
+                    is_read,
+                  }) => (
+                    <Link
+                      key={event_id}
+                      to={`/event/${event_id}`}
+                      className="text-blue-600"
                     >
-                      <img
-                        src={`${api.defaults.baseURL}${image}`}
-                        alt=""
-                        className="w-[50px] h-[50px] rounded-lg"
-                      />
-                      <div>
-                        <p className="font-bold">
-                          {truncateText(event_title, 28)}
-                        </p>
-                        <p className="text-xs ">{dateFormat(created_at)}</p>
-                        <Link to={`/event/${id}`} className="text-blue-600">
-                          {status === "Upcoming"
-                            ? "Click to join event"
-                            : "Click to review event"}
-                        </Link>
-                      </div>
-                    </div>
-                  </li>
-                ))}
+                      <li
+                        onClick={() => handleCloseNotification(false, event_id)}
+                      >
+                        <div
+                          className={`${
+                            !is_read ? "bg-gray-200" : ""
+                          } gap-2 text-sm text-gray-600 flex pl-3 items-center  p-2   cursor-pointer
+ border-b border-gray-300 dark:hover:bg-gray-20 hover:bg-gray-200`}
+                        >
+                          <img
+                            src={`${api.defaults.baseURL}${image}`}
+                            alt=""
+                            className="w-[50px] h-[50px] rounded-lg"
+                          />
+                          <div>
+                            <p className="font-bold">
+                              {truncateText(message, 28)}
+                            </p>
+                            <p className="text-xs ">{dateFormat(created_at)}</p>
+                            <span className="text-blue-500">
+                              {event_status === "Upcoming"
+                                ? "Click to join event"
+                                : "Click to review event"}
+                            </span>
+                          </div>
+                        </div>
+                      </li>
+                    </Link>
+                  )
+                )}
               </>
             )}
           </ul>

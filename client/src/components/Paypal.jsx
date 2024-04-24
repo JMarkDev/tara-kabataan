@@ -3,7 +3,13 @@ import api from "../api/api";
 import Cookies from "js-cookie";
 import { useToast } from "../hooks/useToast";
 
-const Paypal = ({ handlePaymentMethod, total, title, event_id }) => {
+const Paypal = ({
+  handlePaymentMethod,
+  total,
+  title,
+  event_id,
+  handleSubmitAttendee,
+}) => {
   const toast = useToast();
   const userID = Cookies.get("userId");
   const [formData, setFormData] = useState({
@@ -64,6 +70,7 @@ const Paypal = ({ handlePaymentMethod, total, title, event_id }) => {
       if (response.data.status === "success") {
         console.log(response.data);
         toast.success("Payment successful.");
+        handleSubmitAttendee();
       }
     } catch (error) {
       console.log(error);
