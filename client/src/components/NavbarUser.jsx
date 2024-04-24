@@ -95,7 +95,6 @@ const NavbarUser = () => {
         const response = await api.put(
           `/notifications/update/id/${userId}/event/${event_id}/role/user`
         );
-        console.log(response.data);
         fetchNotifications();
       } catch (error) {
         console.log(error);

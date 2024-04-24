@@ -37,6 +37,7 @@ const ViewEvent = () => {
     const fetchGender = async () => {
       try {
         const response = await api.get(`/analytics/gender/${id}`);
+
         setGenderData(response.data);
       } catch (error) {
         console.log(error);

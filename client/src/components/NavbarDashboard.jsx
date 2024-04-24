@@ -20,6 +20,7 @@ function NavbarDashboard({ setOpen }) {
   const { isSmallScreen } = useResizeLayout();
   const { id } = useParams();
   const [attendees, setAttendees] = useState([]);
+  const [allNotification, setAllNotification] = useState(0);
 
   const pageTitles = {
     "/dashboard": "Dashboard",
@@ -59,21 +60,6 @@ function NavbarDashboard({ setOpen }) {
     getUserData();
   }, [userId]);
 
-  useEffect(() => {
-    const fetchAttendees = async () => {
-      try {
-        const response = await api.get("/attendees/all");
-        const sortByDate = response.data.sort((a, b) => {
-          return new Date(b.created_at) - new Date(a.created_at);
-        });
-        setAttendees(sortByDate);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchAttendees();
-  }, []);
-
   const showProfile = () => {
     setOpenNotification(false);
     setOpenProfile(!openProfile);
@@ -87,6 +73,40 @@ function NavbarDashboard({ setOpen }) {
     // Prevent closing the dropdown when clicking inside it
     event.stopPropagation();
     setOpenProfile(false);
+  };
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await api.get("/notifications/admin/all");
+      setAttendees(response.data);
+      const filterNotification = response.data.filter(
+        (notif) => notif.is_read === false
+      );
+      setAllNotification(filterNotification.length);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  const handleCloseNotificationAdmin = (notification, event_id) => {
+    setOpenNotification(notification);
+    const handleIsRead = async () => {
+      try {
+        const response = await api.put(
+          `/notifications/update/event/${event_id}`
+        );
+        console.log(response.data);
+        console.log("test");
+        fetchNotifications();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    handleIsRead();
   };
 
   return (
@@ -121,11 +141,16 @@ function NavbarDashboard({ setOpen }) {
                 className="text-2xl cursor-pointer w-10 h-10 p-2 bg-white rounded-full hover:bg-gray-200"
               />
               <span className="absolute ml-6 text-[14px] top-0 bg-[#E72929] text-white px-2 min-w-5 h-5 text-center font-semibold rounded-full">
-                {attendees.length}
+                {allNotification}
               </span>
             </div>
 
-            {openNotification && <Notification attendees={attendees} />}
+            {openNotification && (
+              <Notification
+                attendees={attendees}
+                handleCloseNotificationAdmin={handleCloseNotificationAdmin}
+              />
+            )}
 
             <div>
               <h1 className="text-lg font-semibold leading-6 text-center">

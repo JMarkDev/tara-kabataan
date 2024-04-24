@@ -5,8 +5,12 @@ import api from "../api/api";
 import { useFormat } from "../hooks/useFormatDate";
 import { Link } from "react-router-dom";
 
-const Notification = ({ data, attendees, handleCloseNotification }) => {
-  // const [openNotification, setOpenNotification] = useState(false);
+const Notification = ({
+  data,
+  attendees,
+  handleCloseNotification,
+  handleCloseNotificationAdmin,
+}) => {
   const { dateFormat } = useFormat();
   const role = Cookies.get("role");
 
@@ -32,16 +36,23 @@ const Notification = ({ data, attendees, handleCloseNotification }) => {
                     image,
                     attendee_name,
                     user,
-                    event_name,
+                    message,
                     created_at,
                     id,
                     event_id,
+                    is_read,
                   }) => (
-                    <li key={id}>
-                      <Link to={`/view-event/${event_id}`}>
+                    <Link key={event_id} to={`/view-event/${event_id}`}>
+                      <li
+                        onClick={() =>
+                          handleCloseNotificationAdmin(false, event_id)
+                        }
+                      >
                         <div
-                          className="gap-2 text-sm text-gray-600 flex pl-3 items-center  p-2   cursor-pointer
-              hover:bg-gray-200 border-b border-gray-300 dark:hover:bg-gray-20 "
+                          className={`${
+                            !is_read ? "bg-gray-200" : ""
+                          } gap-2 text-sm text-gray-600 flex pl-3 items-center  p-2   cursor-pointer
+                                        border-b border-gray-300 dark:hover:bg-gray-20 hover:bg-gray-200`}
                         >
                           <img
                             src={`${
@@ -54,15 +65,15 @@ const Notification = ({ data, attendees, handleCloseNotification }) => {
                           />
                           <div>
                             <p className="font-bold">{attendee_name}</p>
-                            <p>{truncateText(event_name, 28)}</p>
+                            <p>{truncateText(message, 28)}</p>
                             <p className="text-xs ">
                               {dateFormat(created_at)}
                               {/* Jan 01, 2021 - <span>02:25 PM</span> */}
                             </p>
                           </div>
                         </div>
-                      </Link>
-                    </li>
+                      </li>
+                    </Link>
                   )
                 )}
               </>
@@ -89,7 +100,7 @@ const Notification = ({ data, attendees, handleCloseNotification }) => {
                           className={`${
                             !is_read ? "bg-gray-200" : ""
                           } gap-2 text-sm text-gray-600 flex pl-3 items-center  p-2   cursor-pointer
- border-b border-gray-300 dark:hover:bg-gray-20 hover:bg-gray-200`}
+                                        border-b border-gray-300 dark:hover:bg-gray-20 hover:bg-gray-200`}
                         >
                           <img
                             src={`${api.defaults.baseURL}${image}`}
