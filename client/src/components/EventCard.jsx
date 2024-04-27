@@ -52,7 +52,7 @@ const EventCard = ({ event }) => {
           <img src={imgNotify} alt="empty" className="h-[50vh] mt-5" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
+        <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 gap-7">
           {event.map(
             (
               {

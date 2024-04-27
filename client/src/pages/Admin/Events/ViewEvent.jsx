@@ -9,6 +9,7 @@ import AttendeesTable from "../../../components/AttendeesTable";
 import { useFormat } from "../../../hooks/useFormatDate";
 import FeaturedImageGallery from "../../../components/FeaturedImageGallery";
 import BackBtn from "../../../components/BackBtn";
+import userIcon from "../../../assets/images/user.png";
 
 const ViewEvent = () => {
   const { id } = useParams();
@@ -32,6 +33,7 @@ const ViewEvent = () => {
   const [discountPrice, setDiscountPrice] = useState("");
   const [status, setStatus] = useState("");
   const { extractYear, dateFormat, formatTime } = useFormat();
+  const [comment, setComment] = useState([]);
 
   useEffect(() => {
     const fetchGender = async () => {
@@ -115,6 +117,19 @@ const ViewEvent = () => {
       return 0;
     }
   }, 0);
+
+  const fetchComments = async () => {
+    try {
+      const response = await api.get(`/comment/id/${id}`);
+      setComment(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchComments();
+  }, [id]);
 
   return (
     <div>
@@ -241,6 +256,80 @@ const ViewEvent = () => {
       <div className="mt-7">
         {/* <ImageGalery /> */}
         <FeaturedImageGallery id={id} />
+      </div>
+      <div>
+        {status === "Completed" && (
+          <div className="bg-white ">
+            <div className="bg-gray-100 ">
+              <h1 className="font-bold text-lg md:text-2xl my-5">
+                Event Feedback
+              </h1>
+
+              {comment.length > 0 ? (
+                <div className="bg-white mt-5 rounded-lg">
+                  {comment.map(
+                    ({
+                      id,
+                      attendees_name,
+                      created_at,
+                      image,
+                      comment,
+                      user,
+                    }) => (
+                      <div
+                        key={attendees_name}
+                        className="flex gap-3 border-b-gray-300 border-b p-5 rounded-md"
+                      >
+                        <img
+                          src={`${
+                            user && user.image
+                              ? `${api.defaults.baseURL}${user.image}`
+                              : userIcon
+                          }`}
+                          alt=""
+                          className="w-10 h-10 rounded-full"
+                        />
+                        <div>
+                          <p className="font-bold">{attendees_name}</p>
+                          <p className="text-sm">{dateFormat(created_at)}</p>
+                          <p className="mt-5">{comment}</p>
+                          {/* Handle different image formats */}
+                          {image && (
+                            <div className="flex gap-2 mt-5 overflow-x-auto">
+                              {typeof image === "string"
+                                ? image.split(",").map((imageUrl, index) => (
+                                    <img
+                                      key={`${index}-${imageUrl.trim()}`} // Combine index and trimmed URL
+                                      src={`${
+                                        api.defaults.baseURL
+                                      }/uploads/${imageUrl.trim()}`}
+                                      alt=""
+                                      className="w-20 h-20"
+                                    />
+                                  ))
+                                : image instanceof Array && image.length > 0
+                                ? image.map((imageUrl, index) => (
+                                    <img
+                                      key={`${index}-${imageUrl}`} // Combine index and URL
+                                      src={`${api.defaults.baseURL}/uploads/${imageUrl}`}
+                                      alt=""
+                                      className="w-20 h-20"
+                                    />
+                                  ))
+                                : null}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )
+                  )}
+                </div>
+              ) : (
+                <p className="my-5">There are no reviews for this event yet</p>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

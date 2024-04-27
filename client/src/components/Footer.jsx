@@ -76,7 +76,7 @@ export default function FooterWithSocialLinks() {
                     color="gray"
                     className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
                   >
-                    SK Office, 2nd floor, Barangay Hall,
+                    Purok Madasigon, Bulatok,
                   </Typography>
                 </li>
                 <li>
@@ -84,7 +84,7 @@ export default function FooterWithSocialLinks() {
                     color="gray"
                     className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
                   >
-                    Sta. Maria, Zamboanga City
+                    Pagadian City, Zamboanga del Sur
                   </Typography>
                 </li>
                 <li>

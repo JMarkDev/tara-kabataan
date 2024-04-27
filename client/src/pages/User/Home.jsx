@@ -119,7 +119,7 @@ const Home = () => {
             have something amazing for everyone.
           </p>
 
-          <div className="mx-auto lg:px-10 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7 mt-10">
+          <div className="m-auto grid sm:grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 gap-7 mt-10">
             {category.map(({ id, category_name, image }, index) => (
               <Link key={id} to={`/event/filter/${category_name}`}>
                 <motion.div
@@ -181,7 +181,7 @@ const Home = () => {
               Stay ahead of the curve with our upcoming events. Don't miss out -
               mark your calendar and join the fun!
             </p>
-            <div className="flex flex-col mt-7 justify-center items-center">
+            <div className="m-auto flex flex-col mt-7 justify-center items-center ">
               <EventCard event={event} />
               <Link to="/events" className=" mt-10">
                 <button className="px-7 py-3 rounded-full bg-gradient-to-r from-indigo-400 via-purple-600 to-pink-600 text-md font-semibold leading-6 text-white shadow-sm transition-all duration-300 ease-in-out hover:from-pink-600 hover:to-purple-600 hover:via-indigo-400 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">

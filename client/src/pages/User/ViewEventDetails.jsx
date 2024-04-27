@@ -371,7 +371,7 @@ const ViewEventDetails = () => {
                       multiple
                     />
                     <button
-                      className="p-2 mt-5 w-full rounded-full bg-blue-500 text-white"
+                      className="p-2 mt-5 w-full rounded-full bg-blue-500 hover:bg-blue-700 text-white"
                       type="submit"
                     >
                       Submit
@@ -383,15 +383,22 @@ const ViewEventDetails = () => {
             {comment.length > 0 ? (
               <div className="bg-white p-2 mt-5 rounded-lg">
                 {comment.map(
-                  ({ id, attendees_name, created_at, image, comment }) => (
+                  ({
+                    id,
+                    attendees_name,
+                    created_at,
+                    image,
+                    comment,
+                    user,
+                  }) => (
                     <div
                       key={attendees_name}
                       className="flex gap-3 my-5 border-b-gray-300 border-b p-5 rounded-md"
                     >
                       <img
                         src={`${
-                          profileImage
-                            ? `${api.defaults.baseURL}${profileImage}`
+                          user && user.image
+                            ? `${api.defaults.baseURL}${user.image}`
                             : userIcon
                         }`}
                         alt=""

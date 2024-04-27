@@ -7,8 +7,10 @@ import { MdEmail } from "react-icons/md";
 import { FaPhone } from "react-icons/fa6";
 import { FaLocationDot } from "react-icons/fa6";
 import Cookies from "js-cookie";
+import { useToast } from "../../hooks/useToast";
 
 const ContactUs = () => {
+  const toast = useToast();
   const form = useRef();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -38,7 +40,7 @@ const ContactUs = () => {
       })
       .then(
         () => {
-          alert("Message Sent Successfully!");
+          toast.success("Message Sent Successfully!");
           form.current.reset(); // Reset the form after successful submission
         },
         (error) => {
@@ -91,7 +93,7 @@ const ContactUs = () => {
               <h1 className="lg:text-xl text-lg font-bold p-2">Location</h1>
             </div>
             <p className="text-md text-gray-600 p-2">
-              SK Office, 2nd floor, Barangay Hall, Sta. Maria, Zamboanga City
+              Purok Madasigon, Bulatok, Pagadian City, Zamboanga del Sur
             </p>
           </div>
         </motion.div>
