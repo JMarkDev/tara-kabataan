@@ -32,17 +32,20 @@ const Notification = ({
             {role === "admin" ? (
               <>
                 {attendees.map(
-                  ({
-                    image,
-                    attendee_name,
-                    user,
-                    message,
-                    created_at,
-                    id,
-                    event_id,
-                    is_read,
-                  }) => (
-                    <Link key={event_id} to={`/view-event/${event_id}`}>
+                  (
+                    {
+                      image,
+                      attendee_name,
+                      user,
+                      message,
+                      created_at,
+                      id,
+                      event_id,
+                      is_read,
+                    },
+                    index
+                  ) => (
+                    <Link key={index} to={`/view-event/${event_id}`}>
                       <li
                         onClick={() =>
                           handleCloseNotificationAdmin(false, event_id)

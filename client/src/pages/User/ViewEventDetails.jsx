@@ -8,10 +8,10 @@ import { useFormat } from "../../hooks/useFormatDate";
 import FeatureImageGallery from "../../components/FeaturedImageGallery";
 import JoinEvent from "./JoinEvent";
 import Cookies from "js-cookie";
-import userIcon from "../../assets/images/user.png";
 import { useToast } from "../../hooks/useToast";
 import BackBtn from "../../components/BackBtn";
 import { motion } from "framer-motion";
+import Comments from "../../components/Comments";
 
 const ViewEventDetails = () => {
   const toast = useToast();
@@ -156,9 +156,8 @@ const ViewEventDetails = () => {
     try {
       const response = await api.post("/comment/add", data);
       if (response.data.status === "success") {
-        setComment(response.data);
+        setComment((prevData) => [...prevData, response.data.postcomment]);
         toast.success("Feedback submitted successfully");
-        fetchComments();
         setFormData({
           comment: "",
           image: null,
@@ -380,68 +379,8 @@ const ViewEventDetails = () => {
                 </div>
               </form>
             )}
-            {comment.length > 0 ? (
-              <div className="bg-white p-2 mt-5 rounded-lg">
-                {comment.map(
-                  ({
-                    id,
-                    attendees_name,
-                    created_at,
-                    image,
-                    comment,
-                    user,
-                  }) => (
-                    <div
-                      key={attendees_name}
-                      className="flex gap-3 my-5 border-b-gray-300 border-b p-5 rounded-md"
-                    >
-                      <img
-                        src={`${
-                          user && user.image
-                            ? `${api.defaults.baseURL}${user.image}`
-                            : userIcon
-                        }`}
-                        alt=""
-                        className="w-10 h-10 rounded-full"
-                      />
-                      <div>
-                        <p className="font-bold">{attendees_name}</p>
-                        <p className="text-sm">{dateFormat(created_at)}</p>
-                        <p className="mt-5">{comment}</p>
-                        {/* Handle different image formats */}
-                        {image && (
-                          <div className="flex gap-2 mt-5 overflow-x-auto">
-                            {typeof image === "string"
-                              ? image.split(",").map((imageUrl, index) => (
-                                  <img
-                                    key={`${index}-${imageUrl.trim()}`} // Combine index and trimmed URL
-                                    src={`${
-                                      api.defaults.baseURL
-                                    }/uploads/${imageUrl.trim()}`}
-                                    alt=""
-                                    className="w-20 h-20"
-                                  />
-                                ))
-                              : image instanceof Array && image.length > 0
-                              ? image.map((imageUrl, index) => (
-                                  <img
-                                    key={`${index}-${imageUrl}`} // Combine index and URL
-                                    src={`${api.defaults.baseURL}/uploads/${imageUrl}`}
-                                    alt=""
-                                    className="w-20 h-20"
-                                  />
-                                ))
-                              : null}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )
-                )}
-              </div>
-            ) : (
-              <p className="my-5">There are no reviews for this event yet</p>
-            )}
+
+            <Comments comments={comment} />
           </div>
         </div>
       )}

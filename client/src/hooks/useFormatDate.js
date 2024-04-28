@@ -14,6 +14,7 @@ export const useFormat = () => {
     "December",
   ];
   const dateFormat = (date) => {
+    console.log(date);
     const month = parseInt(date.substring(5, 7), 10) - 1;
     const day = date.substring(8, 10);
     const year = date.substring(0, 4);
@@ -45,11 +46,11 @@ export const useFormat = () => {
 
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();
-    const currentDay = currentDate.getDay();
+    const currentDay = currentDate.getDate();
 
     const discountYear = discountDated.getFullYear();
     const discountMonth = discountDated.getMonth();
-    const discountDay = discountDated.getDay();
+    const discountDay = discountDated.getDate();
 
     const isDiscountedDate =
       currentYear <= discountYear &&
