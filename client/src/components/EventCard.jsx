@@ -74,7 +74,7 @@ const EventCard = ({ event }) => {
               return (
                 <motion.div
                   key={id}
-                  className={`w-[350px] h-[428px]  bg-white cursor-pointer rounded-md shadow-md hover:shadow-2xl `}
+                  className={`max-w-[350px] h-[428px]  bg-white cursor-pointer rounded-md shadow-md hover:shadow-2xl `}
                   initial={{
                     opacity: 0,
                     x: -50,

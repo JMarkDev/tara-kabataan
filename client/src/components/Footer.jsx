@@ -208,7 +208,7 @@ export default function FooterWithSocialLinks() {
             className="flex mb-4 text-center font-normal text-blue-gray-900 md:mb-0"
           > */}
           <p>
-            &copy; {currentYear} Tara Kabataan Organization. All Rights
+            &copy; {currentYear} TARA Kabataan Organization. All Rights
             Reserved.
           </p>
           .{/* </Typography> */}

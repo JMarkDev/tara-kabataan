@@ -78,7 +78,9 @@ function NavbarDashboard({ setOpen }) {
   const fetchNotifications = async () => {
     try {
       const response = await api.get("/notifications/admin/all");
-      setAttendees(response.data);
+
+      const sortNotification = [...response.data].sort((a, b) => b.id - a.id);
+      setAttendees(sortNotification);
       const filterNotification = response.data.filter(
         (notif) => notif.is_read === false
       );
@@ -100,7 +102,6 @@ function NavbarDashboard({ setOpen }) {
           `/notifications/update/event/${event_id}`
         );
         console.log(response.data);
-        console.log("test");
         fetchNotifications();
       } catch (error) {
         console.log(error);
@@ -140,9 +141,11 @@ function NavbarDashboard({ setOpen }) {
                 }}
                 className="text-2xl cursor-pointer w-10 h-10 p-2 bg-white rounded-full hover:bg-gray-200"
               />
-              <span className="absolute ml-6 text-[14px] top-0 bg-[#E72929] text-white px-2 min-w-5 h-5 text-center font-semibold rounded-full">
-                {allNotification}
-              </span>
+              {allNotification === 0 ? null : (
+                <span className="absolute ml-6 text-[14px] top-0 bg-[#E72929] text-white px-2 min-w-5 h-5 text-center font-semibold rounded-full">
+                  {allNotification}
+                </span>
+              )}
             </div>
 
             {openNotification && (

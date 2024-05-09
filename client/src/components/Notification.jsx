@@ -83,16 +83,19 @@ const Notification = ({
             ) : (
               <>
                 {data?.map(
-                  ({
-                    message,
-                    image,
-                    created_at,
-                    event_status,
-                    event_id,
-                    is_read,
-                  }) => (
+                  (
+                    {
+                      message,
+                      image,
+                      created_at,
+                      event_status,
+                      event_id,
+                      is_read,
+                    },
+                    index
+                  ) => (
                     <Link
-                      key={event_id}
+                      key={index}
                       to={`/event/${event_id}`}
                       className="text-blue-600"
                     >
@@ -106,7 +109,11 @@ const Notification = ({
                                         border-b border-gray-300 dark:hover:bg-gray-20 hover:bg-gray-200`}
                         >
                           <img
-                            src={`${api.defaults.baseURL}${image}`}
+                            src={`${
+                              image === null
+                                ? `${userIcon}`
+                                : `${api.defaults.baseURL}${image}`
+                            } `}
                             alt=""
                             className="w-[50px] h-[50px] rounded-lg"
                           />

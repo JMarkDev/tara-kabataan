@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormat } from "../hooks/useFormatDate";
 import Transaction from "./Transaction";
@@ -18,13 +18,22 @@ const AttendeesTable = ({ attendees, eventType }) => {
       "Email",
       "Phone Number",
     ];
+
+    const formatFieldCsv = (field) => {
+      if (/[,]/.test(field)) {
+        return `"${field}"`;
+      }
+
+      return field;
+    };
+
     const dataRows = attendees.map((response) => {
       return [
-        response.attendee_name,
-        response.birthdate,
-        response.gender,
-        response.attendee_email,
-        response.phone_number,
+        formatFieldCsv(response.attendee_name),
+        formatFieldCsv(response.birthdate),
+        formatFieldCsv(response.gender),
+        formatFieldCsv(response.attendee_email),
+        formatFieldCsv(response.phone_number),
       ];
     });
 

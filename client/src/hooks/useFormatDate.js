@@ -14,7 +14,6 @@ export const useFormat = () => {
     "December",
   ];
   const dateFormat = (date) => {
-    console.log(date);
     const month = parseInt(date.substring(5, 7), 10) - 1;
     const day = date.substring(8, 10);
     const year = date.substring(0, 4);

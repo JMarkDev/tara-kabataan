@@ -35,6 +35,7 @@ const Chatbot = ({ setOpenChat, openChat }) => {
       setConversation(updatedConversation);
       setTimeout(() => {
         setIsLoading(false);
+        setUserQuery("");
       }, 3000);
     } catch (error) {
       console.log(error);
@@ -42,7 +43,6 @@ const Chatbot = ({ setOpenChat, openChat }) => {
   };
 
   const handleOptionClick = async (option) => {
-    setUserQuery(option);
     try {
       const response = await api.post("/chatbot/query", {
         user_query: option,
@@ -51,7 +51,7 @@ const Chatbot = ({ setOpenChat, openChat }) => {
         ...conversation,
         { user_query: option, bot_response: response.data.data },
       ];
-      setIsLoading(!isLoading);
+      setIsLoading(true);
       setConversation(updatedConversation);
       setTimeout(() => {
         setIsLoading(false);
@@ -148,7 +148,7 @@ const Chatbot = ({ setOpenChat, openChat }) => {
         {option.map((options, index) => (
           <div
             key={index}
-            className="text-sm px-2 py-1 hover:bg-[#6415ff] hover:text-white border border-[#6415ff] rounded-full  text-[#6415ff] cursor-pointer transition-all"
+            className="text-sm px-2 py-1 hover:bg-[#6415ff] hover:text-white border border-[#6415ff] rounded-full text-[#6415ff] cursor-pointer transition-all"
             onClick={() => handleOptionClick(options)}
           >
             {options}
@@ -166,7 +166,7 @@ const Chatbot = ({ setOpenChat, openChat }) => {
               type="text"
               className="relative w-full mb-2 p-2 rounded-full text-sm focus:outline-none border border-indigo-400 focus:border-[#6415ff]"
               placeholder="Type a message"
-              // value={userQuery}
+              value={userQuery}
               onChange={(e) => setUserQuery(e.target.value)}
             />
           </div>

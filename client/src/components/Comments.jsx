@@ -12,6 +12,7 @@ const CommentContainer = ({ comments }) => {
   const userRole = Cookies.get("role");
   const userId = Cookies.get("userId");
   const { id } = useParams();
+  const [client_id, setClientID] = useState("");
   const { dateFormat } = useFormat();
   const [reply, setActiveReply] = useState(false);
   const [commentData, setCommentData] = useState([]);
@@ -74,9 +75,11 @@ const CommentContainer = ({ comments }) => {
     data.append("user_id", userId);
     data.append("comment", comment);
     data.append("comment_id", commentID);
+    data.append("client_id", client_id);
 
     try {
       const response = await api.post("/comment/reply", data);
+      console.log(response.data);
       if (response.data.status === "success") {
         setCommentData((prevData) => [...prevData, response.data.postcomment]);
         toast.success("Feedback submitted successfully");
@@ -100,9 +103,10 @@ const CommentContainer = ({ comments }) => {
     }));
   };
 
-  const handleReplyModal = (active, comment_id) => {
+  const handleReplyModal = (active, comment_id, client_id) => {
     setActiveReply(active);
     setCommentID(comment_id);
+    setClientID(client_id);
   };
 
   return (
@@ -120,6 +124,7 @@ const CommentContainer = ({ comments }) => {
                 user,
                 role,
                 comment_id,
+                user_id,
               }) => (
                 <div
                   key={id}
@@ -181,7 +186,9 @@ const CommentContainer = ({ comments }) => {
                       {userRole === "admin" && (
                         <>
                           <button
-                            onClick={() => handleReplyModal(true, comment_id)}
+                            onClick={() =>
+                              handleReplyModal(true, comment_id, user_id)
+                            }
                             className="flex justify-center items-center gap-2 bg-gray-300 rounded-md p-2 hover:bg-gray-400"
                           >
                             {" "}

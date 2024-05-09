@@ -175,7 +175,7 @@ const EventCalendar = () => {
           <div className="flex items-center bg-[#6415ff]  text-white p-2 rounded-lg">
             {disabledBack && (
               <button
-                className="gap-2 bg-gray-500 hover:bg-gray-600 flex items-center text-sm lg:text-xl p-2 rounded-lg"
+                className="gap-2 border  hover:border-[#6415ff] hover:bg-gray-300 hover:text-[#6415ff]  flex items-center text-sm  p-2 rounded-lg"
                 onClick={handleBack}
               >
                 <MdArrowBackIos />
@@ -185,7 +185,7 @@ const EventCalendar = () => {
 
             <span className="font-bold text-xl text-[#9E9E9E] mx-2">|</span>
             <button
-              className="gap-2 bg-gray-500 hover:bg-gray-600 flex items-center text-sm lg:text-xl p-2 rounded-lg"
+              className="gap-2 border hover:border-[#6415ff] hover:bg-gray-300 hover:text-[#6415ff]  flex items-center text-sm  p-2 rounded-lg"
               onClick={handleNext}
             >
               Next
