@@ -8,8 +8,13 @@ import userIcon from "../assets/images/user.png";
 import UserProfile from "./UserProfile";
 import Notification from "./Notification";
 import { IoNotificationsOutline } from "react-icons/io5";
+import io from "socket.io-client";
 
 const NavbarUser = () => {
+  // implement socket io
+  // server endpoint
+  const socket = io.connect(`${api.defaults.baseURL}`);
+
   const location = useLocation();
   const [mobileMenu, setMobileMenu] = useState(false);
   const [userData, setUserData] = useState(false);
@@ -87,7 +92,16 @@ const NavbarUser = () => {
 
   useEffect(() => {
     fetchNotifications();
-  }, [userId]);
+
+    // receive notification from the add events
+    socket.on("receive_notification", () => {
+      fetchNotifications();
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [userId]); // client-side socket.io
 
   const handleCloseNotification = (notification, event_id) => {
     setOpenNotification(notification);

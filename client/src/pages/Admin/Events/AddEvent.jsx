@@ -2,10 +2,11 @@ import api from "../../../api/api";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../../../hooks/useToast";
-import { IoIosAddCircle } from "react-icons/io";
 import Loader from "../../../components/loading/otpLoader/otpLoader";
+import io from "socket.io-client";
 
 const AddEvent = () => {
+  const socket = io.connect(`${api.defaults.baseURL}`);
   const [loader, setLoader] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
@@ -104,7 +105,10 @@ const AddEvent = () => {
     try {
       const response = await api.post("/event/add", data);
       if (response.data.status === "success") {
+        // send the notification
+        socket.emit("send_notification", data);
         toast.success(response.data.message);
+        setLoader(false);
         navigate("/admin-events");
       }
     } catch (error) {

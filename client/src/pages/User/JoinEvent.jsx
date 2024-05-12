@@ -8,6 +8,7 @@ import { useToast } from "../../hooks/useToast";
 import Paypal from "../../components/Paypal";
 import { FaPesoSign } from "react-icons/fa6";
 import { FaRegCircleCheck } from "react-icons/fa6";
+import io from "socket.io-client";
 
 const JoinEvent = ({
   handleClose,
@@ -17,6 +18,7 @@ const JoinEvent = ({
   total,
   event_date,
 }) => {
+  const socket = io.connect(`${api.defaults.baseURL}`);
   const navigate = useNavigate();
   const toast = useToast();
   const { id } = useParams();
@@ -120,10 +122,12 @@ const JoinEvent = ({
     try {
       const response = await api.post("/attendees/add", data);
       if (response.data.status === "success") {
+        // send notification to dashboard
+        socket.emit("send_attendee_notification", data);
         setTimeout(() => {
           handleClose();
           navigate("/success");
-        }, 2000);
+        }, 1000);
 
         toast.success("Join event successfully!");
         localStorage.removeItem("region");

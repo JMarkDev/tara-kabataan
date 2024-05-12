@@ -9,8 +9,10 @@ import UserProfile from "./UserProfile";
 import { useResizeLayout } from "../hooks/resizeLayout";
 import { IoNotificationsOutline } from "react-icons/io5";
 import Notification from "./Notification";
+import io from "socket.io-client";
 
 function NavbarDashboard({ setOpen }) {
+  const socket = io.connect(`${api.defaults.baseURL}`);
   const [openNotification, setOpenNotification] = useState(false);
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
@@ -92,6 +94,13 @@ function NavbarDashboard({ setOpen }) {
 
   useEffect(() => {
     fetchNotifications();
+    socket.on("receive_attendee_notification", () => {
+      fetchNotifications();
+
+      return () => {
+        socket.disconnect();
+      };
+    });
   }, []);
 
   const handleCloseNotificationAdmin = (notification, event_id) => {
